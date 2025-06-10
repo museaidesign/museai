@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuseAI Shop - Artist Backed Artwork</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-REPLACE_WITH_YOUR_GA4_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-REPLACE_WITH_YOUR_GA4_ID');
+    </script>
+
+    <style>
+        /* Header styles update */
+        .header .container {
+            max-width: var(--max-width);
+            padding: 0 1rem;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+            gap: 1.5rem;
+            background: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Form styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal__content {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 16px;
+            max-width: 680px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal__close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .modal__close:hover {
+            background: #e9ecef;
+            color: var(--text);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .form-header p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.625rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .upload-info {
+            background: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .upload-info h3 {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .requirement-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .requirement-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        .requirement-list svg {
+            width: 12px;
+            height: 12px;
+            color: var(--success);
+        }
+
+        .upload-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .upload-zone.drag-over {
+            border-color: var(--primary);
+            background: rgba(var(--primary-rgb), 0.05);
+        }
+
+        .upload-zone svg {
+            width: 32px;
+            height: 32px;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-zone p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--text);
+        }
+
+        .upload-count {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .preview-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .form-actions button {
+            min-width: 120px;
+            padding: 0.625rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 480px) {
+            .guidelines-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-grid {
+                grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            }
+        }
+
+        /* Rest of your existing styles */
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex: 1;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            white-space: nowrap;
+            margin-right: auto;
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-cta .btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+
+        /* Shop hero section - matched with index.html hero padding */
+        .shop-hero {
+            padding: 160px 0 60px;
+            text-align: center;
+            background: linear-gradient(135deg, #FFF5F5 0%, #F9F7FE 100%);
+            position: relative;
+        }
+
+        .shop-hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .shop-hero h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .shop-message {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .message-primary {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Product grid styles */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            padding: 1rem;
+            margin: 0 auto;
+            max-width: var(--max-width);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Product card - adjusted height */
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            height: auto;  /* Allow natural height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-image {
+            aspect-ratio: 1;  /* Maintain square ratio */
+            overflow: hidden;
+            display: block;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-info {
+            padding: 0.75rem;  /* Reduced padding */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Form validation styles */
+        .email-input {
+            padding-right: 40px; /* Space for the validation icon */
+        }
+        
+        .validation-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            display: none;
+        }
+        
+        .validation-icon::before {
+            content: '✓';
+            color: #4CAF50;
+            font-size: 16px;
+        }
+        
+        .validation-icon.error::before {
+            content: '✕';
+            color: #ff4444;
+        }
+        
+        .email-validation-message {
+            display: none;
+            color: #ff4444;
+            font-size: 0.875rem;
+            margin-top: 4px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .email-input.valid + .validation-icon,
+        .email-input.error + .validation-icon {
+            display: block;
+        }
+        
+        .email-input.error ~ .email-validation-message {
+            display: block;
+        }
+        
+        .email-input.valid {
+            border-color: #4CAF50;
+        }
+        
+        .email-input.error {
+            border-color: #ff4444;
+            background-color: #fff0f0;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea,
+        .form-group.error select {
+            border-color: #ff4444;
+            background-color: #fff0f0;
+        }
+
+        .form-group.error .radio-group,
+        .form-group.error .checkbox-group {
+            border: 1px solid #ff4444;
+            border-radius: 4px;
+            padding: 8px;
+            background-color: #fff0f0;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: #ff4444;
+            background-color: #fff0f0;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .upload-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .guidelines-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .guidelines-box {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .guidelines-box h4 {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .guidelines-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .guidelines-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-light);
+        }
+
+        .guidelines-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .guidelines-list svg {
+            width: 12px;
+            height: 12px;
+            color: var(--primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">MuseAI</a>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html#value-prop" class="nav-link">Features</a></li>
+                    <li><a href="index.html#how-it-works" class="nav-link">How It Works</a></li>
+                    <li><a href="index.html#showcase" class="nav-link">Showcase</a></li>
+                    <li><a href="index.html#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="merchandise.html" class="nav-link">Shop</a></li>
+                </ul>
+                <div class="nav-cta">
+                    <button class="btn btn-secondary" onclick="openArtistModal(); trackButtonClick('nav_apply_model');">Apply to Train Model</button>
+                    <button class="btn btn-primary" onclick="window.open('https://tally.so/r/n9g6JG', '_blank'); trackButtonClick('nav_join_waitlist');">Join Waitlist</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Shop Hero Section -->
+    <section class="shop-hero">
+        <div class="container">
+            <h1>AI-Enhanced Artwork Collection</h1>
+            <div class="shop-message">
+                <p class="message-primary">Each piece represents a unique collaboration between our artists and AI technology, with 70% of proceeds going directly to the artists.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Grid Section -->
+    <section class="shop-grid">
+        <div class="container">
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252.jpg" alt="Morning Newspaper on a Kerala Waterboat">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>Morning Newspaper on a Kerala Waterboat</h3>
+                            <p class="artist">by MuseAI x August Macke</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252 (1).jpg" alt="Wanderlust at a Cave Window">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>Wanderlust at a Cave Window</h3>
+                            <p class="artist">by MuseAI x Nicolas Kristian</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252 (2).jpg" alt="Lotus Blooms">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>Lotus Blooms</h3>
+                            <p class="artist">by MuseAI x August Macke</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252 (3).jpg" alt="Wanderlust in a Dessert">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>Wanderlust in a Dessert</h3>
+                            <p class="artist">by MuseAI x Nicolas Kristian</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252 (4).jpg" alt="Friends in Sarees">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>Friends in Sarees</h3>
+                            <p class="artist">by MuseAI x August Macke</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252 (11).jpg" alt="BookWorm in a Hot Air Balloon">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>BookWorm in a Hot Air Balloon</h3>
+                            <p class="artist">by MuseAI x Nicolas Kristian</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252 (12).jpg" alt="Wishing Upon a Dandelion">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>Wishing Upon a Dandelion</h3>
+                            <p class="artist">by MuseAI x Nicolas Kristian</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252 (13).jpg" alt="Biking Mirage on the Shore">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>Biking Mirage on the Shore</h3>
+                            <p class="artist">by MuseAI x Nicolas Kristian</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 9 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252 (16).jpg" alt="Kerala Backwaters">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>Kerala Backwaters</h3>
+                            <p class="artist">by MuseAI x Nicolas Kristian</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 10 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252 (23).jpg" alt="Colorful streets of Goa">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>Colorful streets of Goa</h3>
+                            <p class="artist">by MuseAI x Nicolas Kristian</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 11 -->
+                <div class="product-card">
+                    <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank" class="product-image">
+                        <img src="images/Merchandise/behance-6704de7f2b252 (11) 2.jpg" alt="Morning Ride Through Old Town">
+                    </a>
+                    <div class="product-info">
+                        <a href="https://www.etsy.com/shop/MuseDesignCollective" target="_blank">
+                            <h3>Morning Ride Through Old Town</h3>
+                            <p class="artist">by MuseAI x August Macke</p>
+                            <p class="description">Available on Etsy →</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">MuseAI</a>
+                    <p class="footer-tagline">A designer in your pocket</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/museaidesign/?hl=en" target="_blank" class="social-link" aria-label="Follow us on Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C14.717 2 15.056 2.01 16.122 2.06C17.187 2.11 17.912 2.277 18.55 2.525C19.21 2.779 19.766 3.123 20.322 3.678C20.8305 4.1779 21.224 4.78259 21.475 5.45C21.722 6.087 21.89 6.813 21.94 7.878C21.987 8.944 22 9.283 22 12C22 14.717 21.99 15.056 21.94 16.122C21.89 17.187 21.722 17.912 21.475 18.55C21.2247 19.2178 20.8311 19.8226 20.322 20.322C19.822 20.8303 19.2173 21.2238 18.55 21.475C17.913 21.722 17.187 21.89 16.122 21.94C15.056 21.987 14.717 22 12 22C9.283 22 8.944 21.99 7.878 21.94C6.813 21.89 6.088 21.722 5.45 21.475C4.78233 21.2245 4.17753 20.8309 3.678 20.322C3.16941 19.8222 2.77593 19.2175 2.525 18.55C2.277 17.913 2.11 17.187 2.06 16.122C2.013 15.056 2 14.717 2 12C2 9.283 2.01 8.944 2.06 7.878C2.11 6.812 2.277 6.088 2.525 5.45C2.77524 4.78218 3.1688 4.17732 3.678 3.678C4.17767 3.16923 4.78243 2.77573 5.45 2.525C6.088 2.277 6.812 2.11 7.878 2.06C8.944 2.013 9.283 2 12 2ZM12 7C10.6739 7 9.40215 7.52678 8.46447 8.46447C7.52678 9.40215 7 10.6739 7 12C7 13.3261 7.52678 14.5979 8.46447 15.5355C9.40215 16.4732 10.6739 17 12 17C13.3261 17 14.5979 16.4732 15.5355 15.5355C16.4732 14.5979 17 13.3261 17 12C17 10.6739 16.4732 9.40215 15.5355 8.46447C14.5979 7.52678 13.3261 7 12 7ZM18.5 6.75C18.5 6.41848 18.3683 6.10054 18.1339 5.86612C17.8995 5.6317 17.5815 5.5 17.25 5.5C16.9185 5.5 16.6005 5.6317 16.3661 5.86612C16.1317 6.10054 16 6.41848 16 6.75C16 7.08152 16.1317 7.39946 16.3661 7.63388C16.6005 7.8683 16.9185 8 17.25 8C17.5815 8 17.8995 7.8683 18.1339 7.63388C18.3683 7.39946 18.5 7.08152 18.5 6.75ZM12 9C12.7956 9 13.5587 9.31607 14.1213 9.87868C14.6839 10.4413 15 11.2044 15 12C15 12.7956 14.6839 13.5587 14.1213 14.1213C13.5587 14.6839 12.7956 15 12 15C11.2044 15 10.4413 14.6839 9.87868 14.1213C9.31607 13.5587 9 12.7956 9 12C9 11.2044 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2044 9 12 9Z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="index.html#value-prop">Features</a></li>
+                        <li><a href="index.html#how-it-works">How It Works</a></li>
+                        <li><a href="index.html#showcase">Showcase</a></li>
+                        <li><a href="merchandise.html">Shop</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="mailto:museaidesign@gmail.com">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MuseAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Artist Application Modal -->
+    <div id="artistModal" class="modal">
+        <div class="modal__content">
+            <span class="modal__close" onclick="closeArtistModal()">&times;</span>
+            <div class="artist-form">
+                <!-- Step 1: Basic Information -->
+                <div class="form-step" data-step="1">
+                    <div class="form-header">
+                        <h2>Apply to Train Your AI Model</h2>
+                        <p>Share your unique style with the world</p>
+                    </div>
+                    
+                    <form id="artistForm" onsubmit="return validateAndProceed(event)">
+                        <div class="form-group">
+                            <label for="artistName">Full Name*</label>
+                            <input type="text" id="artistName" name="artistName" required minlength="2" placeholder="Enter your full name">
+                            <div class="error-message">Please enter your full name (minimum 2 characters)</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="artistEmail">Email*</label>
+                            <input type="email" id="artistEmail" name="artistEmail" required placeholder="your@email.com">
+                            <div class="error-message">Please enter a valid email address</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="portfolio">Portfolio URL*</label>
+                            <input type="url" id="portfolio" name="portfolio" required placeholder="https://your-portfolio.com">
+                            <div class="error-message">Please enter a valid URL</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="styleDescription">Describe your style*</label>
+                            <textarea id="styleDescription" name="styleDescription" rows="2" required minlength="20" placeholder="e.g., Minimalist illustrations with pastel colors"></textarea>
+                            <div class="error-message">Please provide a description (minimum 20 characters)</div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Next: Upload Images</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Upload with Guidelines -->
+                <div class="form-step" data-step="2" style="display: none;">
+                    <div class="form-header">
+                        <h2>Upload Your Style Images</h2>
+                        <p>Share images that best represent your artistic style</p>
+                    </div>
+
+                    <div class="upload-section">
+                        <h3>Technical Requirements</h3>
+                        <div class="guidelines-grid">
+                            <div class="guidelines-box">
+                                <h4>Image Specifications</h4>
+                                <ul class="guidelines-list">
+                                    <li>
+                                        <svg viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                        </svg>
+                                        Min. 1024x1024px resolution
+                                    </li>
+                                    <li>
+                                        <svg viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                        </svg>
+                                        JPG, PNG formats only
+                                    </li>
+                                    <li>
+                                        <svg viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                        </svg>
+                                        Max 10MB per image
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="guidelines-box">
+                                <h4>Style Guidelines</h4>
+                                <ul class="guidelines-list">
+                                    <li>
+                                        <svg viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                        </svg>
+                                        15 images minimum
+                                    </li>
+                                    <li>
+                                        <svg viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                        </svg>
+                                        Consistent style/theme
+                                    </li>
+                                    <li>
+                                        <svg viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                        </svg>
+                                        No text overlays
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="upload-zone" id="uploadZone">
+                            <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                            <svg viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                            </svg>
+                            <p>Drop images here or click to upload</p>
+                            <span class="upload-count">0 of 15 images</span>
+                        </div>
+
+                        <div class="preview-grid" id="imagePreview"></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-secondary" onclick="prevStep(2)">Back</button>
+                        <button type="button" class="btn btn-primary" onclick="handleSubmit(event)" id="submitButton">Submit Application</button>
+                    </div>
+                </div>
+
+                <!-- Success Step -->
+                <div class="form-step" data-step="success" style="display: none;">
+                    <div class="success-message">
+                        <svg viewBox="0 0 24 24" width="48" height="48">
+                            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <h2>Application Submitted!</h2>
+                        <p>We'll review your work and get back to you soon.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Track product interactions
+        document.querySelectorAll('.product-image').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const card = link.closest('.product-card');
+                const productName = card.querySelector('h3').textContent;
+                const artistName = card.querySelector('.artist').textContent;
+                
+                gtag('event', 'product_click', {
+                    'event_category': 'ecommerce',
+                    'event_label': productName,
+                    'artist_name': artistName.replace('by MuseAI x ', '')
+                });
+                
+                window.open('https://www.etsy.com/shop/MuseDesignCollective', '_blank');
+            });
+        });
+
+        // Track button clicks
+        function trackButtonClick(label) {
+            gtag('event', 'button_click', {
+                'event_category': 'engagement',
+                'event_label': label
+            });
+        }
+
+        // Initialize all waitlist buttons to redirect to Tally form
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('button.btn-primary').forEach(button => {
+                if (button.textContent.toLowerCase().includes('waitlist')) {
+                    button.onclick = function(e) {
+                        e.preventDefault();
+                        trackButtonClick('join_waitlist');
+                        window.open('https://tally.so/r/n9g6JG', '_blank');
+                    };
+                }
+            });
+        });
+
+        // Initialize variables
+        let selectedFiles = [];
+        let currentStep = 1;
+
+        // Form validation
+        function validateAndProceed(event) {
+            console.log('validateAndProceed called');
+            event.preventDefault();
+            
+            const form = document.getElementById('artistForm');
+            if (!form) {
+                console.error('Artist form not found');
+                return false;
+            }
+
+            const formGroups = form.querySelectorAll('.form-group');
+            let isValid = true;
+
+            formGroups.forEach(group => {
+                const input = group.querySelector('input, textarea');
+                if (input && !input.checkValidity()) {
+                    group.classList.add('error');
+                    isValid = false;
+                }
+            });
+
+            console.log('Form validation result:', isValid);
+            if (isValid) {
+                nextStep(2);
+            }
+
+            return false;
+        }
+
+        // Handle file uploads
+        function handleFiles(files) {
+            console.log('Handling files:', files.length);
+            if (!files || files.length === 0) {
+                console.log('No files selected');
+                return;
+            }
+
+            const newFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+            selectedFiles = [...selectedFiles, ...newFiles];
+            updatePreview();
+            validateForm();
+            
+            // Update upload count display
+            const uploadCount = document.querySelector('.upload-count');
+            if (uploadCount) {
+                uploadCount.textContent = `${selectedFiles.length} of 10-15 recommended`;
+            }
+        }
+
+        // Update preview grid
+        function updatePreview() {
+            const imagePreview = document.getElementById('imagePreview');
+            if (!imagePreview) {
+                console.error('Image preview container not found');
+                return;
+            }
+
+            imagePreview.innerHTML = '';
+            selectedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const div = document.createElement('div');
+                    div.className = 'preview-item';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button class="remove-btn" onclick="removeFile(${index})">×</button>
+                    `;
+                    imagePreview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Remove file from selection
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updatePreview();
+            validateForm();
+        }
+
+        // Form validation
+        function validateForm() {
+            console.log('Validating form...');
+            console.log('Selected files:', selectedFiles ? selectedFiles.length : 0);
+            const submitButton = document.getElementById('submitButton');
+            if (submitButton) {
+                const isValid = selectedFiles && selectedFiles.length >= 10;
+                submitButton.disabled = !isValid;
+                console.log('Form valid:', isValid);
+            }
+        }
+
+        // Navigation between steps
+        function nextStep(step) {
+            console.log('Moving to step:', step);
+            const currentStepElement = document.querySelector(`[data-step="${currentStep}"]`);
+            const nextStepElement = document.querySelector(`[data-step="${step}"]`);
+            
+            if (currentStepElement && nextStepElement) {
+                currentStepElement.style.display = 'none';
+                nextStepElement.style.display = 'block';
+                currentStep = step;
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function prevStep(step) {
+            console.log('Moving back to step:', step);
+            const currentStepElement = document.querySelector(`[data-step="${currentStep}"]`);
+            const prevStepElement = document.querySelector(`[data-step="${step}"]`);
+            
+            if (currentStepElement && prevStepElement) {
+                currentStepElement.style.display = 'none';
+                prevStepElement.style.display = 'block';
+                currentStep = step;
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Modal functions
+        function openArtistModal() {
+            console.log('Opening artist modal');
+            const modal = document.getElementById('artistModal');
+            if (modal) {
+                modal.classList.add('show');
+            }
+        }
+
+        function closeArtistModal() {
+            console.log('Closing artist modal');
+            const modal = document.getElementById('artistModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+        }
+
+        // Modify the handleSubmit function to use a more targeted approach
+        async function handleSubmit(event) {
+            event.preventDefault();
+            console.log('Submit button clicked');
+
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Processing... <span class="spinner"></span>';
+
+            try {
+                // Get form data
+                const name = document.getElementById('artistName').value;
+                const email = document.getElementById('artistEmail').value;
+                const portfolio = document.getElementById('portfolio').value;
+                
+                console.log('Form Data:', { name, email, portfolio });
+                console.log('Number of files:', selectedFiles.length);
+
+                // Validate form data
+                if (!name || !email || !portfolio) {
+                    throw new Error('Please fill in all required fields');
+                }
+
+                if (!selectedFiles || selectedFiles.length < 10) {
+                    throw new Error('Please upload at least 10 images');
+                }
+
+                // Process files
+                console.log('Processing files...');
+                const filePromises = selectedFiles.map(file => {
+                    return new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                            console.log(`Processed file: ${file.name}`);
+                            resolve({
+                                name: file.name,
+                                type: file.type,
+                                data: reader.result.split(',')[1]
+                            });
+                        };
+                        reader.onerror = (error) => {
+                            console.error('Error reading file:', error);
+                            resolve(null);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                });
+
+                const fileData = await Promise.all(filePromises);
+                console.log('All files processed');
+
+                // Prepare form data
+                const formData = {
+                    name,
+                    email,
+                    portfolio,
+                    phone: document.getElementById('artistPhone')?.value || ''
+                };
+
+                // Send to Google Apps Script
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbxmTdXuP3PyiJv0NhmUrNL3C16gcHfL4EgxPxkX4jjAOWyECBzMrxdwyJRhVaym5gJt/exec';
+                console.log('Sending to script URL:', scriptURL);
+
+                const requestBody = new URLSearchParams({
+                    fields: JSON.stringify(formData),
+                    files: JSON.stringify(fileData),
+                    driveFolder: '1iPwruYv3yzaf_t9Q4I6B7hwHhjtGPPi_',
+                    sheetId: '1pJV3bheRurHSov1s4ySIxgxiUADej2T0lVzV4PSEWKE'
+                });
+
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: requestBody
+                });
+
+                console.log('Response received:', response);
+                
+                // Move to success step
+                const successStep = document.querySelector('[data-step="success"]');
+                if (successStep) {
+                    document.querySelector(`[data-step="${currentStep}"]`).style.display = 'none';
+                    successStep.style.display = 'block';
+                    currentStep = 'success';
+                    window.scrollTo(0, 0);
+                } else {
+                    console.error('Success step not found');
+                }
+                
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('There was an error submitting your application. Error: ' + error.message);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = 'Submit Application';
+            }
+        }
+
+        // Initialize everything when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded');
+            
+            // Initialize upload zone
+            const uploadZone = document.getElementById('uploadZone');
+            const fileInput = document.getElementById('fileInput');
+            
+            if (uploadZone && fileInput) {
+                console.log('Upload zone and file input initialized');
+                
+                uploadZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadZone.classList.add('drag-over');
+                });
+
+                uploadZone.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    uploadZone.classList.remove('drag-over');
+                });
+
+                uploadZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadZone.classList.remove('drag-over');
+                    handleFiles(e.dataTransfer.files);
+                });
+
+                uploadZone.addEventListener('click', () => {
+                    fileInput.click();
+                });
+
+                fileInput.addEventListener('change', (e) => {
+                    handleFiles(e.target.files);
+                });
+            }
+
+            // Initialize modal close on outside click
+            window.addEventListener('click', (e) => {
+                const modal = document.getElementById('artistModal');
+                if (e.target === modal) {
+                    closeArtistModal();
+                }
+            });
+
+            // Initialize modal close on escape key
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeArtistModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
