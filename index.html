@@ -98,7 +98,7 @@
         .hero {
             background: linear-gradient(135deg, #FFF5F5 0%, #F9F7FE 100%);
             position: relative;
-            padding: 160px 0 100px;
+            padding: 100px 0 80px;
         }
 
         .form-group {
@@ -511,6 +511,2168 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Showcase section styles */
+        .artwork-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.2rem;
+            margin: 0.5rem 0 0 0;
+        }
+
+        .artwork-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            min-height: 320px;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .artwork-item img {
+            width: 100%;
+            height: 260px;
+            object-fit: contain;
+            background: #f5f5f5;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .artwork-item:hover img {
+            transform: scale(1.03);
+        }
+
+        .guess-buttons {
+            position: relative;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.75rem 0.5rem 0.5rem 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+
+        .guess-btn {
+            padding: 0.5rem 1.1rem;
+            border: 1px solid rgba(200, 200, 200, 0.5);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .guess-btn.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .guess-btn.correct {
+            background: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
+        }
+
+        .guess-btn.incorrect {
+            background: #f44336;
+            border-color: #f44336;
+            color: white;
+        }
+
+        .score-display {
+            margin-bottom: 0.5rem;
+            font-size: 1.15rem;
+            font-weight: 500;
+        }
+
+        .score-message {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-top: 0.3rem;
+        }
+
+        .showcase-cta {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 1100px) {
+            .container {
+                max-width: 98vw;
+            }
+            .artwork-grid {
+                gap: 1.2rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                max-width: 100vw;
+            }
+            .artwork-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .artwork-grid {
+                grid-template-columns: 1fr;
+            }
+            .artwork-item img {
+                height: 180px;
+            }
+        }
+
+        .artist-tabs {
+            margin-bottom: 2rem;
+        }
+        .artist-tab-btn.active {
+            background: var(--primary, #7C3AED);
+            color: white;
+            border-color: var(--primary, #7C3AED);
+        }
+
+        /* Artwork Showcase Styles - Clean Version */
+        .artwork-showcase {
+            padding: 4rem 0;
+            background: #fff;
+        }
+
+        .artwork-showcase .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .artwork-showcase-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .artwork-showcase-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .artwork-description {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .artwork-comparison {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .artwork-column {
+            text-align: center;
+        }
+
+        .artwork-column h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .artwork-column p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .artwork-display {
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .artwork-display img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail {
+            width: 48px;
+            height: 48px;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .thumbnail.active {
+            border-color: var(--primary);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .artwork-comparison {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .artwork-showcase-header h2 {
+                font-size: 2rem;
+            }
+
+            .artwork-column h3 {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Value Proposition Styles */
+        .value-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .value-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .value-card ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+
+        .value-card li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .value-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .artwork-showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .artwork-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            padding: 2rem 1.5rem 2.5rem 1.5rem;
+            min-width: 0;
+        }
+        .artwork-column h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: #222;
+            text-align: center;
+        }
+        .main-image-container, .generated-image-container {
+            width: 100%;
+            max-width: 280px;
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8f9fa;
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            margin-bottom: 1.2rem;
+            transition: opacity 0.2s;
+        }
+        .main-image-container img, .generated-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #f8f9fa;
+            display: block;
+            transition: opacity 0.2s;
+        }
+        .artwork-thumbnails {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .thumbnail {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .thumbnail:hover {
+            border-color: var(--primary, #7C3AED);
+            transform: scale(1.05);
+        }
+        .thumbnail.active {
+            border-color: var(--primary, #7C3AED);
+            transform: scale(1.05);
+        }
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .generated-info {
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        .generated-description {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+        .use-cases-intro {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .use-cases-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            width: 100%;
+        }
+        .use-case-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .use-case-item:hover {
+            background: #f8f9fa;
+            border-color: #e9ecef;
+        }
+        .use-case-item.active {
+            background: var(--primary, #7C3AED);
+            color: white;
+            border-color: var(--primary, #7C3AED);
+        }
+        .use-case-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            text-align: center;
+        }
+        .use-case-content {
+            flex: 1;
+        }
+        .use-case-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        .use-case-desc {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        @media (max-width: 1000px) {
+            .artwork-showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .main-image-container, .generated-image-container {
+                max-width: 320px;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-image-container, .generated-image-container {
+                max-width: 90vw;
+            }
+            .artwork-showcase .container {
+                padding: 0 0.5rem;
+            }
+            .artwork-thumbnails {
+                gap: 0.3rem;
+            }
+            .thumbnail {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        /* Artwork Showcase Styles - Value Proposition Focus */
+        .artwork-showcase {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #FFF5F5 0%, #F9F7FE 100%);
+        }
+
+        .artwork-showcase .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .artwork-showcase-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .artwork-showcase-header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            background: linear-gradient(135deg, #7C3AED, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .artwork-description {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .transformation-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        .flow-step {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .step-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #7C3AED, #EC4899);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem auto;
+        }
+
+        .step-header h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .step-header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .original-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .original-item {
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .original-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .original-item.active {
+            border-color: #7C3AED;
+            transform: scale(1.05);
+        }
+
+        .original-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .transformation-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: #7C3AED;
+            font-weight: 600;
+        }
+
+        .transformation-arrow svg {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .variations-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .main-variation {
+            text-align: center;
+        }
+
+        .main-variation img {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1/1;
+            border-radius: 16px;
+            object-fit: contain;
+            background: #f8f9fa;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transition: opacity 0.3s ease;
+        }
+
+        .variation-label {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .use-cases-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .use-case-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            background: #f8f9fa;
+        }
+
+        .use-case-option:hover {
+            background: #e9ecef;
+            transform: translateX(4px);
+        }
+
+        .use-case-option.active {
+            background: linear-gradient(135deg, #7C3AED, #EC4899);
+            color: white;
+            border-color: #7C3AED;
+        }
+
+        .use-case-option.active .compatibility-indicator .indicator-dot {
+            background-color: white;
+        }
+
+        .use-case-option.active .compatibility-indicator .indicator-dot.empty {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .option-icon {
+            font-size: 1.8rem;
+            width: 50px;
+            text-align: center;
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        .option-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .option-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .value-highlight {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .highlight-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-card:hover {
+            border-color: #7C3AED;
+            transform: translateY(-4px);
+        }
+
+        .highlight-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #7C3AED;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-text h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .highlight-text p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 1024px) {
+            .variations-showcase {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .value-highlight {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .artwork-showcase-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .flow-step {
+                padding: 1.5rem;
+            }
+            
+            .original-thumbnails {
+                gap: 0.6rem;
+            }
+            
+            .original-thumbnail {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .use-case-option {
+                padding: 0.8rem;
+            }
+            
+            .option-icon {
+                font-size: 1.5rem;
+                width: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .artwork-showcase .container {
+                padding: 0 1rem;
+            }
+            
+            .original-thumbnails {
+                gap: 0.5rem;
+            }
+            
+            .original-thumbnail {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .highlight-card {
+                padding: 1.5rem;
+            }
+            
+            .highlight-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        .original-showcase {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .main-original-image {
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 1/1;
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 0 auto 1rem auto;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            background: #f8f9fa;
+        }
+
+        .main-original-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+
+        .original-thumbnails {
+            display: flex;
+            gap: 0.6rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .original-thumbnail {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .original-thumbnail:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .original-thumbnail.active {
+            border-color: #7C3AED;
+            transform: scale(1.1);
+        }
+
+        .original-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Style Bank Styles */
+        .style-bank {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .style-bank h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        /* Artist Style Selector Styles */
+        .style-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            max-width: 100%;
+        }
+
+        .style-tab {
+            flex: 0 1 160px;
+            text-align: center;
+            padding: 0.8rem;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: white;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            min-width: 160px;
+        }
+
+        .style-tab:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .style-tab.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #7C3AED, #EC4899);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.3);
+        }
+
+        .style-preview {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.8rem;
+            background: #f8f9fa;
+        }
+
+        .style-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .style-info h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .style-info p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .original-ai-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .ai-artwork-showcase {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .main-ai-image {
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 1/1;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 0.7rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            background: #f8f9fa;
+        }
+        .main-ai-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+        .ai-label {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        .ai-usecases-section {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .ai-usecases-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.7rem;
+        }
+        .ai-usecases-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .ai-usecase-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 0.7rem 1.2rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            font-weight: 500;
+        }
+        .ai-usecase-icon {
+            font-size: 1.2rem;
+        }
+        @media (max-width: 900px) {
+            .original-ai-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+            .main-ai-image, .main-original-image {
+                max-width: 90vw;
+            }
+        }
+
+        .artwork-two-col {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .artwork-col {
+            flex: 1 1 280px;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 0.8rem;
+        }
+
+        .artwork-col-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .artwork-col-header h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            color: var(--text);
+        }
+
+        .artwork-col-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .main-original-image, .main-ai-image {
+            width: 100%;
+            max-width: 280px;
+            aspect-ratio: 1/1;
+            margin-bottom: 0.8rem;
+        }
+
+        .main-original-image img, .main-ai-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .original-thumbnails, .ai-thumbnails {
+            display: flex;
+            gap: 0.4rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 0.4rem;
+        }
+
+        .original-thumbnail, .ai-thumbnail {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .original-thumbnail:hover, .ai-thumbnail:hover {
+            opacity: 1;
+        }
+
+        .original-thumbnail.active, .ai-thumbnail.active {
+            opacity: 1;
+            outline: 2px solid var(--primary);
+        }
+
+        .original-thumbnail img, .ai-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .artwork-two-col-with-arrow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 1rem auto;
+            max-width: 800px;
+        }
+
+        .ai-training-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .ai-training-label {
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-top: 0.3rem;
+        }
+
+        @media (max-width: 900px) {
+            .artwork-two-col-with-arrow {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .artwork-col {
+                width: 100%;
+                max-width: 320px;
+                padding: 0;
+            }
+
+            .main-original-image, .main-ai-image {
+                max-width: 100%;
+            }
+
+            .ai-training-arrow {
+                transform: rotate(90deg);
+            }
+
+            .ai-training-label {
+                transform: rotate(-90deg);
+            }
+        }
+
+        /* Style Tabs */
+        .style-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .style-tab {
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .style-tab:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .style-tab.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Original and Generated Images */
+        .artwork-two-col {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .artwork-col {
+            flex: 1 1 320px;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .artwork-col-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .artwork-col-header h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--text);
+        }
+
+        .artwork-col-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .main-original-image,
+        .main-generated-image {
+            width: 100%;
+            max-width: 320px;
+            aspect-ratio: 1/1;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-original-image img,
+        .main-generated-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        .original-thumbnails,
+        .generated-thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .original-thumbnail,
+        .generated-thumbnail {
+            width: 48px;
+            height: 48px;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .original-thumbnail:hover,
+        .generated-thumbnail:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .original-thumbnail.active,
+        .generated-thumbnail.active {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .original-thumbnail img,
+        .generated-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 900px) {
+            .artwork-two-col {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            .artwork-col {
+                max-width: 90vw;
+            }
+
+            .main-original-image,
+            .main-generated-image {
+                max-width: 100%;
+            }
+        }
+
+        /* Use Cases Section Styles */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .use-case-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .use-case-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .use-case-image {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            background: #f8f9fa;
+            flex-shrink: 0;
+        }
+
+        .use-case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .use-case-card:hover .use-case-image img {
+            transform: scale(1.05);
+        }
+
+        .use-case-content {
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .use-case-content h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .use-case-content p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.4;
+            margin: 0;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .value-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .highlight-item {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-item h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--text);
+        }
+
+        .highlight-item p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 1200px) {
+            .use-cases-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .use-cases-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .use-cases-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .use-case-image {
+                height: 150px;
+            }
+
+            .use-case-content {
+                padding: 0.8rem;
+            }
+
+            .use-case-content h3 {
+                font-size: 0.9rem;
+            }
+
+            .use-case-content p {
+                font-size: 0.8rem;
+            }
+
+            .value-highlights {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-top: 3rem;
+            }
+
+            .highlight-item {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .use-cases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .use-case-content {
+                padding: 1rem;
+            }
+
+            .use-case-content h3 {
+                font-size: 1rem;
+            }
+
+            .use-case-content p {
+                font-size: 0.85rem;
+            }
+
+            .highlight-icon {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Artwork Showcase Styles */
+        .artwork-showcase {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, #FFF5F5 0%, #F9F7FE 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .artwork-showcase .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .artwork-showcase-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .artwork-showcase-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            background: linear-gradient(135deg, #7C3AED, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .artwork-description {
+            font-size: 1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        .artwork-showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .artwork-column {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .artwork-column h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .main-image-container, .generated-image-container {
+            width: 100%;
+            max-width: 280px;
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8f9fa;
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-image-container img, .generated-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+
+        .artwork-thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .thumbnail:hover {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .thumbnail.active {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .generated-info {
+            margin-top: 1rem;
+        }
+
+        .generated-description {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .use-cases-intro {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .use-cases-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .use-case-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            text-align: left;
+        }
+
+        .use-case-item:hover {
+            background: #f8f9fa;
+            border-color: #e9ecef;
+        }
+
+        .use-case-item.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .use-case-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            text-align: center;
+        }
+
+        .use-case-content {
+            flex: 1;
+        }
+
+        .use-case-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .use-case-desc {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 1024px) {
+            .artwork-showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .main-image-container, .generated-image-container {
+                max-width: 320px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .artwork-showcase {
+                padding: 3rem 0;
+            }
+            .artwork-showcase-header h2 {
+                font-size: 2rem;
+            }
+            .artwork-column {
+                padding: 1.5rem;
+            }
+            .artwork-thumbnails {
+                gap: 0.4rem;
+            }
+            .thumbnail {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .artwork-showcase .container {
+                padding: 0 1rem;
+            }
+            .main-image-container, .generated-image-container {
+                max-width: 280px;
+            }
+            .use-case-item {
+                padding: 0.8rem;
+                gap: 0.8rem;
+            }
+            .use-case-icon {
+                font-size: 1.3rem;
+                width: 35px;
+            }
+        }
+
+        .style-info p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+
+
+        /* Combined Container Styles */
+        .combined-container {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .style-bank-section {
+            margin-bottom: 1rem;
+        }
+
+        .transformation-section {
+            margin-top: 1rem;
+        }
+
+        /* Section Separator Styles */
+        .section-separator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem 0;
+            padding: 0.5rem 0;
+            width: 100%;
+        }
+
+        .separator-line {
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #e9ecef 50%, transparent 100%);
+        }
+
+        .combined-container .style-bank {
+            margin-bottom: 0;
+        }
+
+        .combined-container .style-bank {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .combined-container .style-bank-header {
+            text-align: left;
+            flex-shrink: 0;
+        }
+
+        .combined-container .style-bank h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            color: var(--text);
+        }
+
+        .combined-container .style-instruction {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        .combined-container .style-selector {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .combined-container .style-tab {
+            flex: 0 1 120px;
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .combined-container .style-preview {
+            width: 100%;
+            height: 70px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.4rem;
+            background: #f8f9fa;
+        }
+
+        .combined-container .style-info h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .combined-container .style-tab:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(124, 58, 237, 0.15);
+        }
+
+        .combined-container .style-tab.active {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(124, 58, 237, 0.25);
+        }
+
+        .style-bank-column .style-bank {
+            margin-bottom: 0;
+        }
+
+        .style-bank-column .style-selector {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        
+
+        @media (max-width: 768px) {
+            .artwork-showcase {
+                padding: 1.5rem 0;
+            }
+            
+            .artwork-showcase-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .combined-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .combined-container .style-selector {
+                gap: 0.8rem;
+            }
+
+            .combined-container .style-tab {
+                flex: 0 1 100px;
+                min-width: 100px;
+            }
+
+            .combined-container .style-preview {
+                height: 55px;
+            }
+
+            .combined-container .style-info h4 {
+                font-size: 0.75rem;
+            }
+
+            .combined-container .style-bank {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .combined-container .style-bank-header {
+                text-align: center;
+            }
+            
+            .combined-container .style-bank h4 {
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .section-separator {
+                margin: 0.5rem 0;
+            }
+
+            .separator-icon {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .artwork-two-col-with-arrow {
+                gap: 1rem;
+                margin: 0.8rem auto;
+            }
+            
+            .artwork-col {
+                padding: 0.6rem;
+            }
+            
+            .main-original-image, .main-ai-image {
+                max-width: 240px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .artwork-showcase {
+                padding: 1rem 0;
+            }
+            
+            .artwork-showcase-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .artwork-description {
+                font-size: 0.9rem;
+            }
+            
+            .combined-container {
+                padding: 1rem 0.8rem;
+            }
+
+            .combined-container .style-selector {
+                gap: 0.6rem;
+            }
+
+            .combined-container .style-tab {
+                flex: 0 1 90px;
+                min-width: 90px;
+            }
+
+            .combined-container .style-preview {
+                height: 50px;
+            }
+
+            .combined-container .style-info h4 {
+                font-size: 0.7rem;
+            }
+
+            .section-separator {
+                margin: 0.4rem 0;
+                gap: 0.4rem;
+            }
+
+            .separator-icon {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .artwork-two-col-with-arrow {
+                gap: 0.8rem;
+                margin: 0.6rem auto;
+            }
+            
+            .artwork-col {
+                padding: 0.5rem;
+            }
+            
+            .main-original-image, .main-ai-image {
+                max-width: 200px;
+            }
+            
+            .original-thumbnail, .ai-thumbnail {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        /* AI Comparison Section Styles */
+        .ai-comparison {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, #F9F7FE 0%, #FFF5F5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .comparison-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .comparison-table {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr;
+            background: linear-gradient(135deg, #7C3AED, #EC4899);
+            color: white;
+            padding: 1.5rem 1rem;
+        }
+
+        .table-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin: 0;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr;
+            border-bottom: 1px solid #e9ecef;
+            min-height: 280px;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .prompt-cell {
+            padding: 1.5rem 1rem;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .others-cell,
+        .museai-cell {
+            padding: 1.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feedback-cell {
+            padding: 1.5rem 1rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .feedback-content {
+            text-align: left;
+            padding: 0;
+        }
+
+        .feedback-content h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--text);
+        }
+
+        .feedback-content p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .prompt-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+            text-align: center;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .comparison-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .comparison-image.museai {
+            background: transparent;
+        }
+
+        .comparison-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+
+
+
+
+        /* Callout Box Styles */
+        .callout-box {
+            background: linear-gradient(135deg, #7C3AED, #EC4899);
+            color: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(124, 58, 237, 0.2);
+        }
+
+        .callout-box h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .callout-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+        }
+
+        .callout-feature {
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+
+
+
+
+        @media (max-width: 768px) {
+            .table-header,
+            .table-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .comparison-table {
+                grid-template-columns: 1fr;
+            }
+
+            .table-header {
+                padding: 1rem;
+            }
+
+            .table-header h3 {
+                font-size: 1rem;
+                padding: 0.5rem 0;
+            }
+
+            .prompt-cell,
+            .others-cell,
+            .museai-cell,
+            .feedback-cell {
+                padding: 1rem;
+            }
+
+            .comparison-image {
+                width: 140px;
+                height: 140px;
+            }
+
+
+
+            .feedback-content h4 {
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .feedback-content p {
+                font-size: 0.85rem;
+            }
+
+            .callout-box {
+                padding: 2rem 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            .callout-box h3 {
+                font-size: 1.3rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .callout-features {
+                flex-direction: column;
+                gap: 0.8rem;
+                margin-bottom: 0;
+                flex-wrap: wrap;
+            }
+
+            .callout-feature {
+                font-size: 0.9rem;
+                justify-content: center;
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ai-comparison {
+                padding: 3rem 0;
+            }
+
+            .comparison-image {
+                width: 100px;
+                height: 100px;
+            }
+
+
+
+            .feedback-content h4 {
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .feedback-content p {
+                font-size: 0.8rem;
+            }
+
+            .prompt-text {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -527,7 +2689,6 @@
                     <li><a href="merchandise.html" class="nav-link">Shop</a></li>
                 </ul>
                 <div class="nav-cta">
-                    <button class="btn btn-secondary" onclick="openArtistModal()">Apply to Train Model</button>
                     <button class="btn btn-primary" onclick="window.open('https://tally.so/r/n9g6JG', '_blank'); trackButtonClick('nav_join_waitlist');">Join Waitlist</button>
                 </div>
             </nav>
@@ -538,194 +2699,373 @@
     <section id="hero" class="hero section">
         <div class="container">
             <div class="hero-content">
-                <h1>Create consistent visuals with artist-trained AI</h1>
-                <p class="hero-subtitle">Artist-trained design. Scaled for your hustle.</p>
+                <h1>Your on-demand AI design team – trained by real artists.</h1>
+                <p class="hero-subtitle">Fast, flexible and scalable</p>
                 <div class="hero-cta">
                     <button class="btn btn-primary" onclick="window.open('https://tally.so/r/n9g6JG', '_blank'); trackButtonClick('hero_join_waitlist');">Join Waitlist</button>
-                    <button class="btn btn-secondary" onclick="openArtistModal(); trackButtonClick('hero_apply_model');">Apply to Train Model</button>
                 </div>
                 <div class="hero-features">
                     <div class="feature">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>Train Your Own AI Model</span>
+                        <span>Artist trained AI</span>
                     </div>
                     <div class="feature">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>Fair Artist Compensation</span>
+                        <span>Brand aligned by default</span>
                     </div>
                     <div class="feature">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>Brand-Aligned Designs</span>
+                        <span>1/10th the turn around time</span>
                     </div>
                 </div>
             </div>
             <div class="hero-visual">
                 <div class="showcase-block">
-                    <img src="images/Hero.jpeg" alt="MuseAI Hero" class="showcase-image">
+                    <img src="images/Hero.jpeg" alt="MuseAI Hero" class="showcase-image" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding: 40px; text-align: center; color: #6c757d; background: #f8f9fa; border-radius: 12px;\'>Hero Image</div>';">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Value Proposition Section -->
+    <!-- 2. Why Generic AI Fails Modern Brands -->
+    <section id="ai-comparison" class="ai-comparison section section-dark">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Generic AI Fails Modern Brands</h2>
+                <p>Still stuck prompt-tweaking? If you're using the same AI as everyone else, your brand will look like everyone else's. Try artist-trained AI.</p>
+            </div>
+            
+            <div class="comparison-container">
+                <div class="comparison-table">
+                                        <div class="table-header">
+                        <div class="prompt-column">
+                            <h3>Prompt</h3>
+                        </div>
+                        <div class="others-column">
+                            <h3>Generic AI Tools</h3>
+                        </div>
+                        <div class="museai-column">
+                            <h3>Artist Style 1</h3>
+                        </div>
+                        <div class="museai-column">
+                            <h3>Artist Style 2</h3>
+                        </div>
+                        <div class="feedback-column">
+                            <h3>Why MuseAI is Better</h3>
+                        </div>
+                    </div>
+                    
+                                        <div class="table-row">
+                        <div class="prompt-cell">
+                            <div class="prompt-text">"Woman on bicycle at sunset"</div>
+                        </div>
+                        <div class="others-cell">
+                            <div class="comparison-image">
+                                <img src="images/Comparison/Others/Untitled.jpg" alt="Generic AI output" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="museai-cell">
+                            <div class="comparison-image museai">
+                                <img src="images/Comparison/Finetuned/WomanSunset2.jpg" alt="MuseAI output" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="museai-cell">
+                            <div class="comparison-image museai">
+                                <img src="images/Comparison/Finetuned1/womansunset.jpg" alt="MuseAI output" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="feedback-cell">
+                            <div class="feedback-content">
+                                <h4>Expert-Guided, Unique Results</h4>
+                                <p>Real designers shape the style—so outputs are distinct, not generic.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="prompt-cell">
+                            <div class="prompt-text">"A child playing in the garden"</div>
+                        </div>
+                        <div class="others-cell">
+                            <div class="comparison-image">
+                                <img src="images/Comparison/Others/Untitled 2.jpg" alt="Generic AI output" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="museai-cell">
+                            <div class="comparison-image museai">
+                                <img src="images/Comparison/Finetuned/ChildGarden.jpg" alt="MuseAI output" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="museai-cell">
+                            <div class="comparison-image museai">
+                                <img src="images/Comparison/Finetuned1/childgarden.jpg" alt="MuseAI output" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="feedback-cell">
+                            <div class="feedback-content">
+                                <h4>No Prompt Headaches</h4>
+                                <p>MuseAI works within a defined aesthetic and expert-trained color palette—so even the simplest prompts produce usable, on-brand results every time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. MuseAI is Built for Modern Brands -->
     <section id="value-prop" class="value-prop section section-light">
         <div class="container">
             <div class="section-header">
-                <h2>For Everyone in the Creative Process</h2>
-                <p>Whether you're looking to scale your design needs or monetize your creative expertise</p>
+                <h2>Built for Modern Brands</h2>
+                <p>MuseAI helps bring your access to design expertise at a fraction of the cost while ensuring 100% quality. It gives you complete independence to produce your vision with the quality of a design studio.</p>
             </div>
-            <div class="value-grid">
-                <!-- For Businesses & Creators -->
-                <div class="value-card creators">
-                    <h2>For SMBs, Self-Starters, Creators & Anyone with Design Needs</h2>
-                    <ul>
-                        <li>Get on-brand visuals instantly, every time</li>
-                        <li>No more design bottlenecks or expensive retainers</li>
-                        <li>Maintain brand consistency across all channels</li>
-                        <li>Scale your creative output affordably</li>
-                    </ul>
-                    <button class="btn btn-primary" onclick="window.open('https://tally.so/r/n9g6JG', '_blank'); trackButtonClick('value_join_waitlist');">Join Waitlist</button>
+            <div class="value-points-row">
+                <div class="value-point" tabindex="0">
+                    <span class="value-icon-row">📈</span>
+                    <span class="value-label">Fast, Scalable, and Quick to Test</span>
+                    <span class="value-tooltip">Turn a few visuals into a brand system.</span>
                 </div>
-                <!-- For Artists & Design Studios -->
-                <div class="value-card artists">
-                    <h2>For Artists, Designers & Design Studios</h2>
-                    <ul>
-                        <li>Train AI models with your unique style</li>
-                        <li>Create new revenue streams from your expertise</li>
-                        <li>Maintain full control over your creative assets</li>
-                        <li>Scale your studio without scaling overhead</li>
-                    </ul>
-                    <button class="btn btn-secondary" onclick="openArtistModal(); trackButtonClick('value_apply_model');">Apply to Train Model</button>
+                <div class="value-point" tabindex="0">
+                    <span class="value-icon-row">🎨</span>
+                    <span class="value-label">Put Your Best Foot Forward</span>
+                    <span class="value-tooltip">No back-and-forth. Just pro results.</span>
+                </div>
+                <div class="value-point" tabindex="0">
+                    <span class="value-icon-row">🔄</span>
+                    <span class="value-label">Designer Quality Outputs</span>
+                    <span class="value-tooltip">Switch styles anytime.</span>
+                </div>
+                <div class="value-point" tabindex="0">
+                    <span class="value-icon-row">💸</span>
+                    <span class="value-label">Creative Freedom Without the Delays</span>
+                    <span class="value-tooltip">Pay when you need. Scale anytime.</span>
+                </div>
+                <div class="value-point" tabindex="0">
+                    <span class="value-icon-row">⚡</span>
+                    <span class="value-label">On-Demand Access to Your Design Team</span>
+                    <span class="value-tooltip">Polished visuals. Prompt-free.</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works Section -->
+    <!-- 5. How MuseAI Works -->
     <section id="how-it-works" class="how-it-works section section-dark">
         <div class="container">
             <div class="section-header">
                 <h2>How MuseAI Works</h2>
-                <p>Your journey from art to AI-powered design system</p>
             </div>
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                            <path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M7 7H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M7 12H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M7 17H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3>Submit Your Art</h3>
-                    <p>Share 15+ high-quality images that showcase your unique artistic style. Our system analyzes your work's distinctive characteristics.</p>
+            <div class="how-it-works-grid">
+                <div class="how-step">
+                    <img src="images/how it works/1.jpg" alt="Upload Your Style" loading="lazy">
+                    <div class="how-caption">Upload Your Style or Use Ours</div>
+                    <div class="how-desc">Reach out to artists or SMBs. Use our expert styles or upload your own brand assets.</div>
                 </div>
-                <div class="step-card">
-                    <div class="step-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3>AI Training</h3>
-                    <p>We train a custom AI model that learns to replicate your artistic style, ensuring consistency and authenticity in every generation.</p>
+                <div class="how-step">
+                    <img src="images/how it works/2.jpg" alt="AI Training" loading="lazy">
+                    <div class="how-caption">AI Training</div>
+                    <div class="how-desc">MuseAI learns your style for consistent, brand-aligned results.</div>
                 </div>
-                <div class="step-card">
-                    <div class="step-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                            <path d="M20.24 12.24C21.3658 11.1142 21.9983 9.58722 21.9983 7.99504C21.9983 6.40285 21.3658 4.87588 20.24 3.75004C19.1142 2.62419 17.5872 1.9917 15.995 1.9917C14.4028 1.9917 12.8758 2.62419 11.75 3.75004L5 10.5V19H13.5L20.24 12.24Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16 8L2 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M17.5 15H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3>Generate & Earn</h3>
-                    <p>Your AI model becomes available to clients, generating new artwork in your style. You earn passive income from every use.</p>
+                <div class="how-step">
+                    <img src="images/how it works/3.jpg" alt="Generate Content" loading="lazy">
+                    <div class="how-caption">Generate Content</div>
+                    <div class="how-desc">Create ready-to-use visuals for any channel in seconds.</div>
                 </div>
-            </div>
-            <div class="steps-cta">
-                <button class="btn btn-primary" onclick="openArtistModal()">Start Your Journey</button>
+                <div class="how-step">
+                    <img src="images/how it works/4.jpg" alt="Scale Your Brand" loading="lazy">
+                    <div class="how-caption">Scale Your Brand</div>
+                    <div class="how-desc">Expand your visual identity across products, ads, and more.</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Showcase Section -->
-    <section id="showcase" class="showcase section section-light">
+    <!-- 6. From 10 Images to Infinite Possibilities -->
+    <section id="artwork-showcase" class="artwork-showcase section section-light">
+        <div class="container">
+            <div class="artwork-showcase-header">
+                <h2>From 10 Images to Infinite Possibilities</h2>
+                <p class="artwork-description">Watch your style become a creative engine.</p>
+            </div>
+
+            <div class="transformation-flow">
+                <!-- Step 1: Original Collection -->
+                                <!-- Combined Style Bank and Transformation Box -->
+                <div class="combined-container">
+                    <!-- Style Bank Section -->
+                    <div class="style-bank-section">
+                        <div class="style-bank">
+                            <div class="style-bank-header">
+                                <h4>Style Bank</h4>
+                                <p class="style-instruction">Choose one style to see the transformation:</p>
+                            </div>
+                            <div class="style-selector">
+                                <div class="style-tab active" onclick="switchArtistStyle('watercolor')">
+                                    <div class="style-preview">
+                                        <img src="images/Styles/Watercolor/Original/SR_lifestyle watercolor 2.png" alt="Watercolor Style" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding: 20px; text-align: center; color: #6c757d;\'>Style Preview</div>';">
+                            </div>
+                                    <div class="style-info">
+                                        <h4>Watercolor</h4>
+                        </div>
+                            </div>
+                                <div class="style-tab" onclick="switchArtistStyle('wanderlust')">
+                                    <div class="style-preview">
+                                        <img src="images/Styles/Wanderlust/Original/3.png" alt="Gouache Style" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding: 20px; text-align: center; color: #6c757d;\'>Style Preview</div>';">
+                            </div>
+                                    <div class="style-info">
+                                        <h4>Gouache</h4>
+                            </div>
+                            </div>
+                                <div class="style-tab" onclick="switchArtistStyle('folk')">
+                                    <div class="style-preview">
+                                        <img src="images/Styles/Folk/Original/1.jpg" alt="Folk Style" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding: 20px; text-align: center; color: #6c757d;\'>Style Preview</div>';">
+                            </div>
+                                    <div class="style-info">
+                                        <h4>Folk Art</h4>
+                            </div>
+                        </div>
+                                <div class="style-tab" onclick="switchArtistStyle('botanical')">
+                                    <div class="style-preview">
+                                        <img src="images/Styles/Botanical/Original/Untitled.jpg" alt="Botanical Style" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding: 20px; text-align: center; color: #6c757d;\'>Style Preview</div>';">
+                                    </div>
+                                    <div class="style-info">
+                                        <h4>Botanical</h4>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                    <!-- Visual Separator -->
+                    <div class="section-separator">
+                        <div class="separator-line"></div>
+                    </div>
+
+                    <!-- AI Transformation Section -->
+                    <div class="transformation-section">
+                        <div class="artwork-two-col-with-arrow center-arrow">
+                        <!-- Left: Original Artwork -->
+                        <div class="artwork-col">
+                            <div class="artwork-col-header">
+                                <h4>Your Visual References</h4>
+                                <p class="artwork-col-desc">10 images that capture your style</p>
+                                </div>
+                            <div class="main-original-image">
+                                <img id="mainOriginalImage" src="" alt="Original artwork" loading="lazy">
+                            </div>
+                            <div id="originalThumbnails" class="original-thumbnails"></div>
+                            </div>
+
+                        <!-- Middle: Arrow -->
+                        <div class="ai-training-arrow">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 20h24M32 20l-8-8m8 8l-8 8" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <div class="ai-training-label">AI Training</div>
+                        </div>
+
+                        <!-- Right: AI-Generated Artwork -->
+                        <div class="artwork-col">
+                            <div class="artwork-col-header">
+                                <h4>AI Generated Visuals</h4>
+                                <p class="artwork-col-desc">Ready for any use case</p>
+                                </div>
+                            <div class="main-generated-image">
+                                <img id="mainGeneratedImage" src="" alt="AI generated artwork" loading="lazy">
+                            </div>
+                            <div id="generatedThumbnails" class="generated-thumbnails"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Real-World Use Cases -->
+    <section id="use-cases" class="use-cases section section-light">
         <div class="container">
             <div class="section-header">
-                <h2>See the Magic in Action</h2>
-                <p>Every output carries the fingerprint of real artistic vision</p>
+                <h2>Real-World Use Cases</h2>
+                <p>See how AI-generated artwork transforms ideas into stunning visuals</p>
             </div>
-            <div class="showcase-grid">
-                <!-- Original Work Carousel -->
-                <div class="showcase-carousel-container">
-                    <h3>Original Artist Work</h3>
-                    <div class="carousel" id="original-carousel">
-                        <button class="carousel-button prev" onclick="moveSlide('original-carousel', -1)">←</button>
-                        <button class="carousel-button next" onclick="moveSlide('original-carousel', 1)">→</button>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="images/Original/3.png" alt="Original artwork 1" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="images/Original/4.png" alt="Original artwork 2" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="images/Original/6.png" alt="Original artwork 3" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="images/Original/7.png" alt="Original artwork 4" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="images/Original/9.png" alt="Original artwork 5" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="images/Original/10.png" alt="Original artwork 6" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
+            
+            <div class="use-cases-row">
+                <div class="use-case-layout use-case-4-3">
+                    <div class="video-container video-4-3" onclick="openVideoModal('images/Mockups/Storybook_mockup.mp4')">
+                        <video autoplay muted loop playsinline>
+                            <source src="images/Mockups/Storybook_mockup.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">▶</div>
                         </div>
                     </div>
+                    <div class="use-case-content">
+                        <h3>Children's Book Illustrations</h3>
+                        <p>Beautiful, consistent character designs that bring stories to life with vibrant colors and engaging visuals</p>
+                    </div>
                 </div>
-
-                <!-- AI Generated Work Carousel -->
-                <div class="showcase-carousel-container">
-                    <h3>AI Generated Work</h3>
-                    <div class="carousel" id="ai-carousel">
-                        <button class="carousel-button prev" onclick="moveSlide('ai-carousel', -1)">←</button>
-                        <button class="carousel-button next" onclick="moveSlide('ai-carousel', 1)">→</button>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="images/Generated/exactly.ai_PastelHorizons_AGirlWithAYellowUmbrellaSitsOnTopOfAnAbandoned_2025-05-13_13-58.jpeg" alt="AI-generated artwork - Girl with Yellow Umbrella" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="images/Generated/exactly.ai_PastelHorizons_APersonRidesABicycleAcrossAnEndlessSaltFlatDuring_2025-05-13_13-59.jpeg" alt="AI-generated artwork - Bicycle Rider" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="images/Generated/exactly.ai_PastelHorizons_ASingleYellowTentSitsOnTopOfAWindsweptDesertDuneA_2025-05-13_14-00.jpeg" alt="AI-generated artwork - Yellow Tent" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="images/Generated/exactly.ai_PastelHorizons_AFadedHotAirBalloonGroundedInAGoldenWheatFieldAt_2025-05-13_14-00.jpeg" alt="AI-generated artwork - Hot Air Balloon" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="images/Generated/exactly.ai_PastelHorizons_ALoneFigureSittingCross-leggedAtTheEdgeOfADramatic_2025-05-13_14-01.jpeg" alt="AI-generated artwork - Lone Figure" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="images/Generated/exactly.ai_PastelHorizons_ATinyFigureHoldsOntoTheStemOfAnEnormousDandelion_2025-05-13_14-06.jpeg" alt="AI-generated artwork - Dandelion" class="carousel-img" onload="console.log('Image loaded:', this.src)" onerror="console.error('Image failed:', this.src)">
-                            </div>
+                <div class="use-case-layout use-case-4-3">
+                    <div class="video-container video-4-3" onclick="openVideoModal('images/Mockups/Brand Assets 2.mp4')">
+                        <video autoplay muted loop playsinline>
+                            <source src="images/Mockups/Brand Assets 2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">▶</div>
                         </div>
+                    </div>
+                    <div class="use-case-content">
+                        <h3>Brand Assets & Social Media</h3>
+                        <p>Create assets to supplement social media posts, ads, and marketing campaigns. Speak a unique and cohesive brand voice—be it a coffee shop, beauty brand, or the next baby product.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="use-cases-row">
+                <div class="use-case-layout use-case-1-1">
+                    <div class="video-container video-1-1" onclick="openVideoModal('images/Mockups/Posters.mp4')">
+                        <video autoplay muted loop playsinline>
+                            <source src="images/Mockups/Posters.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">▶</div>
+                        </div>
+                    </div>
+                    <div class="use-case-content">
+                        <h3>Customized Posters in Your Favorite Artist's Style</h3>
+                        <p>Get custom posters in the style of your favorite artist—perfect for gifts, decor, or brand storytelling.</p>
+                    </div>
+                </div>
+                <div class="use-case-layout use-case-1-1">
+                    <div class="video-container video-1-1">
+                        <img src="img/services/services_placeholder.jpg" alt="Product Packaging Coming Soon" style="width:100%;height:100%;object-fit:cover;display:block;background:#f3f3f3;">
+                        <div class="video-overlay" style="opacity:1;justify-content:center;align-items:center;">
+                            <div class="play-icon" style="font-size:1.2rem;background:#eee;color:#888;box-shadow:none;">Coming Soon</div>
+                        </div>
+                    </div>
+                    <div class="use-case-content">
+                        <h3>Product Packaging (Coming Soon)</h3>
+                        <p>Showcase your products with custom packaging designs. Available soon!</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- 8. Testimonials -->
     <section id="testimonials" class="testimonials section section-dark">
         <div class="container">
             <div class="section-header">
@@ -738,19 +3078,13 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-        </div>
-    </section>
-
-    <!-- Footer -->
+    <!-- 9. Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="#" class="logo">MuseAI</a>
-                    <p class="footer-tagline">A designer in your pocket</p>
+                    <p class="footer-tagline">Your on-demand AI design team.</p>
                     <div class="social-links">
                         <a href="https://www.instagram.com/museaidesign/?hl=en" target="_blank" class="social-link" aria-label="Follow us on Instagram">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -784,6 +3118,7 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 MuseAI. All rights reserved.</p>
+                <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.5rem;">Sample outputs shown. MuseAI technology in development.</p>
             </div>
         </div>
     </footer>
@@ -1242,7 +3577,182 @@
             }
         }
 
-        // Initialize everything when the DOM is loaded
+        // Store guesses and revealed state for each artist
+        let guesses_artist1 = {};
+        let guesses_artist2 = {};
+        let gameRevealed_artist1 = false;
+        let gameRevealed_artist2 = false;
+
+        function makeGuess(button, guess, artist) {
+            let guesses = artist === 'artist1' ? guesses_artist1 : guesses_artist2;
+            let gameRevealed = artist === 'artist1' ? gameRevealed_artist1 : gameRevealed_artist2;
+            if (gameRevealed) return;
+            const artworkItem = button.closest('.artwork-item');
+            const grid = document.getElementById(artist + '-grid');
+            const artworkId = Array.from(grid.querySelectorAll('.artwork-item')).indexOf(artworkItem);
+            artworkItem.querySelectorAll('.guess-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            button.classList.add('selected');
+            guesses[artworkId] = guess;
+            const totalArtworks = grid.querySelectorAll('.artwork-item').length;
+            if (Object.keys(guesses).length === totalArtworks) {
+                document.getElementById('revealBtn-' + artist).disabled = false;
+            }
+        }
+
+        function revealLabels(artist) {
+            let guesses = artist === 'artist1' ? guesses_artist1 : guesses_artist2;
+            let gameRevealedVar = artist === 'artist1' ? 'gameRevealed_artist1' : 'gameRevealed_artist2';
+            if (window[gameRevealedVar]) return;
+            const grid = document.getElementById(artist + '-grid');
+            const items = grid.querySelectorAll('.artwork-item');
+            let correctGuesses = 0;
+            items.forEach((item, index) => {
+                const actualType = item.dataset.type;
+                const guess = guesses[index];
+                const buttons = item.querySelectorAll('.guess-btn');
+                item.classList.add('revealed');
+                buttons.forEach(button => {
+                    const buttonType = button.textContent.toLowerCase();
+                    if (buttonType === actualType) {
+                        button.classList.add('correct');
+                    } else if (buttonType === guess) {
+                        button.classList.add('incorrect');
+                    }
+                });
+                if (guess === actualType) {
+                    correctGuesses++;
+                }
+            });
+            const scoreDisplay = document.getElementById('score-' + artist);
+            const scoreElement = document.getElementById('score-' + artist + '-val');
+            const scoreMessage = scoreDisplay.querySelector('.score-message');
+            scoreDisplay.style.display = 'block';
+            scoreElement.textContent = correctGuesses;
+            // Encouraging message
+            const percentage = (correctGuesses / items.length) * 100;
+            if (percentage === 100) {
+                scoreMessage.textContent = "Perfect! You're an expert at spotting AI art!";
+            } else if (percentage >= 80) {
+                scoreMessage.textContent = "Excellent! You have a great eye for detail!";
+            } else if (percentage >= 60) {
+                scoreMessage.textContent = "Good job! The difference is getting harder to spot!";
+            } else {
+                scoreMessage.textContent = "Interesting! The AI is getting really good at mimicking artists!";
+            }
+            document.getElementById('resetBtn-' + artist).style.display = 'inline-block';
+            document.getElementById('revealBtn-' + artist).style.display = 'none';
+            window[gameRevealedVar] = true;
+        }
+
+        function resetGame(artist) {
+            if (artist === 'artist1') {
+                guesses_artist1 = {};
+                gameRevealed_artist1 = false;
+            } else {
+                guesses_artist2 = {};
+                gameRevealed_artist2 = false;
+            }
+            const grid = document.getElementById(artist + '-grid');
+            grid.querySelectorAll('.artwork-item').forEach(item => {
+                item.classList.remove('revealed');
+                item.querySelectorAll('.guess-btn').forEach(btn => {
+                    btn.classList.remove('selected', 'correct', 'incorrect');
+                });
+            });
+            document.getElementById('score-' + artist).style.display = 'none';
+            document.getElementById('revealBtn-' + artist).style.display = 'inline-block';
+            document.getElementById('revealBtn-' + artist).disabled = true;
+            document.getElementById('resetBtn-' + artist).style.display = 'none';
+            refreshImages();
+        }
+
+        function refreshImages() {
+            // Artist 1 (Wanderlust)
+            const originalImages1 = [
+                'images/Styles/Wanderlust/Original/3.png',
+                'images/Styles/Wanderlust/Original/4.png',
+                'images/Styles/Wanderlust/Original/6.png',
+                'images/Styles/Wanderlust/Original/7.png',
+                'images/Styles/Wanderlust/Original/9.png',
+                'images/Styles/Wanderlust/Original/10.png'
+            ];
+            const aiImages1 = [
+                'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_AGirlWithAYellowUmbrellaSitsOnTopOfAnAbandoned_2025-05-13_13-58.jpeg',
+                'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_APersonRidesABicycleAcrossAnEndlessSaltFlatDuring_2025-05-13_13-59.jpeg',
+                'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_ASingleYellowTentSitsOnTopOfAWindsweptDesertDuneA_2025-05-13_14-00.jpeg',
+                'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_AFadedHotAirBalloonGroundedInAGoldenWheatFieldAt_2025-05-13_14-00.jpeg',
+                'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_ALoneFigureSittingCross-leggedAtTheEdgeOfADramatic_2025-05-13_14-01.jpeg',
+                'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_ATinyFigureHoldsOntoTheStemOfAnEnormousDandelion_2025-05-13_14-06.jpeg'
+            ];
+            // Artist 2 (Botanical)
+            const originalImages2 = [
+                'images/Styles/Botanical/Original/2.jpg',
+                'images/Styles/Botanical/Original/3.jpg',
+                'images/Styles/Botanical/Original/4.jpg',
+                'images/Styles/Botanical/Original/5.jpg',
+                'images/Styles/Botanical/Original/Untitled.jpg'
+            ];
+            const aiImages2 = [
+                'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_AClosedPoppyBudDroopingSlightlyCoveredInFineFuzz_2025-05-13_15-04.jpeg',
+                'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ASingleGulmoharFlowerBud—CurvedNarrowWithA_2025-05-13_14-56.jpeg',
+                'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ACascadingStalkOfUnopenedAmaltasBuds—Elegant_2025-05-13_14-56.jpeg',
+                'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ASphericalYellow-orangeKadambaFlowerInPartialBloom_2025-05-13_15-05.jpeg',
+                'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_AThickRoundedMagnoliaBudWithVelvetGreenCasingNext_2025-05-13_15-07.jpeg',
+                'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ATightRoundJasmineBudWithWaxyWhitePetalsAndGreen_2025-05-13_15-08.jpeg'
+            ];
+            // Shuffle arrays
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            // Artist 1 grid
+            const shuffledOriginal1 = shuffleArray([...originalImages1]);
+            const shuffledAI1 = shuffleArray([...aiImages1]);
+            let originalIndex1 = 0;
+            let aiIndex1 = 0;
+            document.querySelectorAll('#artist1-grid .artwork-item').forEach((item) => {
+                const img = item.querySelector('img');
+                if (item.dataset.type === 'original') {
+                    img.src = shuffledOriginal1[originalIndex1 % shuffledOriginal1.length] || '';
+                    originalIndex1++;
+                } else {
+                    img.src = shuffledAI1[aiIndex1 % shuffledAI1.length] || '';
+                    aiIndex1++;
+                }
+                img.onerror = function handler() {
+                    img.onerror = null;
+                    img.src = 'images/placeholder.png';
+                    img.alt = 'Image not found';
+                };
+            });
+            // Artist 2 grid
+            const shuffledOriginal2 = shuffleArray([...originalImages2]);
+            const shuffledAI2 = shuffleArray([...aiImages2]);
+            let originalIndex2 = 0;
+            let aiIndex2 = 0;
+            document.querySelectorAll('#artist2-grid .artwork-item').forEach((item) => {
+                const img = item.querySelector('img');
+                if (item.dataset.type === 'original') {
+                    img.src = shuffledOriginal2[originalIndex2 % shuffledOriginal2.length] || '';
+                    originalIndex2++;
+                } else {
+                    img.src = shuffledAI2[aiIndex2 % shuffledAI2.length] || '';
+                    aiIndex2++;
+                }
+                img.onerror = function handler() {
+                    img.onerror = null;
+                    img.src = 'images/placeholder.png';
+                    img.alt = 'Image not found';
+                };
+            });
+        }
+
+        // Initialize showcase items
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM Content Loaded');
             
@@ -1321,6 +3831,658 @@
                     console.log('Successfully loaded image:', img.src);
                 };
             });
+
+            // Disable reveal button initially
+            document.getElementById('revealBtn-artist1').disabled = true;
+            document.getElementById('revealBtn-artist2').disabled = true;
+
+            // Initial image refresh
+            refreshImages();
+
+            // Add click handlers to artwork items
+            document.querySelectorAll('.artwork-item').forEach(item => {
+                const img = item.querySelector('img');
+                item.addEventListener('click', (e) => {
+                    // Don't open modal if clicking on buttons
+                    if (!e.target.closest('.guess-btn')) {
+                        openImageModal(img.src);
+                    }
+                });
+            });
+
+            switchArtist('artist1');
+            refreshImages();
+
+            // Initialize Artwork Showcase Scroll Navigation
+            initializeArtworkShowcaseScroll();
+        });
+
+        // Artwork Showcase Scroll Navigation Functions
+        function initializeArtworkShowcaseScroll() {
+            const artworkShowcase = document.querySelector('.artwork-showcase');
+            if (!artworkShowcase) return;
+
+            const useCases = ['childrens-books', 'posters', 'packaging'];
+            const progressDots = document.querySelectorAll('.progress-dot');
+            const progressLabels = document.querySelectorAll('.progress-label');
+            const extensionPreviews = document.querySelectorAll('.extension-preview');
+
+            let currentUseCaseIndex = 0;
+            let wheelLock = false;
+            const SCROLL_THRESHOLD = 12;
+
+            activateUseCase(0);
+
+            // Only handle wheel events inside the section
+            artworkShowcase.addEventListener('wheel', handleWheel, { passive: false });
+
+            function handleWheel(event) {
+                if (wheelLock) return;
+                // Only trigger if the scroll is significant
+                if (Math.abs(event.deltaY) < SCROLL_THRESHOLD) return;
+
+                // If at first use case and scrolling up, or at last and scrolling down, let the page scroll
+                if ((currentUseCaseIndex === 0 && event.deltaY < 0) || (currentUseCaseIndex === useCases.length - 1 && event.deltaY > 0)) {
+                    return;
+                }
+
+                // Otherwise, only update the use case
+                event.preventDefault();
+                wheelLock = true;
+                setTimeout(() => { wheelLock = false; }, 500);
+
+                if (event.deltaY > 0 && currentUseCaseIndex < useCases.length - 1) {
+                    activateUseCase(currentUseCaseIndex + 1);
+                } else if (event.deltaY < 0 && currentUseCaseIndex > 0) {
+                    activateUseCase(currentUseCaseIndex - 1);
+                }
+            }
+
+            function activateUseCase(index) {
+                if (index === currentUseCaseIndex) return;
+                extensionPreviews.forEach((preview, i) => {
+                    if (i === index) {
+                        preview.classList.add('active');
+                        preview.style.display = 'block';
+                    } else {
+                        preview.classList.remove('active');
+                        setTimeout(() => {
+                            if (!preview.classList.contains('active')) {
+                                preview.style.display = 'none';
+                            }
+                        }, 500);
+                    }
+                });
+                progressDots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+                progressLabels.forEach((label, i) => {
+                    label.classList.toggle('active', i === index);
+                });
+                currentUseCaseIndex = index;
+            }
+
+            // Optional: allow click navigation as fallback
+            progressDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    activateUseCase(index);
+                });
+            });
+            progressLabels.forEach((label, index) => {
+                label.addEventListener('click', () => {
+                    activateUseCase(index);
+                });
+            });
+        }
+
+        function openImageModal(imgSrc) {
+            const modal = document.createElement('div');
+            modal.className = 'image-modal';
+            modal.innerHTML = `
+                <div class="image-modal-content">
+                    <span class="image-modal-close">&times;</span>
+                    <img src="${imgSrc}" alt="Expanded artwork">
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // Show modal with animation
+            setTimeout(() => modal.classList.add('show'), 10);
+            
+            // Close modal on click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal || e.target.className === 'image-modal-close') {
+                    modal.classList.remove('show');
+                    setTimeout(() => modal.remove(), 300);
+                }
+            });
+        }
+
+        function switchArtist(artist) {
+            document.getElementById('artist1-block').style.display = artist === 'artist1' ? '' : 'none';
+            document.getElementById('artist2-block').style.display = artist === 'artist2' ? '' : 'none';
+            document.getElementById('tab-artist1').classList.toggle('active', artist === 'artist1');
+            document.getElementById('tab-artist2').classList.toggle('active', artist === 'artist2');
+        }
+
+        // Add these functions to your existing script section
+        function updateMainImage(src) {
+            var mainImg = document.getElementById('mainArtworkImage');
+            if (mainImg) {
+                mainImg.style.opacity = '0';
+                setTimeout(function() {
+                    mainImg.src = src;
+                    mainImg.style.opacity = '1';
+                }, 200);
+            }
+            
+            // Update active thumbnail
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            event.target.closest('.thumbnail').classList.add('active');
+        }
+
+        function selectUseCase(useCaseId, useCaseTitle, imageSrc) {
+            // Update generated image
+            var generatedImg = document.getElementById('generatedArtworkImage');
+            if (generatedImg) {
+                generatedImg.style.opacity = '0';
+                setTimeout(function() {
+                    generatedImg.src = imageSrc;
+                    generatedImg.style.opacity = '1';
+                }, 200);
+            }
+            
+            // Update use case description
+            var description = document.querySelector('.generated-description');
+            if (description) {
+                description.textContent = useCaseTitle;
+            }
+            
+            // Update active use case
+            document.querySelectorAll('.use-case-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.use-case-item').classList.add('active');
+        }
+
+        function showExtension(extensionId) {
+            // Hide all extension contents
+            document.querySelectorAll('.extension-preview').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.extension-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected extension
+            document.getElementById(extensionId).style.display = 'flex';
+            
+            // Add active class to clicked tab
+            event.target.closest('.extension-tab').classList.add('active');
+        }
+
+        function showMoreExamples(useCase) {
+            // This function will be implemented to show more examples in a modal
+            alert(`More ${useCase} examples coming soon!`);
+        }
+
+        function selectOriginal(src, index) {
+            // Update active original
+            document.querySelectorAll('.original-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.original-item').classList.add('active');
+            
+            // You could update the generated variations based on the selected original
+            // For now, we'll keep the same variations
+        }
+
+        // Video Modal Functions
+        function openVideoModal(videoSrc) {
+            const modal = document.getElementById('videoModal');
+            const modalVideo = document.getElementById('modalVideo');
+            const source = modalVideo.querySelector('source');
+            
+            source.src = videoSrc;
+            modalVideo.load();
+            modal.style.display = 'block';
+            
+            // Prevent body scroll when modal is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const modalVideo = document.getElementById('modalVideo');
+            
+            modal.style.display = 'none';
+            modalVideo.pause();
+            
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('videoModal');
+            if (event.target === modal) {
+                closeVideoModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeVideoModal();
+            }
+        });
+
+        function changeMainOriginal(src, index) {
+            const mainImage = document.getElementById('mainOriginalImage');
+            if (mainImage) {
+                mainImage.src = src;
+            }
+            document.querySelectorAll('.original-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            event.target.closest('.original-thumbnail').classList.add('active');
+        }
+
+        function changeMainGenerated(src, index) {
+            const mainImage = document.getElementById('mainGeneratedImage');
+            if (mainImage) {
+                mainImage.src = src;
+            }
+            document.querySelectorAll('.generated-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            event.target.closest('.generated-thumbnail').classList.add('active');
+        }
+
+        // Style switching and image management
+        const styleImages = {
+            botanical: {
+                originals: [
+                    'images/Styles/Botanical/Original/Untitled.jpg',
+                    'images/Styles/Botanical/Original/2.jpg',
+                    'images/Styles/Botanical/Original/3.jpg',
+                    'images/Styles/Botanical/Original/4.jpg',
+                    'images/Styles/Botanical/Original/5.jpg'
+                ],
+                generated: [
+                    'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ACascadingStalkOfUnopenedAmaltasBuds—Elegant_2025-05-13_14-56.jpeg',
+                    'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ASingleGulmoharFlowerBud—CurvedNarrowWithA_2025-05-13_14-56.jpeg',
+                    'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_AClosedPoppyBudDroopingSlightlyCoveredInFineFuzz_2025-05-13_15-04.jpeg',
+                    'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ASphericalYellow-orangeKadambaFlowerInPartialBloom_2025-05-13_15-05.jpeg',
+                    'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_AThickRoundedMagnoliaBudWithVelvetGreenCasingNext_2025-05-13_15-07.jpeg',
+                    'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ATightRoundJasmineBudWithWaxyWhitePetalsAndGreen_2025-05-13_15-08.jpeg'
+                ]
+            },
+            folk: {
+                originals: [
+                    'images/Styles/Folk/Original/1.jpg',
+                    'images/Styles/Folk/Original/2.jpg',
+                    'images/Styles/Folk/Original/3.jpg',
+                    'images/Styles/Folk/Original/4.jpg',
+                    'images/Styles/Folk/Original/5.jpg'
+                ],
+                generated: [
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_CreateAFolk-styleIndianPaintingInspiredBy_2025-06-18_17-19.jpeg',
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_DesignAFlat-colorPosterInIndianFolkArtStyle_2025-06-18_17-20.jpeg',
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_CreateAFolk-styleIndianMiniaturePaintingForASpice_2025-06-18_17-23.jpeg',
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_IllustrateATraditionalIndianWomanSeated_2025-06-18_17-24.jpeg',
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_CreateAMughal-inspiredSceneWhereANoblewomanStands_2025-06-18_17-31.jpeg',
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_IllustrateAMughal-stylePaintingOfAJoyfulWoman_2025-06-18_17-34.jpeg',
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_ASide-profileMughal-stylePaintingOfAWomanSeated_2025-06-18_17-37.jpeg'
+                ]
+            },
+            wanderlust: {
+                originals: [
+                    'images/Styles/Wanderlust/Original/3.png',
+                    'images/Styles/Wanderlust/Original/4.png',
+                    'images/Styles/Wanderlust/Original/6.png',
+                    'images/Styles/Wanderlust/Original/7.png',
+                    'images/Styles/Wanderlust/Original/9.png',
+                    'images/Styles/Wanderlust/Original/10.png'
+                ],
+                generated: [
+                    'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_AGirlWithAYellowUmbrellaSitsOnTopOfAnAbandoned_2025-05-13_13-58.jpeg',
+                    'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_APersonRidesABicycleAcrossAnEndlessSaltFlatDuring_2025-05-13_13-59.jpeg',
+                    'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_ASingleYellowTentSitsOnTopOfAWindsweptDesertDuneA_2025-05-13_14-00.jpeg',
+                    'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_AFadedHotAirBalloonGroundedInAGoldenWheatFieldAt_2025-05-13_14-00.jpeg',
+                    'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_ALoneFigureSittingCross-leggedAtTheEdgeOfADramatic_2025-05-13_14-01.jpeg',
+                    'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_ATinyFigureHoldsOntoTheStemOfAnEnormousDandelion_2025-05-13_14-06.jpeg'
+                ]
+            },
+            watercolor: {
+                originals: [
+                    'images/Styles/Watercolor/Original/SR_lifestyle watercolor 2.png',
+                    'images/Styles/Watercolor/Original/SR_lifestyle watercolor 6.png',
+                    'images/Styles/Watercolor/Original/SR_lifestyle watercolor 11.png',
+                    'images/Styles/Watercolor/Original/SR_lifestyle watercolor 13.png'
+                ],
+                generated: [
+                    'images/Styles/Watercolor/Generated/Bird.jpeg',
+                    'images/Styles/Watercolor/Generated/Car.jpeg',
+                    'images/Styles/Watercolor/Generated/Hat.jpeg',
+                    'images/Styles/Watercolor/Generated/House.jpeg',
+                    'images/Styles/Watercolor/Generated/Lemond.jpeg'
+                ]
+            }
+        };
+
+        let currentStyle = 'botanical';
+
+        function switchArtistStyle(style) {
+            if (!styleImages[style]) {
+                console.error('Style not found:', style);
+                return;
+            }
+
+            // Remove active class from all style tabs
+            document.querySelectorAll('.style-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Add active class to selected style tab
+            document.querySelector(`.style-tab[onclick*="${style}"]`)?.classList.add('active');
+
+            currentStyle = style;
+            const images = styleImages[style];
+
+            // Update original images
+            const mainOriginal = document.getElementById('mainOriginalImage');
+            if (mainOriginal && images.originals.length > 0) {
+                mainOriginal.src = images.originals[0];
+                mainOriginal.onerror = function() {
+                    console.error('Failed to load main original image:', this.src);
+                    this.style.background = '#f8f9fa';
+                    this.style.display = 'flex';
+                    this.style.alignItems = 'center';
+                    this.style.justifyContent = 'center';
+                    this.style.color = '#6c757d';
+                    this.style.fontSize = '0.875rem';
+                    this.alt = 'Image not available';
+                };
+            }
+
+            // Update original thumbnails
+            const originalThumbnails = document.getElementById('originalThumbnails');
+            if (originalThumbnails) {
+                originalThumbnails.innerHTML = images.originals.map((src, index) => `
+                    <div class="original-thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainOriginal('${src}', ${index})">
+                        <img src="${src}" alt="Original ${index + 1}" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.display='none';">
+                    </div>
+                `).join('');
+            }
+
+            // Update generated images
+            const mainGenerated = document.getElementById('mainGeneratedImage');
+            if (mainGenerated && images.generated.length > 0) {
+                mainGenerated.src = images.generated[0];
+                mainGenerated.onerror = function() {
+                    console.error('Failed to load main generated image:', this.src);
+                    this.style.background = '#f8f9fa';
+                    this.style.display = 'flex';
+                    this.style.alignItems = 'center';
+                    this.style.justifyContent = 'center';
+                    this.style.color = '#6c757d';
+                    this.style.fontSize = '0.875rem';
+                    this.alt = 'Image not available';
+                };
+            }
+
+            // Update generated thumbnails
+            const generatedThumbnails = document.getElementById('generatedThumbnails');
+            if (generatedThumbnails) {
+                generatedThumbnails.innerHTML = images.generated.map((src, index) => `
+                    <div class="generated-thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainGenerated('${src}', ${index})">
+                        <img src="${src}" alt="Generated ${index + 1}" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.display='none';">
+                    </div>
+                `).join('');
+            }
+        }
+
+        function changeMainOriginal(src, index) {
+            const mainImage = document.getElementById('mainOriginalImage');
+            if (mainImage) {
+                mainImage.src = src;
+            }
+            document.querySelectorAll('.original-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            event.target.closest('.original-thumbnail').classList.add('active');
+        }
+
+        function changeMainGenerated(src, index) {
+            const mainImage = document.getElementById('mainGeneratedImage');
+            if (mainImage) {
+                mainImage.src = src;
+            }
+            document.querySelectorAll('.generated-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            event.target.closest('.generated-thumbnail').classList.add('active');
+        }
+
+        // Initialize with botanical style
+        document.addEventListener('DOMContentLoaded', () => {
+            switchArtistStyle('botanical');
+        });
+
+        // JS: AI thumbnail selection
+        function changeMainAI(src, index) {
+            const mainAI = document.getElementById('mainAIImage');
+            if (mainAI) {
+                mainAI.src = src;
+            }
+            document.querySelectorAll('.ai-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            event.target.closest('.ai-thumbnail').classList.add('active');
+        }
+
+        // Image showcase functionality
+        const images = {
+            original: [
+                'images/Styles/Botanical/Original/Untitled.jpg',
+                'images/Styles/Botanical/Original/2.jpg',
+                'images/Styles/Botanical/Original/3.jpg',
+                'images/Styles/Botanical/Original/4.jpg'
+            ],
+            generated: [
+                'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ACascadingStalkOfUnopenedAmaltasBuds—Elegant_2025-05-13_14-56.jpeg',
+                'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ASingleGulmoharFlowerBud—CurvedNarrowWithA_2025-05-13_14-56.jpeg',
+                'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_AClosedPoppyBudDroopingSlightlyCoveredInFineFuzz_2025-05-13_15-04.jpeg',
+                'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ASphericalYellow-orangeKadambaFlowerInPartialBloom_2025-05-13_15-05.jpeg'
+            ]
+        };
+
+        // Initialize thumbnails
+        function initializeThumbnails() {
+            const originalThumbnails = document.getElementById('originalThumbnails');
+            const generatedThumbnails = document.getElementById('generatedThumbnails');
+
+            // Set up original thumbnails
+            originalThumbnails.innerHTML = images.original.map((src, index) => `
+                <div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="changeImage('original', '${src}', ${index})">
+                    <img src="${src}" alt="Original ${index + 1}" loading="lazy">
+                </div>
+            `).join('');
+
+            // Set up generated thumbnails
+            generatedThumbnails.innerHTML = images.generated.map((src, index) => `
+                <div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="changeImage('generated', '${src}', ${index})">
+                    <img src="${src}" alt="Generated ${index + 1}" loading="lazy">
+                </div>
+            `).join('');
+        }
+
+        // Change main image
+        function changeImage(type, src, index) {
+            const mainImage = document.getElementById(`main${type.charAt(0).toUpperCase() + type.slice(1)}Image`);
+            mainImage.src = src;
+
+            // Update active thumbnail
+            const thumbnails = document.querySelectorAll(`#${type}Thumbnails .thumbnail`);
+            thumbnails.forEach(thumb => thumb.classList.remove('active'));
+            thumbnails[index].classList.add('active');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeThumbnails);
+
+        // Artist style switching functionality
+        const artistStyles = {
+            botanical: {
+                original: [
+                    'images/Styles/Botanical/Original/Untitled.jpg',
+                    'images/Styles/Botanical/Original/2.jpg',
+                    'images/Styles/Botanical/Original/3.jpg',
+                    'images/Styles/Botanical/Original/4.jpg'
+                ],
+                generated: [
+                    'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ACascadingStalkOfUnopenedAmaltasBuds—Elegant_2025-05-13_14-56.jpeg',
+                    'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ASingleGulmoharFlowerBud—CurvedNarrowWithA_2025-05-13_14-56.jpeg',
+                    'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_AClosedPoppyBudDroopingSlightlyCoveredInFineFuzz_2025-05-13_15-04.jpeg',
+                    'images/Styles/Botanical/Generated/exactly.ai_BotanicalHarmony_ASphericalYellow-orangeKadambaFlowerInPartialBloom_2025-05-13_15-05.jpeg'
+                ]
+            },
+            folk: {
+                original: [
+                    'images/Styles/Folk/Original/1.jpg',
+                    'images/Styles/Folk/Original/2.jpg',
+                    'images/Styles/Folk/Original/3.jpg',
+                    'images/Styles/Folk/Original/4.jpg'
+                ],
+                generated: [
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_CreateAFolk-styleIndianPaintingInspiredBy_2025-06-18_17-19.jpeg',
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_DesignAFlat-colorPosterInIndianFolkArtStyle_2025-06-18_17-20.jpeg',
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_CreateAFolk-styleIndianMiniaturePaintingForASpice_2025-06-18_17-23.jpeg',
+                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_IllustrateATraditionalIndianWomanSeated_2025-06-18_17-24.jpeg'
+                ]
+            },
+            wanderlust: {
+                original: [
+                    'images/Styles/Wanderlust/Original/3.png',
+                    'images/Styles/Wanderlust/Original/4.png',
+                    'images/Styles/Wanderlust/Original/6.png',
+                    'images/Styles/Wanderlust/Original/7.png'
+                ],
+                generated: [
+                    'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_AGirlWithAYellowUmbrellaSitsOnTopOfAnAbandoned_2025-05-13_13-58.jpeg',
+                    'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_APersonRidesABicycleAcrossAnEndlessSaltFlatDuring_2025-05-13_13-59.jpeg',
+                    'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_ASingleYellowTentSitsOnTopOfAWindsweptDesertDuneA_2025-05-13_14-00.jpeg',
+                    'images/Styles/Wanderlust/Generated/exactly.ai_PastelHorizons_AFadedHotAirBalloonGroundedInAGoldenWheatFieldAt_2025-05-13_14-00.jpeg'
+                ]
+            },
+            watercolor: {
+                original: [
+                    'images/Styles/Watercolor/Original/SR_lifestyle watercolor 2.png',
+                    'images/Styles/Watercolor/Original/SR_lifestyle watercolor 6.png',
+                    'images/Styles/Watercolor/Original/SR_lifestyle watercolor 11.png',
+                    'images/Styles/Watercolor/Original/SR_lifestyle watercolor 13.png'
+                ],
+                generated: [
+                    'images/Styles/Watercolor/Generated/Bird.jpeg',
+                    'images/Styles/Watercolor/Generated/Car.jpeg',
+                    'images/Styles/Watercolor/Generated/Hat.jpeg',
+                    'images/Styles/Watercolor/Generated/House.jpeg',
+                    'images/Styles/Watercolor/Generated/Lemond.jpeg'
+                ]
+            }
+        };
+
+        function switchArtistStyle(style) {
+            console.log('Switching to style:', style);
+            
+            // Update active tab
+            document.querySelectorAll('.style-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            const targetTab = document.querySelector(`.style-tab[onclick*="${style}"]`);
+            if (targetTab) {
+                targetTab.classList.add('active');
+                console.log('Activated tab for style:', style);
+            } else {
+                console.error('Could not find tab for style:', style);
+            }
+
+            // Update images
+            if (artistStyles[style]) {
+                updateImages(artistStyles[style]);
+                console.log('Updated images for style:', style);
+            } else {
+                console.error('Could not find images for style:', style);
+            }
+        }
+
+        function updateImages(images) {
+            // Update main images
+            const mainOriginalImage = document.getElementById('mainOriginalImage');
+            const mainGeneratedImage = document.getElementById('mainGeneratedImage');
+            
+            if (mainOriginalImage && images.original.length > 0) {
+                mainOriginalImage.src = images.original[0];
+            }
+            if (mainGeneratedImage && images.generated.length > 0) {
+                mainGeneratedImage.src = images.generated[0];
+            }
+
+            // Update thumbnails
+            const originalThumbnails = document.getElementById('originalThumbnails');
+            const generatedThumbnails = document.getElementById('generatedThumbnails');
+
+            if (originalThumbnails) {
+                originalThumbnails.innerHTML = images.original.map((src, index) => `
+                    <div class="original-thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainOriginal('${src}', ${index})">
+                        <img src="${src}" alt="Original ${index + 1}" loading="lazy">
+                    </div>
+                `).join('');
+            }
+
+            if (generatedThumbnails) {
+                generatedThumbnails.innerHTML = images.generated.map((src, index) => `
+                    <div class="generated-thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainGenerated('${src}', ${index})">
+                        <img src="${src}" alt="Generated ${index + 1}" loading="lazy">
+                    </div>
+                `).join('');
+            }
+        }
+
+        function changeMainOriginal(src, index) {
+            const mainImage = document.getElementById('mainOriginalImage');
+            if (mainImage) {
+                mainImage.src = src;
+            }
+            document.querySelectorAll('.original-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            event.target.closest('.original-thumbnail').classList.add('active');
+        }
+
+        function changeMainGenerated(src, index) {
+            const mainImage = document.getElementById('mainGeneratedImage');
+            if (mainImage) {
+                mainImage.src = src;
+            }
+            document.querySelectorAll('.generated-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            event.target.closest('.generated-thumbnail').classList.add('active');
+        }
+
+        // Initialize with botanical style
+        document.addEventListener('DOMContentLoaded', () => {
+            switchArtistStyle('botanical');
+        });
+
+        // Initialize with watercolor style
+        document.addEventListener('DOMContentLoaded', () => {
+            switchArtistStyle('watercolor');
         });
     </script>
 </body>
