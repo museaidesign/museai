@@ -2682,9 +2682,11 @@
             <a href="#hero" class="logo">MuseAI</a>
             <nav class="nav">
                 <ul class="nav-list">
-                    <li><a href="#value-prop" class="nav-link">Features</a></li>
+                    <li><a href="#ai-comparison" class="nav-link">Problem</a></li>
+                    <li><a href="#value-prop" class="nav-link">Why MuseAI</a></li>
                     <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
-                    <li><a href="#showcase" class="nav-link">Showcase</a></li>
+                    <li><a href="#artwork-showcase" class="nav-link">Artist Showcase</a></li>
+                    <li><a href="#use-cases" class="nav-link">Use Cases</a></li>
                     <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
                     <li><a href="merchandise.html" class="nav-link">Shop</a></li>
                 </ul>
@@ -2831,30 +2833,30 @@
                 <p>MuseAI helps bring your access to design expertise at a fraction of the cost while ensuring 100% quality. It gives you complete independence to produce your vision with the quality of a design studio.</p>
             </div>
             <div class="value-points-row">
-                <div class="value-point" tabindex="0">
+                <div class="value-point">
                     <span class="value-icon-row">📈</span>
                     <span class="value-label">Fast, Scalable, and Quick to Test</span>
-                    <span class="value-tooltip">Turn a few visuals into a brand system.</span>
+                    <span class="value-desc">Quickly turn a handful of images into a full set of brand visuals, ready to use anywhere.</span>
                 </div>
-                <div class="value-point" tabindex="0">
+                <div class="value-point">
                     <span class="value-icon-row">🎨</span>
                     <span class="value-label">Put Your Best Foot Forward</span>
-                    <span class="value-tooltip">No back-and-forth. Just pro results.</span>
+                    <span class="value-desc">Showcase your brand at its best with professional, consistent design from day one.</span>
                 </div>
-                <div class="value-point" tabindex="0">
+                <div class="value-point">
                     <span class="value-icon-row">🔄</span>
                     <span class="value-label">Designer Quality Outputs</span>
-                    <span class="value-tooltip">Switch styles anytime.</span>
+                    <span class="value-desc">Get studio-level results for every project, without the wait or the back-and-forth.</span>
                 </div>
-                <div class="value-point" tabindex="0">
+                <div class="value-point">
                     <span class="value-icon-row">💸</span>
                     <span class="value-label">Creative Freedom Without the Delays</span>
-                    <span class="value-tooltip">Pay when you need. Scale anytime.</span>
+                    <span class="value-desc">Try new ideas and styles instantly—no more waiting for revisions or approvals.</span>
                 </div>
-                <div class="value-point" tabindex="0">
+                <div class="value-point">
                     <span class="value-icon-row">⚡</span>
                     <span class="value-label">On-Demand Access to Your Design Team</span>
-                    <span class="value-tooltip">Polished visuals. Prompt-free.</span>
+                    <span class="value-desc">Create what you need, when you need it, with MuseAI always ready to help.</span>
                 </div>
             </div>
         </div>
@@ -4131,13 +4133,11 @@
                     'images/Styles/Folk/Original/5.jpg'
                 ],
                 generated: [
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_CreateAFolk-styleIndianPaintingInspiredBy_2025-06-18_17-19.jpeg',
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_DesignAFlat-colorPosterInIndianFolkArtStyle_2025-06-18_17-20.jpeg',
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_CreateAFolk-styleIndianMiniaturePaintingForASpice_2025-06-18_17-23.jpeg',
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_IllustrateATraditionalIndianWomanSeated_2025-06-18_17-24.jpeg',
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_CreateAMughal-inspiredSceneWhereANoblewomanStands_2025-06-18_17-31.jpeg',
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_IllustrateAMughal-stylePaintingOfAJoyfulWoman_2025-06-18_17-34.jpeg',
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_ASide-profileMughal-stylePaintingOfAWomanSeated_2025-06-18_17-37.jpeg'
+                    'images/Styles/Folk/Generated/1.jpeg',
+                    'images/Styles/Folk/Generated/2.jpeg',
+                    'images/Styles/Folk/Generated/3.jpeg',
+                    'images/Styles/Folk/Generated/4.jpeg',
+                    'images/Styles/Folk/Generated/5.jpeg'
                 ]
             },
             wanderlust: {
@@ -4359,10 +4359,11 @@
                     'images/Styles/Folk/Original/4.jpg'
                 ],
                 generated: [
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_CreateAFolk-styleIndianPaintingInspiredBy_2025-06-18_17-19.jpeg',
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_DesignAFlat-colorPosterInIndianFolkArtStyle_2025-06-18_17-20.jpeg',
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_CreateAFolk-styleIndianMiniaturePaintingForASpice_2025-06-18_17-23.jpeg',
-                    'images/Styles/Folk/Generated/exactly.ai_RegalReveries_IllustrateATraditionalIndianWomanSeated_2025-06-18_17-24.jpeg'
+                    'images/Styles/Folk/Generated/1.jpeg',
+                    'images/Styles/Folk/Generated/2.jpeg',
+                    'images/Styles/Folk/Generated/3.jpeg',
+                    'images/Styles/Folk/Generated/4.jpeg',
+                    'images/Styles/Folk/Generated/5.jpeg'
                 ]
             },
             wanderlust: {
@@ -4484,6 +4485,39 @@
         document.addEventListener('DOMContentLoaded', () => {
             switchArtistStyle('watercolor');
         });
+    </script>
+
+    <!-- Video Modal (ensure this is at the end of the body) -->
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <span class="video-modal-close" onclick="closeVideoModal()">&times;</span>
+            <video id="modalVideo" controls>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <!-- Use Case Section: ensure each video-container has the correct onclick -->
+    <!-- Example for one video: -->
+    <!--
+    <div class="video-container" onclick="openVideoModal('images/Mockups/Storybook_mockup.mp4')">
+        <video ...>
+            <source src="images/Mockups/Storybook_mockup.mp4" type="video/mp4">
+        </video>
+        ...
+    </div>
+    -->
+
+    <script>
+    // Prevent right-click context menu on all images
+    window.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('img').forEach(function(img) {
+        img.addEventListener('contextmenu', function(e) {
+          e.preventDefault();
+        });
+      });
+    });
     </script>
 </body>
 </html> 
