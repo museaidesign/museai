@@ -573,18 +573,23 @@
     <header class="header">
         <div class="container">
             <a href="index.html" class="logo">MuseAI</a>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <nav class="nav">
                 <ul class="nav-list">
-                    <li><a href="index.html#ai-comparison" class="nav-link">Problem</a></li>
-                    <li><a href="index.html#value-prop" class="nav-link">Why MuseAI</a></li>
-                    <li><a href="index.html#how-it-works" class="nav-link">How It Works</a></li>
-                    <li><a href="index.html#artwork-showcase" class="nav-link">Artist Showcase</a></li>
-                    <li><a href="index.html#use-cases" class="nav-link">Use Cases</a></li>
-                    <li><a href="index.html#testimonials" class="nav-link">Testimonials</a></li>
-                    <li><a href="merchandise.html" class="nav-link">Shop</a></li>
+                    <li><a href="index.html#ai-comparison" class="nav-link" onclick="closeMobileMenu()">Problem</a></li>
+                    <li><a href="index.html#value-prop" class="nav-link" onclick="closeMobileMenu()">Why MuseAI</a></li>
+                    <li><a href="index.html#how-it-works" class="nav-link" onclick="closeMobileMenu()">How It Works</a></li>
+                    <li><a href="index.html#artwork-showcase" class="nav-link" onclick="closeMobileMenu()">Artist Showcase</a></li>
+                    <li><a href="index.html#use-cases" class="nav-link" onclick="closeMobileMenu()">Use Cases</a></li>
+                    <li><a href="index.html#testimonials" class="nav-link" onclick="closeMobileMenu()">Testimonials</a></li>
+                    <li><a href="merchandise.html" class="nav-link" onclick="closeMobileMenu()">Shop</a></li>
                 </ul>
                 <div class="nav-cta">
-                    <button class="btn btn-primary" onclick="window.open('https://tally.so/r/n9g6JG', '_blank'); trackButtonClick('nav_join_waitlist');">Join Waitlist</button>
+                    <button class="btn btn-primary" onclick="window.open('https://tally.so/r/n9g6JG', '_blank'); trackButtonClick('nav_join_waitlist'); closeMobileMenu();">Join Waitlist</button>
                 </div>
             </nav>
         </div>
@@ -767,7 +772,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="index.html" class="logo">MuseAI</a>
-                    <p class="footer-tagline">A designer in your pocket</p>
+                    <p class="footer-tagline">Your on-demand AI design team.</p>
                     <div class="social-links">
                         <a href="https://www.instagram.com/museaidesign/?hl=en" target="_blank" class="social-link" aria-label="Follow us on Instagram">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1217,6 +1222,30 @@
                 submitButton.innerHTML = 'Submit Application';
             }
         }
+
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            nav.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            nav.classList.remove('active');
+            toggle.classList.remove('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            if (!nav.contains(e.target) && !toggle.contains(e.target) && nav.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
 
         // Initialize everything when the DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
