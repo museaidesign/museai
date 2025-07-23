@@ -38,10 +38,36 @@ body {
   min-height: 100vh;
 }
 
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+}
+
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
 }
 
 /* Buttons */
@@ -58,6 +84,8 @@ body {
   background: transparent;
   border: 2px solid var(--primary);
   color: var(--primary);
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .btn:hover {
@@ -84,6 +112,25 @@ body {
 .btn-large {
   padding: 1rem 2rem;
   font-size: 1.25rem;
+}
+
+/* Mobile button optimizations */
+@media (max-width: 768px) {
+  .btn {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn {
+    padding: 1.125rem 2.25rem;
+    font-size: 1.1rem;
+    min-height: 52px;
+    min-width: 52px;
+  }
 }
 
 /* Header */
