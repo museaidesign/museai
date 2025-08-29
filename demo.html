@@ -1,0 +1,4331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuseAI Demo Experience</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Demo Experience Styles */
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 20%;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Demo Steps */
+        .demo-steps-container {
+            position: relative;
+        }
+
+        .demo-step {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .demo-step.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .step-description {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Welcome Step */
+        .welcome-illustration {
+            margin: 3rem 0;
+        }
+
+        .welcome-image {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Creation Options */
+        .creation-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .option-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card:hover {
+            border-color: #ff6b6b;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(255, 107, 107, 0.15);
+        }
+
+        .option-card.selected {
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, #fff5f5, #fff);
+            box-shadow: 0 8px 16px rgba(255, 107, 107, 0.2);
+        }
+
+        .option-image {
+            height: 180px;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-image img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .option-card:hover .option-image img {
+            transform: scale(1.05);
+        }
+
+        .option-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-card p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Model Tabs */
+        .model-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0 2rem 0;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .tab:hover {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .tab.active {
+            background: #ff6b6b;
+            border-color: #ff6b6b;
+            color: white;
+        }
+
+        /* Content Sections */
+        .content-section {
+            transition: all 0.3s ease;
+        }
+
+        /* Create Your Own Section */
+        .create-own-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+
+        .upload-area {
+            text-align: center;
+            padding: 3rem;
+            background: #f8f9fa;
+            border-radius: 16px;
+            border: 2px dashed #e0e0e0;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .upload-area h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-area p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .upload-area {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: #ff6b6b;
+            background: #fff5f5;
+        }
+
+        /* Uploaded Images Section */
+        .uploaded-images {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .uploaded-images h4 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .image-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .image-thumbnail {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+            background: white;
+        }
+
+        .image-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Style Options */
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .style-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .style-card:hover {
+            border-color: #ff6b6b;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(255, 107, 107, 0.15);
+        }
+
+        .style-card.selected {
+            border-color: #ff6b6b;
+            box-shadow: 0 8px 16px rgba(255, 107, 107, 0.2);
+        }
+
+        .style-card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .style-card.disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .style-preview {
+            height: 120px;
+            overflow: hidden;
+        }
+
+        .style-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .style-card:hover .style-preview img {
+            transform: scale(1.05);
+        }
+
+        .style-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0.5rem 0.5rem 0.25rem;
+        }
+
+        .style-card p {
+            color: #666;
+            margin: 0 0.5rem 0.5rem;
+            line-height: 1.4;
+        }
+
+        /* Project Description */
+        .project-description {
+            margin: 3rem 0;
+            text-align: left;
+        }
+
+        .project-description textarea {
+            width: 100%;
+            padding: 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .project-description textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        .description-tips {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .description-tips h4 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .description-tips ul {
+            color: #666;
+            line-height: 1.6;
+            padding-left: 1.5rem;
+        }
+
+        .description-tips li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Review Summary */
+        .review-summary {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: left;
+        }
+
+        .summary-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-item h4 {
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .summary-item p {
+            color: #666;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Generation Options */
+        .generation-options {
+            margin: 3rem 0;
+        }
+
+        .generation-options h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .generation-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Step Navigation */
+        .step-navigation {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #666;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+        }
+
+        .btn-outline:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .demo-container {
+                padding: 1rem;
+            }
+            
+            .step-content h2 {
+                font-size: 2rem;
+            }
+            
+            .creation-options,
+            .style-options {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .generation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step-navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Animation for step transitions */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Conditional Steps Styling */
+        
+        /* Package Options */
+        .package-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .package-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .package-option:hover {
+            border-color: #ff6b6b;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(255, 107, 107, 0.15);
+        }
+
+        .package-option.selected {
+            border-color: #ff6b6b;
+            box-shadow: 0 8px 16px rgba(255, 107, 107, 0.2);
+        }
+
+        .package-option.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .package-option.disabled:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: #e0e0e0;
+        }
+
+        .package-icon {
+            height: 216px;
+            overflow: hidden;
+        }
+
+        .package-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .package-option:hover .package-icon img {
+            transform: scale(1.05);
+        }
+
+        .package-option span {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0.5rem 0.5rem 0.25rem;
+            display: block;
+        }
+
+        .image-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex-shrink: 0;
+            min-width: 200px;
+        }
+
+        .image-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+            margin-top: 0.75rem;
+            display: block;
+        }
+
+        /* Size Options */
+        .size-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .size-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .size-option:hover {
+            border-color: #ff6b6b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(255, 107, 107, 0.15);
+        }
+
+        .size-option.selected {
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, #fff5f5, #fff);
+            box-shadow: 0 6px 12px rgba(255, 107, 107, 0.2);
+        }
+
+        /* Detail Sections */
+        .detail-section, .spec-section, .element-section, .requirement-section, .format-section, .production-section {
+            margin: 2rem 0;
+        }
+
+        .detail-section h3, .spec-section h3, .element-section h3, .requirement-section h3, .format-section h3, .production-section h3 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        /* Character Creation Styling */
+        .character-creation {
+            margin: 3rem 0;
+        }
+
+        .character-description {
+            margin-bottom: 2rem;
+        }
+
+        .character-tips {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .character-tips h4 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .character-tips ul {
+            color: #666;
+            line-height: 1.6;
+            padding-left: 1.5rem;
+        }
+
+        .character-tips li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Story Book Visuals */
+        .story-visuals {
+            margin: 3rem 0;
+        }
+
+        .prompt-section {
+            margin-bottom: 2rem;
+        }
+
+        .prompt-section h3 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .visual-controls {
+            margin: 2rem 0;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+
+        .character-selection, .style-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            min-width: 200px;
+            flex-shrink: 0;
+        }
+
+        .generate-button-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .character-selection h4, .style-selection h4 {
+            color: #333;
+            font-size: 1rem;
+            margin: 0;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .character-images {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .character-image, .style-image {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed #e0e0e0;
+            border-radius: 8px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .character-image img, .style-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .character-image.selected-character {
+            border: 2px solid #ff6b6b;
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff5f5 100%);
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.15);
+        }
+
+        .story-image.selected-story-image {
+            border: 2px solid #ff6b6b;
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff5f5 100%);
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.15);
+        }
+
+        /* Selected Design Elements in step7-packaging */
+        .character-image.selected-design-element {
+            border: 2px solid #ff6b6b;
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff5f5 100%);
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.15);
+        }
+
+        /* Preview Carousel Styling */
+        .preview-navigation {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            color: #ff6b6b;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            color: #ff6b6b;
+        }
+
+        .preview-carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .preview-slide {
+            display: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .preview-slide.active {
+            display: block;
+        }
+
+        .preview-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1rem;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .indicator.active {
+            background: #ff6b6b;
+        }
+
+        .preview-section {
+            position: relative;
+        }
+
+        .image-placeholder {
+            color: #999;
+            font-size: 0.8rem;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* Story Creation Styling (for step7-book) */
+        .story-creation {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .prompt-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .prompt-section textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .prompt-section textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .control-group select {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .control-group select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        .preview-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .preview-section h3 {
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        .story-preview {
+            min-height: 600px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            position: relative;
+        }
+
+        .preview-placeholder {
+            text-align: center;
+            color: #999;
+        }
+
+        .preview-placeholder p {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .image-selection {
+            margin-bottom: 1.5rem;
+        }
+
+        .image-selection h3 {
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        .story-images-grid {
+            display: flex;
+            gap: 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow-x: auto;
+            padding: 0.5rem;
+            justify-content: center;
+        }
+
+        .story-image {
+            position: relative;
+            cursor: pointer;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            flex-shrink: 0;
+            min-width: 120px;
+        }
+
+        .story-image:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .story-image.selected {
+            border-color: #ff6b6b;
+            border-width: 3px;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .story-image.non-selectable {
+            border-color: #d1d5db;
+            background: #f9fafb;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .story-image.non-selectable:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .story-image img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Editor Preview Styling (for step8-book) */
+        .editor-preview {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .editor-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Design Button Styling */
+        .design-button-section {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .design-book-btn {
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .design-book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .design-book-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Book Mockup Styling */
+        .book-mockup {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .mockup-preview {
+            margin-bottom: 2rem;
+        }
+
+        .mockup-preview video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .mockup-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .mockup-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 4rem;
+            margin-bottom: 2rem;
+        }
+
+        .mockup-tab {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .character-actions {
+            margin: 2rem 0;
+        }
+
+        .action-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tips-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #856404;
+        }
+
+        .tips-icon:hover {
+            background: #ffeaa7;
+            border-color: #fdcb6e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+        }
+
+        .tips-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .click-here-highlight {
+            font-size: 0.8rem;
+            color: #ff7f50;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 0.5rem;
+            animation: throbbing 2s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(255, 127, 80, 0.5);
+        }
+
+        @keyframes throbbing {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% { 
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        /* Tips Modal */
+        .tips-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+
+        .tips-modal.show {
+            display: block;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 1.5rem 1rem 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-body ul {
+            color: #666;
+            line-height: 1.6;
+            padding-left: 1.5rem;
+            margin: 0;
+        }
+
+        .modal-body li {
+            margin-bottom: 0.75rem;
+        }
+
+        .character-carousel {
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .character-carousel h4 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .carousel-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: nowrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .carousel-placeholder {
+            width: 200px;
+            height: auto;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-placeholder .image-container {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed #e0e0e0;
+            border-radius: 12px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+
+
+        .carousel-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Step6-packaging specific styling - make images same size as other steps */
+        #step6-packaging .carousel-placeholder {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        #step6-packaging .carousel-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Center single image in package visuals */
+        #packageVisualsContainer:has(.carousel-placeholder:only-child) {
+            justify-content: center;
+        }
+
+
+
+        .character-name {
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            position: static;
+            margin-bottom: 0.5rem;
+        }
+
+        .placeholder-content {
+            text-align: center;
+            color: #999;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+
+        .placeholder-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Storybook Visuals Carousel */
+        .storybook-visuals-carousel {
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .storybook-visuals-carousel h4 {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .storybook-visuals-carousel .carousel-container {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: nowrap;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .storybook-visuals-carousel .carousel-placeholder {
+            width: 45%;
+            height: 400px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .storybook-visuals-carousel .carousel-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Book Size Options */
+        .book-size-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .book-size-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .book-size-option:hover {
+            border-color: #ff6b6b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(255, 107, 107, 0.15);
+        }
+
+        .book-size-option.selected {
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, #fff5f5, #fff);
+            box-shadow: 0 6px 12px rgba(255, 107, 107, 0.2);
+        }
+
+        /* Printing Options */
+        .printing-options, .quality-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .printing-option, .quality-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .printing-option:hover, .quality-option:hover {
+            border-color: #ff6b6b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(255, 107, 107, 0.15);
+        }
+
+        .printing-option.selected, .quality-option.selected {
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, #fff5f5, #fff);
+            box-shadow: 0 6px 12px rgba(255, 107, 107, 0.2);
+        }
+
+        .demo-step.active {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Demo Steps Container -->
+        <div class="demo-steps-container">
+            <!-- Step 1: Welcome -->
+            <div class="demo-step active" id="step1">
+                <div class="step-content">
+                    <h2>Welcome to MuseAI</h2>
+                    <p class="step-description">Let's create something amazing together. I'll guide you through a few questions to understand your vision.</p>
+                    
+                    <div class="welcome-illustration">
+                        <img src="images/Hero.jpeg" alt="MuseAI Welcome" class="welcome-image">
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="nextStep()">Start Your Journey</button>
+                </div>
+            </div>
+
+            <!-- Step 2: What do you want to make? -->
+            <div class="demo-step" id="step2">
+                <div class="step-content">
+                    <h2>What do you want to make?</h2>
+                    <p class="step-description">Choose the type of project that best fits your vision.</p>
+                    
+                    <div class="creation-options">
+                        <div class="option-card" onclick="selectOption('packaging', this)">
+                            <div class="option-image">
+                                <img src="images/Demo/Kind of Product/Product package.jpg" alt="Product Packaging">
+                            </div>
+                            <h3>Product Packaging</h3>
+                        </div>
+                        
+                        <div class="option-card" onclick="selectOption('book', this)">
+                            <div class="option-image">
+                                <img src="images/Demo/Kind of Product/Book.jpg" alt="Children's Book">
+                            </div>
+                            <h3>Children's Book</h3>
+                        </div>
+                        
+                        <div class="option-card" onclick="selectOption('poster', this)">
+                            <div class="option-image">
+                                <img src="images/Demo/Kind of Product/Poster.jpg" alt="Posters">
+                            </div>
+                            <h3>Posters</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step2Next" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: What's your project about? -->
+            <div class="demo-step" id="step3">
+                <div class="step-content">
+                    <h2>What's your project about?</h2>
+                    <p class="step-description">Tell us about your vision and what you want to achieve.</p>
+                    
+                    <div class="project-description">
+                        <textarea 
+                            id="projectDescription" 
+                            placeholder="Describe your project, target audience, and goals. For example: 'I'm launching a sustainable skincare brand targeting eco-conscious millennials. I want packaging that feels premium yet approachable, with nature-inspired illustrations that convey trust and authenticity.'"
+                            rows="6"
+                        ></textarea>
+                        
+                        <div class="description-tips">
+                            <h4>💡 Tips for better results:</h4>
+                            <ul>
+                                <li>Mention your target audience</li>
+                                <li>Describe the mood you want to convey</li>
+                                <li>Include any specific elements or themes</li>
+                                <li>Explain how it will be used</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step3Next" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: What's your style preference? -->
+            <div class="demo-step" id="step4">
+                <div class="step-content">
+                    <h2>What's your style preference?</h2>
+                    <p class="step-description">Select the visual style that resonates with your brand.</p>
+                    
+                    <div class="model-tabs">
+                        <div class="tab active" onclick="switchTab('artists', this)">
+                            <span>Artists</span>
+                        </div>
+                        <div class="tab" onclick="switchTab('styles', this)">
+                            <span>Styles</span>
+                        </div>
+                        <div class="tab" onclick="switchTab('create', this)">
+                            <span>Create Your Own</span>
+                        </div>
+                    </div>
+                    
+                    <div class="content-section" id="artists-section">
+                        <div class="style-options">
+                            <div class="style-card" onclick="selectStyle('august-macke', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Artists/August Macke.jpg" alt="August Macke">
+                                </div>
+                                <h3>August Macke</h3>
+                            </div>
+                            
+                            <div class="style-card" onclick="selectStyle('mary-walcott', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Artists/Mary Walcott.jpg" alt="Mary Walcott">
+                                </div>
+                                <h3>Mary Walcott</h3>
+                            </div>
+                            
+                            <div class="style-card" onclick="selectStyle('nicolas-kristian', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Artists/Nicolas Kristian.jpg" alt="Nicolas Kristian">
+                                </div>
+                                <h3>Nicolas Kristian</h3>
+                            </div>
+                            
+                            <div class="style-card" onclick="selectStyle('severina', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Artists/Severina.jpg" alt="Severina">
+                                </div>
+                                <h3>Severina</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section" id="styles-section" style="display: none;">
+                        <div class="style-options">
+                            <div class="style-card" onclick="selectStyle('retro', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Styles/Retro.jpg" alt="Retro Style">
+                                </div>
+                                <h3>Retro</h3>
+                            </div>
+                            
+                            <div class="style-card" onclick="selectStyle('bold', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Styles/Bold.jpg" alt="Bold Style">
+                                </div>
+                                <h3>Bold</h3>
+                            </div>
+                            
+                            <div class="style-card" onclick="selectStyle('abstract', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Styles/Abstract.jpg" alt="Abstract Style">
+                                </div>
+                                <h3>Abstract</h3>
+                            </div>
+                            
+                            <div class="style-card" onclick="selectStyle('folk', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Styles/Folk.jpg" alt="Folk Style">
+                                </div>
+                                <h3>Folk</h3>
+                            </div>
+                            
+                            <div class="style-card" onclick="selectStyle('fun', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Styles/Fun.jpg" alt="Fun Style">
+                                </div>
+                                <h3>Fun</h3>
+                            </div>
+                            
+                            <div class="style-card" onclick="selectStyle('gouache', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Styles/Gouache.jpg" alt="Gouache Style">
+                                </div>
+                                <h3>Gouache</h3>
+                            </div>
+                            
+                            <div class="style-card" onclick="selectStyle('pop', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Styles/pop.jpg" alt="Pop Style">
+                                </div>
+                                <h3>Pop</h3>
+                            </div>
+                            
+                            <div class="style-card" onclick="selectStyle('vintage', this)">
+                                <div class="style-preview">
+                                    <img src="images/Demo/Styles/Vintage.jpg" alt="Vintage Style">
+                                </div>
+                                <h3>Vintage</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section" id="create-section" style="display: none;">
+                        <div class="create-own-content">
+                            <div class="upload-area" onclick="triggerFileUpload()">
+                                <div class="upload-icon">+</div>
+                                <h3>Click to upload 10 images to create your custom style</h3>
+                                <p>PNG, JPG up to 5MB each</p>
+                                <p>PNG, JPG up to 5MB each</p>
+                            </div>
+                            <input type="file" id="fileUpload" multiple accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
+                            
+                            <div class="uploaded-images" id="uploadedImages" style="display: none;">
+                                <h4>Uploaded Images:</h4>
+                                <div class="image-thumbnails" id="imageThumbnails">
+                                    <!-- Thumbnails will be added here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step4Next" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conditional Steps 5-8 based on product type -->
+            
+            <!-- Step 5: Product Packaging Specific -->
+            <div class="demo-step" id="step5-packaging">
+                <div class="step-content">
+                    <h2>Choose kind of packaging</h2>
+                    <p class="step-description">Select the type of packaging that best fits your product.</p>
+                    
+                    <div class="packaging-details">
+                        <div class="detail-section">
+                            <div class="package-options">
+                                <div class="package-option selected" onclick="selectPackageType('box', this)">
+                                    <div class="package-icon">
+                                        <img src="images/Demo/Kind of Product/Product Packaging/BoxMockup.jpg" alt="Box Mockup">
+                                    </div>
+                                    <span>Box</span>
+                                </div>
+                                <div class="package-option disabled">
+                                    <div class="package-icon">
+                                        <img src="images/Demo/Kind of Product/Product Packaging/CanMockup.jpg" alt="Can Mockup">
+                                    </div>
+                                    <span>Can</span>
+                                </div>
+                                <div class="package-option disabled">
+                                    <div class="package-icon">
+                                        <img src="images/Demo/Kind of Product/Product Packaging/RectangularBox.jpg" alt="Rectangular Box">
+                                    </div>
+                                    <span>Rectangular Box</span>
+                                </div>
+                                <div class="package-option disabled">
+                                    <div class="package-icon">
+                                        <img src="images/Demo/Kind of Product/Product Packaging/TubeBox.jpg" alt="Tube Box">
+                                    </div>
+                                    <span>Tube Box</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step5PackagingNext">Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Children's Book Specific -->
+            <div class="demo-step" id="step5-book">
+                <div class="step-content">
+                    <h2>Create your characters</h2>
+                    <p class="step-description">Describe the characters that will bring your children's book to life.</p>
+                    
+                    <div class="character-creation">
+                        <div class="character-description">
+                            <textarea 
+                                id="characterDescription" 
+                                placeholder="Describe your character in detail..."
+                                rows="6"
+                            ></textarea>
+                            
+
+                        </div>
+                        
+                        <div class="character-actions">
+                            <div class="action-row">
+                                <div class="tips-icon" onclick="openTipsModal()">
+                                    <span class="tips-label">💡 Tips</span>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="btn btn-secondary" onclick="triggerCharacterImageUpload()">
+                                        Upload Reference Image
+                                    </button>
+                                    <button class="btn btn-primary" id="generateCharacterBtn">
+                                        Generate Image
+                                    </button>
+                                </div>
+                                <div class="click-here-highlight">click here</div>
+                            </div>
+                            <input type="file" id="characterImageUpload" accept="image/*" style="display: none;" onchange="handleCharacterImageUpload(event)">
+                        </div>
+                        
+                        <div class="character-carousel">
+                            <h4>Generated Character Images:</h4>
+                            <div class="carousel-container">
+                                <div class="carousel-placeholder" id="placeholder1">
+                                    <div class="image-container">
+                                        <img src="images/Demo/Storybook/Characters/Aarav.jpeg" alt="Aarav Character">
+                                        <div class="placeholder-content">
+                                            <span class="placeholder-text">Image 1</span>
+                                        </div>
+                                    </div>
+                                    <div class="character-name">Leo</div>
+                                </div>
+                                <div class="carousel-placeholder" id="placeholder2">
+                                    <div class="image-container">
+                                        <img src="images/Demo/Storybook/Characters/Amaya.jpeg" alt="Amaya Character">
+                                        <div class="placeholder-content">
+                                            <span class="placeholder-text">Image 2</span>
+                                        </div>
+                                    </div>
+                                    <div class="character-name">Amaya</div>
+                                </div>
+                                <div class="carousel-placeholder" id="placeholder3">
+                                    <div class="image-container">
+                                        <div class="placeholder-content">
+                                            <span class="placeholder-text">Image 3</span>
+                                        </div>
+                                    </div>
+                                    <div class="character-name" id="misoName" style="display: none;">Miso</div>
+                                </div>
+                                <div class="carousel-placeholder" id="placeholder4">
+                                    <div class="image-container">
+                                        <div class="placeholder-content">
+                                            <span class="placeholder-text">Image 4</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tips Modal -->
+                    <div class="tips-modal" id="tipsModal">
+                        <div class="modal-overlay" onclick="closeTipsModal()"></div>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>💡 Character Design Tips</h3>
+                                <button class="modal-close" onclick="closeTipsModal()">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <ul>
+                                    <li><strong>How they look:</strong> Face shape, eye color, skin tone, body type</li>
+                                    <li><strong>Hair:</strong> Style, color, length, texture</li>
+                                    <li><strong>How they are dressed:</strong> Clothing style, colors, patterns</li>
+                                    <li><strong>Accessories:</strong> Glasses, jewelry, hats, bags, etc.</li>
+                                    <li><strong>Personality traits:</strong> What makes them unique?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step5BookNext" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Posters Specific -->
+            <div class="demo-step" id="step5-poster">
+                <div class="step-content">
+                    <h2>Poster Specifications</h2>
+                    <p class="step-description">Define the details for your poster design.</p>
+                    
+                    <div class="poster-specs">
+                        <div class="spec-section">
+                            <h3>Poster Size</h3>
+                            <div class="size-options">
+                                <div class="size-option" onclick="selectPosterSize('a4', this)">
+                                    <span>A4 (8.3" × 11.7")</span>
+                                </div>
+                                <div class="size-option" onclick="selectPosterSize('a3', this)">
+                                    <span>A3 (11.7" × 16.5")</span>
+                                </div>
+                                <div class="size-option" onclick="selectPosterSize('a2', this)">
+                                    <span>A2 (16.5" × 23.4")</span>
+                                </div>
+                                <div class="size-option" onclick="selectPosterSize('custom', this)">
+                                    <span>Custom Size</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="spec-section">
+                            <h3>Poster Purpose</h3>
+                            <textarea 
+                                id="posterPurpose" 
+                                placeholder="What is this poster for? (Event, promotion, decoration, etc.)"
+                                rows="4"
+                            ></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step5PosterNext" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6: Product Packaging Specific -->
+            <div class="demo-step" id="step6-packaging">
+                <div class="step-content">
+                    <h2>Create your design elements</h2>
+                    <p class="step-description">Tell us about your brand identity.</p>
+                    
+                    <div class="character-creation">
+                        <div class="character-description">
+                            <textarea 
+                                id="packagingDescription" 
+                                placeholder="Think about: What style should your logo have? What mood should your hero image convey? What colors represent your brand? What background would complement your design? Describe each element in detail to help generate the perfect design for your product."
+                                rows="6"
+                            >A circular floral wreath design with a soft yellow center. Surrounding the circle are figs cut open to show their pink interiors, purple and pink roses, delicate white blossoms, green leaves, and golden butterflies. The background is a gentle pastel pink, creating an elegant and natural botanical composition.
+
+Make this the Hero Image of the product design.</textarea>
+                            
+
+                        </div>
+                        
+                        <div class="character-actions">
+                            <div class="action-row">
+                                <div class="tips-icon" onclick="openPackagingTipsModal()">
+                                    <span class="tips-label">💡 Tips</span>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="btn btn-secondary" onclick="triggerPackagingImageUpload()">
+                                        Upload Reference Image
+                                    </button>
+                                    <button class="btn btn-primary" id="generatePackagingBtn" onclick="generatePackagingImage()">
+                                        Generate Image
+                                    </button>
+                                    <div class="click-here-highlight">click here</div>
+                                </div>
+                            </div>
+                            <input type="file" id="packagingImageUpload" accept="image/*" style="display: none;" onchange="handlePackagingImageUpload(event)">
+                        </div>
+                        
+                        <div class="character-carousel">
+                            <h4>Generated Design Elements:</h4>
+                            <div class="carousel-container">
+                                <div class="image-item">
+                                    <div class="carousel-placeholder" id="packagingPlaceholder1">
+                                        <img src="images/Demo/Product Package/FloralFruitIllustrations.jpg" alt="Floral Fruit Illustrations">
+                                    </div>
+                                    <span class="image-label">Design Elements 1</span>
+                                </div>
+                                <div class="image-item">
+                                    <div class="carousel-placeholder" id="packagingPlaceholder2">
+                                        <img src="images/Demo/Product Package/FloralFruitIllustrations1.jpg" alt="Floral Fruit Illustrations 1">
+                                    </div>
+                                    <span class="image-label">Design Elements 2</span>
+                                </div>
+                                <div class="image-item">
+                                    <div class="carousel-placeholder" id="packagingPlaceholder3">
+                                        <img src="images/Demo/Product Package/13237211_5178017.svg" alt="Design Element">
+                                    </div>
+                                    <span class="image-label">Background</span>
+                                </div>
+                                <div class="image-item">
+                                    <div class="carousel-placeholder" id="packagingPlaceholder4">
+                                        <div class="placeholder-content">
+                                            <span class="placeholder-text">Click Generate to create Hero Image</span>
+                                        </div>
+                                    </div>
+                                    <span class="image-label" id="heroImageLabel" style="display: none;">Hero Image</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Packaging Tips Modal -->
+                    <div class="tips-modal" id="packagingTipsModal">
+                        <div class="modal-overlay" onclick="closePackagingTipsModal()"></div>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>💡 Design Elements Tips</h3>
+                                <button class="modal-close" onclick="closePackagingTipsModal()">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <ul>
+                                    <li><strong>Logo:</strong> Describe style, colors, placement, and any specific requirements</li>
+                                    <li><strong>Hero Image:</strong> Main visual element - describe mood, style, composition, and focal points</li>
+                                    <li><strong>Brand Elements:</strong> Typography, color palette, patterns, and visual motifs</li>
+                                    <li><strong>Background:</strong> Texture, color, pattern, or image style for the base</li>
+                                    <li><strong>Must-have Elements:</strong> Essential information, legal text, product details, and call-to-action</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step6PackagingNext" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6: Children's Book Specific -->
+            <div class="demo-step" id="step6-book">
+                <div class="step-content">
+                    <h2>Create Story Book Visuals</h2>
+                    <p class="step-description">Generate visual content for your story book.</p>
+                    
+                    <div class="story-visuals">
+                        <div class="prompt-section">
+                            <textarea 
+                                id="visualPrompt" 
+                                placeholder="Describe the visual scene you want to generate for your story book..."
+                                rows="6"
+                            ></textarea>
+                        </div>
+                        
+                        <div class="visual-controls">
+                            <div class="control-row">
+                                <div class="character-selection">
+                                    <h4>Selected Characters</h4>
+                                    <div class="character-images">
+                                        <div class="character-image selected-character" id="charImage1">
+                                            <span class="image-placeholder">Character 1</span>
+                                        </div>
+                                        <div class="character-image selected-character" id="charImage2">
+                                            <span class="image-placeholder">Character 2</span>
+                                        </div>
+                                        <div class="character-image selected-character" id="charImage3">
+                                            <span class="image-placeholder">Character 3</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="style-selection">
+                                    <h4>Selected Style</h4>
+                                    <div class="style-image" id="styleImage">
+                                        <span class="image-placeholder">Style Image</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" id="generateVisualBtn" style="min-width: 120px;">
+                                    Generate
+                                </button>
+                                <div class="click-here-highlight">click here</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Storybook Visuals -->
+                    <div class="storybook-visuals-carousel">
+                        <h4>Generated Storybook Visuals</h4>
+                        <div class="carousel-container">
+                            <div class="carousel-placeholder" id="visual1">
+                                <img src="images/Demo/Storybook/Storybook_Visuals/CoverPhoto.png" alt="Cover Photo">
+                            </div>
+                            <div class="carousel-placeholder" id="visual2" style="display: none;">
+                                <img src="images/Demo/Storybook/Storybook_Visuals/Scene1 (1).jpeg" alt="Scene 1">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step6BookNext" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6: Posters Specific -->
+            <div class="demo-step" id="step6-poster">
+                <div class="step-content">
+                    <h2>Design Elements</h2>
+                    <p class="step-description">Specify the visual elements for your poster.</p>
+                    
+                    <div class="design-elements">
+                        <div class="element-section">
+                            <h3>Key Visual Elements</h3>
+                            <textarea 
+                                id="keyElements" 
+                                placeholder="What are the main visual elements? (Images, icons, text, etc.)"
+                                rows="4"
+                            ></textarea>
+                        </div>
+                        
+                        <div class="element-section">
+                            <h3>Text Content</h3>
+                            <textarea 
+                                id="textContent" 
+                                placeholder="What text needs to be included? (Headlines, descriptions, contact info)"
+                                rows="4"
+                            ></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step6PosterNext" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 7: Product Packaging Specific -->
+            <div class="demo-step" id="step7-packaging">
+                <div class="step-content">
+                    <h2>Create Package Design Visuals</h2>
+                    <p class="step-description">Generate visual content for your package design.</p>
+                    
+                    <div class="story-visuals">
+                        <div class="prompt-section">
+                            <textarea 
+                                id="productVisualPrompt" 
+                                placeholder="Describe the visual scene you want to generate for your product design..."
+                                rows="4"
+                            >A soft pastel pink background with fluffy white clouds filling the lower half. In the top right corner, a branch with small white blossoms extends inward, and just below it a pink-and-yellow butterfly floats toward the center. In the bottom left, a delicate rose and a colorful hummingbird face upward, creating diagonal balance. Leave clear open space in the center for text and labels.</textarea>
+                        </div>
+                        
+                        <div class="visual-controls">
+                            <div class="control-row">
+                                <div class="character-selection">
+                                    <h4>Selected Design Elements</h4>
+                                    <div class="character-images">
+                                        <div class="character-image selected-design-element" id="productElement1">
+                                            <img src="images/Demo/Product Package/FigRose.jpg" alt="Hero Image">
+                                        </div>
+                                        <div class="character-image selected-design-element" id="productElement2">
+                                            <img src="images/Demo/Product Package/FloralFruitIllustrations.jpg" alt="Design Element 1">
+                                        </div>
+                                        <div class="character-image selected-design-element" id="productElement3">
+                                            <img src="images/Demo/Product Package/FloralFruitIllustrations1.jpg" alt="Design Element 2">
+                                        </div>
+                                        <div class="character-image" id="productElement4">
+                                            <img src="images/Demo/Product Package/13237211_5178017.svg" alt="Background">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="style-selection">
+                                    <h4>Selected Style</h4>
+                                    <div class="style-image" id="productStyleImage">
+                                        <img src="images/Demo/Styles/Bold.jpg" alt="Selected Style" id="selectedStyleImg">
+                                    </div>
+                                </div>
+                                <div class="generate-button-section">
+                                    <button class="btn btn-primary" id="generateProductVisualBtn" onclick="generateProductVisual()" style="min-width: 120px;">
+                                        Generate
+                                    </button>
+                                    <div class="click-here-highlight">click here</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Package Design Visuals -->
+                    <div class="storybook-visuals-carousel">
+                        <h4>Generated Package Visuals</h4>
+                        <div class="carousel-container" id="packageVisualsContainer">
+                            <div class="carousel-placeholder" id="productVisual1">
+                                <img src="images/Demo/Product Package/SideFace2.jpg" alt="Side Face Design">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step7PackagingNext" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 7: Children's Book Specific -->
+            <div class="demo-step" id="step7-book">
+                <div class="step-content">
+                    <h2>Now add your story</h2>
+                    <p class="step-description">Design each page with your story, title or details.</p>
+                    
+                    <div class="story-creation">
+                        <!-- Prompt Box -->
+                        <div class="prompt-section">
+                            <textarea 
+                                id="storyPrompt" 
+                                placeholder="Write the exact text that should appear in your story book..."
+                                rows="6"
+                            >Add the title "The Lost Kite" onto the cover. Make sure it sits nicely with the illustration, with fonts and colors that look clear and easy to read.</textarea>
+                        </div>
+                        
+                        <!-- Image Selection -->
+                        <div class="image-selection">
+                            <div class="story-images-grid">
+                                <div class="story-image selected-story-image" onclick="selectStoryImage(1, this)">
+                                    <img src="images/Demo/Storybook/Storybook_Visuals/CoverPhoto.png" alt="Cover Photo">
+                                    <div class="image-overlay">
+                                        <span class="image-number">1</span>
+                                    </div>
+                                </div>
+                                <div class="story-image" onclick="selectStoryImage(2, this)">
+                                    <img src="images/Demo/Storybook/Storybook_Visuals/Scene1 (1).jpeg" alt="Scene 1">
+                                    <div class="image-overlay">
+                                        <span class="image-number">2</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Controls Row -->
+                        <div class="controls-row">
+                            <button class="btn btn-primary" id="generateStoryBtn" onclick="generateStory()" style="min-width: 120px;">
+                                Generate
+                            </button>
+                            <div class="click-here-highlight">click here</div>
+                        </div>
+                        
+                        <!-- Preview Area -->
+                        <div class="preview-section">
+                            <div class="story-preview" id="storyPreview">
+                                <!-- Preview will be populated when Generate is clicked -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step7BookNext" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 8: Children's Book Specific -->
+            <div class="demo-step" id="step8-book">
+                <div class="step-content">
+                    <h2>Edit Your Designs</h2>
+                    <p class="step-description">Tweak text, colors, and illustrations to make it just right.</p>
+                    
+                    <div class="editor-preview" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                        <img src="images/Demo/Storybook/EditorPage.jpg" alt="Storybook Editor" style="max-width: 130%; height: auto; border-radius: 12px;">
+                    </div>
+                    
+                    <div class="design-button-section">
+                        <button class="btn btn-primary design-book-btn" onclick="designMyBook()">
+                            Design my book
+                        </button>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step8BookNext" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 8: Product Packaging Specific -->
+            <div class="demo-step" id="step8-packaging">
+                <div class="step-content">
+                    <h2>Now add details to your packaging.</h2>
+                    <p class="step-description">Create the content and specifications for your package design.</p>
+                    
+                    <div class="story-creation">
+                        <!-- Prompt Box -->
+                        <div class="prompt-section">
+                            <textarea 
+                                id="packagePrompt" 
+                                placeholder="Write the exact text that should appear on your package..."
+                                rows="5"
+                            >Place the text "DearBloom" with "Fig + Rose" below it, and "Hydrating + Restorative Botanical Cream" as supporting text. Arrange and style these elements with suitable fonts, sizes, colors, and positioning so they feel balanced and harmonious with the background design.</textarea>
+                        </div>
+                        
+                        <!-- Image Selection -->
+                        <div class="image-selection">
+                            <div class="story-images-grid">
+                                <div class="story-image selected" onclick="selectPackageImage(1, this)">
+                                    <img src="images/Demo/Product Package/FigRose.jpg" alt="Package Design 1">
+                                    <div class="image-overlay">
+                                        <span class="image-number">1</span>
+                                    </div>
+                                </div>
+                                <div class="story-image" onclick="selectPackageImage(2, this)">
+                                    <img src="images/Demo/Product Package/Sideface_onlydesign.jpg" alt="Package Design 2">
+                                    <div class="image-overlay">
+                                        <span class="image-number">2</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="controls-row">
+                            <button class="btn btn-primary" id="generatePackageBtn" onclick="generatePackage()" style="margin-bottom: 2rem;">
+                                Generate
+                            </button>
+                            <div class="click-here-highlight">click here</div>
+                        </div>
+                        
+                        <!-- Package Design Visuals -->
+                        <div class="storybook-visuals-carousel">
+                            <div class="carousel-container" id="packageDesignContainer">
+                                <!-- Preview will be populated when Generate is clicked -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step8PackagingNext" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 9: Children's Book Mockup -->
+            <div class="demo-step" id="step9-book">
+                <div class="step-content">
+                    <h2>Your Storybook Preview</h2>
+                    <p class="step-description">Here's your personalized children's book design!</p>
+                    
+                    <div class="book-mockup">
+                        <div class="mockup-preview">
+                            <video controls autoplay muted loop style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);">
+                                <source src="images/Mockups/Storybook_mockup.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        
+                        <div class="mockup-actions">
+                            <div class="tab mockup-tab active" onclick="selectMockupAction('download', this)">
+                                <span>Get Print-Ready Files</span>
+                            </div>
+                            <div class="tab mockup-tab" onclick="selectMockupAction('experts', this)">
+                                <span>Ask a Designer</span>
+                            </div>
+                            <div class="tab mockup-tab" onclick="selectMockupAction('share', this)">
+                                <span>Share with Print Partner</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="finishDemo()">Complete Demo</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 9: Product Packaging Specific -->
+            <div class="demo-step" id="step9-packaging">
+                <div class="step-content">
+                    <h2>Let's Edit your package design</h2>
+                    <p class="step-description">Tweak the illustrations, reposition elements, modify text until its just right.</p>
+                    
+                    <div class="editor-preview">
+                        <img src="images/Demo/Product Package/Editorpage_product.jpg" alt="Package Design Editor" style="max-width: 100%; height: auto; border-radius: 12px;">
+                    </div>
+                    
+                    <div class="design-button-section">
+                        <button class="btn btn-primary design-book-btn" id="designPackageBtn" onclick="designMyPackage()">
+                            Design my package
+                        </button>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step9PackagingNext" disabled>Continue</button>
+                    </div>
+                </div>
+                        </div>
+            
+            <!-- Step 10: Product Packaging Mockup -->
+            <div class="demo-step" id="step10-packaging">
+                <div class="step-content">
+                    <h2>Your Product Design Preview</h2>
+                    <p class="step-description">Here's your personalized package design!</p>
+                    
+                    <div class="mockup-video-container">
+                        <video controls autoplay muted loop style="max-width: 70%; height: auto; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);">
+                            <source src="images/Mockups/ProductPackage.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    
+                    <div class="mockup-actions">
+                        <div class="tab mockup-tab active" onclick="selectMockupAction('download', this)">
+                            <span>Get Print-Ready Files</span>
+                        </div>
+                        <div class="tab mockup-tab" onclick="selectMockupAction('experts', this)">
+                            <span>Ask a Designer</span>
+                        </div>
+                        <div class="tab mockup-tab" onclick="selectMockupAction('share', this)">
+                            <span>Share with Print Partner</span>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="finishDemo()">Finish</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 7: Posters Specific -->
+            <div class="demo-step" id="step7-poster">
+                <div class="step-content">
+                    <h2>Printing & Production</h2>
+                    <p class="step-description">Specify your printing and production requirements.</p>
+                    
+                    <div class="poster-production">
+                        <div class="production-section">
+                            <h3>Printing Quality</h3>
+                            <div class="quality-options">
+                                <div class="quality-option" onclick="selectPrintQuality('standard', this)">
+                                    <span>Standard Quality</span>
+                                </div>
+                                <div class="quality-option" onclick="selectPrintQuality('high', this)">
+                                    <span>High Quality</span>
+                                </div>
+                                <div class="quality-option" onclick="selectPrintQuality('premium', this)">
+                                    <span>Premium Quality</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="production-section">
+                            <h3>Quantity Needed</h3>
+                            <textarea 
+                                id="posterQuantity" 
+                                placeholder="How many posters do you need?"
+                                rows="4"
+                            ></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="step7PosterNext" disabled>Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 8: Final Review & Generate (All Product Types) -->
+            <div class="demo-step" id="step8">
+                <div class="step-content">
+                    <h2>Review Your Choices</h2>
+                    <p class="step-description">Let's make sure we got everything right before we start creating.</p>
+                    
+                    <div class="review-summary">
+                        <div class="summary-item">
+                            <h4>Project Type</h4>
+                            <p id="summaryType">-</p>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <h4>Style Preference</h4>
+                            <p id="summaryStyle">-</p>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <h4>Project Description</h4>
+                            <p id="summaryDescription">-</p>
+                        </div>
+                        
+                        <div class="summary-item" id="productSpecificSummary">
+                            <!-- Product-specific summary will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="generation-options">
+                        <h3>What would you like to generate first?</h3>
+                        <div class="generation-buttons">
+                            <button class="btn btn-primary" onclick="generateOption('concepts')">
+                                🎨 Design Concepts
+                            </button>
+                            <button class="btn btn-outline" onclick="generateOption('mockups')">
+                                📱 Mockups
+                            </button>
+                            <button class="btn btn-outline" onclick="generateOption('variations')">
+                                🔄 Style Variations
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="step-navigation">
+                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button class="btn btn-primary" onclick="finishDemo()">Start Creating</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Demo Experience Variables
+        let currentDemoStep = 1;
+        let totalDemoSteps = 8; // Default steps, will be updated based on project type
+        let selectedProjectType = '';
+        let selectedStyle = '';
+        let selectedStyleImage = '';
+        let projectDescription = '';
+        let characterDescription = '';
+        let characterReferenceImage = null;
+
+        // Demo Experience Functions
+        function nextStep() {
+            if (currentDemoStep < totalDemoSteps) {
+                console.log('Moving from step', currentDemoStep, 'to step', currentDemoStep + 1);
+                
+                // Hide current step
+                if (currentDemoStep === 5) {
+                    // Hide the appropriate conditional step 5
+                    const currentStep5Element = document.getElementById(`step5-${selectedProjectType}`);
+                    if (currentStep5Element) {
+                        currentStep5Element.classList.remove('active');
+                        console.log('Hiding step5-', selectedProjectType);
+                    }
+                } else if (currentDemoStep === 6) {
+                    // Hide the appropriate conditional step 6
+                    const currentStep6Element = document.getElementById(`step6-${selectedProjectType}`);
+                    if (currentStep6Element) {
+                        currentStep6Element.classList.remove('active');
+                        console.log('Hiding step6-', selectedProjectType);
+                    }
+                } else if (currentDemoStep === 7) {
+                    // Hide the appropriate conditional step 7
+                    const currentStep7Element = document.getElementById(`step7-${selectedProjectType}`);
+                    if (currentStep7Element) {
+                        currentStep7Element.classList.remove('active');
+                        console.log('Hiding step7-', selectedProjectType);
+                    }
+                } else if (currentDemoStep === 8) {
+                    // Hide the appropriate conditional step 8
+                    const currentStep8Element = document.getElementById(`step8-${selectedProjectType}`);
+                    if (currentStep8Element) {
+                        currentStep8Element.classList.remove('active');
+                        console.log('Hiding step8-', selectedProjectType);
+                    }
+                } else if (currentDemoStep === 9) {
+                    // Hide the appropriate conditional step 9
+                    const currentStep9Element = document.getElementById(`step9-${selectedProjectType}`);
+                    if (currentStep9Element) {
+                        currentStep9Element.classList.remove('active');
+                        console.log('Hiding step9-', selectedProjectType);
+                    }
+                } else if (currentDemoStep === 10) {
+                    // Hide the appropriate conditional step 10
+                    const currentStep10Element = document.getElementById(`step10-${selectedProjectType}`);
+                    if (currentStep10Element) {
+                        currentStep10Element.classList.remove('active');
+                        console.log('Hiding step10-', selectedProjectType);
+                    }
+                } else {
+                    document.getElementById(`step${currentDemoStep}`).classList.remove('active');
+                    console.log('Hiding step', currentDemoStep);
+                }
+                
+                // Show next step
+                currentDemoStep++;
+                
+                // Handle conditional step navigation
+                if (currentDemoStep === 5) {
+                    // Show the appropriate step 5 based on product type
+                    const step5Element = document.getElementById(`step5-${selectedProjectType}`);
+                    if (step5Element) {
+                        step5Element.classList.add('active');
+                        console.log('Showing step5-', selectedProjectType);
+                    }
+                } else if (currentDemoStep === 6) {
+                    // Show the appropriate step 6 based on product type
+                    const step6Element = document.getElementById(`step6-${selectedProjectType}`);
+                    if (step6Element) {
+                        step6Element.classList.add('active');
+                        console.log('Showing step6-', selectedProjectType);
+                    }
+                } else if (currentDemoStep === 7) {
+                    // Show the appropriate step 7 based on product type
+                    const step7Element = document.getElementById(`step7-${selectedProjectType}`);
+                    if (step7Element) {
+                        step7Element.classList.add('active');
+                        console.log('Showing step7-', selectedProjectType);
+                    }
+                } else if (currentDemoStep === 8) {
+                    // Show the appropriate step 8 based on product type
+                    const step8Element = document.getElementById(`step8-${selectedProjectType}`);
+                    if (step8Element) {
+                        step8Element.classList.add('active');
+                        console.log('Showing step8-', selectedProjectType);
+                    }
+                } else if (currentDemoStep === 9) {
+                    // Show the appropriate step 9 based on product type
+                    const step9Element = document.getElementById(`step9-${selectedProjectType}`);
+                    if (step9Element) {
+                        step9Element.classList.add('active');
+                        console.log('Showing step9-', selectedProjectType);
+                    }
+                } else if (currentDemoStep === 10) {
+                    // Show the appropriate step 10 based on product type
+                    const step10Element = document.getElementById(`step10-${selectedProjectType}`);
+                    if (step10Element) {
+                        step10Element.classList.add('active');
+                        console.log('Showing step10-', selectedProjectType);
+                    }
+                } else {
+                    // For other steps, show normally
+                    document.getElementById(`step${currentDemoStep}`).classList.add('active');
+                    console.log('Showing step', currentDemoStep);
+                }
+                
+                // Update progress bar
+                updateProgressBar();
+                
+                // Handle specific step logic
+                handleStepLogic();
+                
+                // Apply project type restrictions when entering step 4 (style preference)
+                if (currentDemoStep === 4) {
+                    applyProjectTypeRestrictions();
+                }
+            }
+        }
+
+        function prevStep() {
+            if (currentDemoStep > 1) {
+                // Hide current step
+                if (currentDemoStep === 5) {
+                    // Hide the appropriate conditional step 5
+                    const currentStep5Element = document.getElementById(`step5-${selectedProjectType}`);
+                    if (currentStep5Element) {
+                        currentStep5Element.classList.remove('active');
+                    }
+                } else if (currentDemoStep === 6) {
+                    // Hide the appropriate conditional step 6
+                    const currentStep6Element = document.getElementById(`step6-${selectedProjectType}`);
+                    if (currentStep6Element) {
+                        currentStep6Element.classList.remove('active');
+                    }
+                } else if (currentDemoStep === 7) {
+                    // Hide the appropriate conditional step 7
+                    const currentStep7Element = document.getElementById(`step7-${selectedProjectType}`);
+                    if (currentStep7Element) {
+                        currentStep7Element.classList.remove('active');
+                    }
+                } else if (currentDemoStep === 8) {
+                    // Hide the appropriate conditional step 8
+                    const currentStep8Element = document.getElementById(`step8-${selectedProjectType}`);
+                    if (currentStep8Element) {
+                        currentStep8Element.classList.remove('active');
+                    }
+                } else if (currentDemoStep === 9) {
+                    // Hide the appropriate conditional step 9
+                    const currentStep9Element = document.getElementById(`step9-${selectedProjectType}`);
+                    if (currentStep9Element) {
+                        currentStep9Element.classList.remove('active');
+                    }
+                } else if (currentDemoStep === 10) {
+                    // Hide step 10 (package mockup)
+                    const currentStep10Element = document.getElementById('step10-packaging');
+                    if (currentStep10Element) {
+                        currentStep10Element.classList.remove('active');
+                    }
+                } else {
+                    document.getElementById(`step${currentDemoStep}`).classList.remove('active');
+                }
+                
+                // Show previous step
+                currentDemoStep--;
+                
+                // Handle conditional step navigation for previous step
+                if (currentDemoStep === 5) {
+                    // Show the appropriate step 5 based on product type
+                    const step5Element = document.getElementById(`step5-${selectedProjectType}`);
+                    if (step5Element) {
+                        step5Element.classList.add('active');
+                    }
+                } else if (currentDemoStep === 6) {
+                    // Show the appropriate step 6 based on product type
+                    const step6Element = document.getElementById(`step6-${selectedProjectType}`);
+                    if (step6Element) {
+                        step6Element.classList.add('active');
+                    }
+                } else if (currentDemoStep === 7) {
+                    // Show the appropriate step 7 based on product type
+                    const step7Element = document.getElementById(`step7-${selectedProjectType}`);
+                    if (step7Element) {
+                        step7Element.classList.add('active');
+                    }
+                } else if (currentDemoStep === 8) {
+                    // Show the appropriate step 8 based on product type
+                    const step8Element = document.getElementById(`step8-${selectedProjectType}`);
+                    if (step8Element) {
+                        step8Element.classList.add('active');
+                    }
+                } else if (currentDemoStep === 9) {
+                    // Show the appropriate step 9 based on product type
+                    const step9Element = document.getElementById(`step9-${selectedProjectType}`);
+                    if (step9Element) {
+                        step9Element.classList.add('active');
+                    }
+                } else if (currentDemoStep === 10) {
+                    // Show step 9 (package editing) when going back from step 10
+                    const step9Element = document.getElementById('step9-packaging');
+                    if (step9Element) {
+                        step9Element.classList.add('active');
+                    }
+                } else {
+                    document.getElementById(`step${currentDemoStep}`).classList.add('active');
+                }
+                
+                // Update progress bar
+                updateProgressBar();
+                
+                // Apply project type restrictions when returning to step 4 (style preference)
+                if (currentDemoStep === 4) {
+                    applyProjectTypeRestrictions();
+                }
+            }
+        }
+
+        function updateProgressBar() {
+            const progressFill = document.getElementById('progressFill');
+            const progressPercentage = (currentDemoStep / totalDemoSteps) * 100;
+            progressFill.style.width = `${progressPercentage}%`;
+        }
+
+        function selectOption(optionType, element) {
+            // Remove selection from all option cards
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked card
+            element.classList.add('selected');
+            
+            // Store selection
+            selectedProjectType = optionType;
+            
+            // Set total steps based on project type
+            if (optionType === 'book') {
+                totalDemoSteps = 9; // Storybook has 9 steps
+            } else if (optionType === 'packaging') {
+                totalDemoSteps = 10; // Product packaging has 10 steps
+            } else if (optionType === 'poster') {
+                totalDemoSteps = 8; // Posters has 8 steps
+            }
+            
+            // Debug: Log the selection
+            console.log('Project type selected:', optionType);
+            console.log('selectedProjectType variable set to:', selectedProjectType);
+            console.log('Total steps set to:', totalDemoSteps);
+            
+            // Enable continue button
+            document.getElementById('step2Next').disabled = false;
+            
+            // If user is currently on step 4, apply restrictions immediately
+            if (currentDemoStep === 4) {
+                applyProjectTypeRestrictions();
+            }
+        }
+
+        function selectStyle(styleType, element) {
+            // Remove selection from all style cards
+            document.querySelectorAll('.style-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked tab
+            element.classList.add('selected');
+            
+            // Store selection
+            selectedStyle = styleType;
+            
+            // Store the selected style image source for later use
+            const styleImage = element.querySelector('.style-preview img');
+            if (styleImage) {
+                selectedStyleImage = styleImage.src;
+                console.log('Selected style image:', selectedStyleImage);
+            }
+            
+            // Enable continue button
+            document.getElementById('step3Next').disabled = false;
+        }
+
+        function switchTab(tabType, element) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab
+            element.classList.add('active');
+            
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show the appropriate content section
+            if (tabType === 'styles') {
+                document.getElementById('styles-section').style.display = 'block';
+            } else if (tabType === 'artists') {
+                document.getElementById('artists-section').style.display = 'block';
+            } else if (tabType === 'create') {
+                document.getElementById('create-section').style.display = 'block';
+            }
+            
+            // Reset any selected styles when switching tabs
+            document.querySelectorAll('.style-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Disable continue button when switching tabs
+            document.getElementById('step3Next').disabled = true;
+            
+            // Apply project type restrictions
+            applyProjectTypeRestrictions();
+            
+            console.log('Switched to tab:', tabType);
+        }
+
+        function applyProjectTypeRestrictions() {
+            // First, clear all previous selections and disabled states
+            document.querySelectorAll('.style-card').forEach(card => {
+                card.classList.remove('selected', 'disabled');
+            });
+            
+            // If user selected Children's Book, restrict style selection to only Severina
+            if (selectedProjectType === 'book') {
+                
+                // Disable all style cards except Severina
+                document.querySelectorAll('.style-card').forEach(card => {
+                    const styleName = card.querySelector('h3').textContent.toLowerCase();
+                    if (styleName !== 'severina') {
+                        card.classList.add('disabled');
+                        // Remove onclick to prevent selection
+                        card.removeAttribute('onclick');
+                    }
+                });
+                
+                // Auto-select Severina for Children's Book users
+                const severinaCard = Array.from(document.querySelectorAll('.style-card')).find(card => 
+                    card.querySelector('h3').textContent.toLowerCase() === 'severina'
+                );
+                if (severinaCard) {
+                    severinaCard.classList.add('selected');
+                    selectedStyle = 'severina';
+                    const styleImage = severinaCard.querySelector('.style-preview img');
+                    if (styleImage) {
+                        selectedStyleImage = styleImage.src;
+                    }
+                    document.getElementById('step4Next').disabled = false;
+                }
+            } else if (selectedProjectType === 'packaging') {
+                
+                // Disable all style cards except August Macke
+                document.querySelectorAll('.style-card').forEach(card => {
+                    const styleName = card.querySelector('h3').textContent.toLowerCase();
+                    if (styleName !== 'august macke') {
+                        card.classList.add('disabled');
+                        // Remove onclick to prevent selection
+                        card.removeAttribute('onclick');
+                    }
+                });
+                
+                // Auto-select August Macke for Product Packaging users
+                const augustMackeCard = Array.from(document.querySelectorAll('.style-card')).find(card => 
+                    card.querySelector('h3').textContent.toLowerCase() === 'august macke'
+                );
+                if (augustMackeCard) {
+                    augustMackeCard.classList.add('selected');
+                    selectedStyle = 'august-macke';
+                    const styleImage = augustMackeCard.querySelector('.style-preview img');
+                    if (styleImage) {
+                        selectedStyleImage = styleImage.src;
+                    }
+                    document.getElementById('step4Next').disabled = false;
+                }
+            } else {
+                // For other project types, enable all styles
+                document.querySelectorAll('.style-card').forEach(card => {
+                    card.classList.remove('disabled');
+                    // Restore onclick functionality
+                    const styleName = card.querySelector('h3').textContent.toLowerCase();
+                    if (styleName === 'august-macke') {
+                        card.setAttribute('onclick', 'selectStyle(\'august-macke\', this)');
+                    } else if (styleName === 'mary-walcott') {
+                        card.setAttribute('onclick', 'selectStyle(\'mary-walcott\', this)');
+                    } else if (styleName === 'nicolas-kristian') {
+                        card.setAttribute('onclick', 'selectStyle(\'nicolas-kristian\', this)');
+                    } else if (styleName === 'severina') {
+                        card.setAttribute('onclick', 'selectStyle(\'severina\', this)');
+                    } else if (styleName === 'retro') {
+                        card.setAttribute('onclick', 'selectStyle(\'retro\', this)');
+                    } else if (styleName === 'bold') {
+                        card.setAttribute('onclick', 'selectStyle(\'bold\', this)');
+                    } else if (styleName === 'abstract') {
+                        card.setAttribute('onclick', 'selectStyle(\'abstract\', this)');
+                    } else if (styleName === 'folk') {
+                        card.setAttribute('onclick', 'selectStyle(\'folk\', this)');
+                    } else if (styleName === 'fun') {
+                        card.setAttribute('onclick', 'selectStyle(\'fun\', this)');
+                    } else if (styleName === 'gouache') {
+                        card.setAttribute('onclick', 'selectStyle(\'gouache\', this)');
+                    } else if (styleName === 'pop') {
+                        card.setAttribute('onclick', 'selectStyle(\'pop\', this)');
+                    } else if (styleName === 'vintage') {
+                        card.setAttribute('onclick', 'selectStyle(\'vintage\', this)');
+                    }
+                });
+            }
+        }
+
+        // File upload functionality
+        let uploadedFiles = [];
+
+        function triggerFileUpload() {
+            document.getElementById('fileUpload').click();
+        }
+
+        function handleFileUpload(event) {
+            const files = Array.from(event.target.files);
+            
+            // Limit to 10 files
+            if (uploadedFiles.length + files.length > 10) {
+                alert('You can only upload a maximum of 10 images.');
+                return;
+            }
+            
+            // Add new files to the array
+            files.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    uploadedFiles.push(file);
+                }
+            });
+            
+            // Display thumbnails
+            displayThumbnails();
+            
+            // Enable continue button if we have images
+            if (uploadedFiles.length > 0) {
+                document.getElementById('step3Next').disabled = false;
+            }
+        }
+
+        function displayThumbnails() {
+            const thumbnailsContainer = document.getElementById('imageThumbnails');
+            const uploadedImagesSection = document.getElementById('uploadedImages');
+            
+            if (uploadedFiles.length === 0) {
+                uploadedImagesSection.style.display = 'none';
+                return;
+            }
+            
+            uploadedImagesSection.style.display = 'block';
+            thumbnailsContainer.innerHTML = '';
+            
+            uploadedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const thumbnail = document.createElement('div');
+                    thumbnail.className = 'image-thumbnail';
+                    thumbnail.innerHTML = `
+                        <img src="${e.target.result}" alt="Uploaded image ${index + 1}">
+                        <button class="remove-image" onclick="removeImage(${index})">×</button>
+                    `;
+                    thumbnailsContainer.appendChild(thumbnail);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function removeImage(index) {
+            uploadedFiles.splice(index, 1);
+            displayThumbnails();
+            
+            // Disable continue button if no images left
+            if (uploadedFiles.length === 0) {
+                document.getElementById('step3Next').disabled = true;
+            }
+        }
+
+        function handleStepLogic() {
+            switch (currentDemoStep) {
+                case 3:
+                    // Enable textarea input for project description
+                    const textarea = document.getElementById('projectDescription');
+                    
+                    // Prefill textarea if user selected Children's Book
+                    if (selectedProjectType === 'book') {
+                        textarea.value = 'I\'m working on a children\'s storybook called The Lost Kite, for kids aged 3–6, about friendship, perseverance, and overcoming challenges. I want to use soft, hand-painted watercolor visuals that spark imagination and add comfort, joy, and resilience for young readers and their families.';
+                        projectDescription = textarea.value;
+                        document.getElementById('step3Next').disabled = false;
+                    } else if (selectedProjectType === 'packaging') {
+                        // Prefill textarea if user selected Product Packaging
+                        textarea.value = 'I\'m designing the packaging for a beauty cream with fig and rose under my brand DearBloom, crafted for skincare lovers who value natural and gentle ingredients.\n\nThe goal is to keep a neutral palette with soft, graceful pops of color—elegant, calming, and inviting without being too bold.';
+                        projectDescription = textarea.value;
+                        document.getElementById('step3Next').disabled = false;
+                    } else {
+                        // For other product types, clear the textarea and show placeholder
+                        textarea.value = '';
+                        projectDescription = '';
+                        document.getElementById('step3Next').disabled = true;
+                    }
+                    
+                    textarea.addEventListener('input', function() {
+                        projectDescription = this.value;
+                        document.getElementById('step3Next').disabled = this.value.trim().length === 0;
+                    });
+                    break;
+                    
+                case 4:
+                    // Apply project type restrictions when step 4 (style preference) is first loaded
+                    applyProjectTypeRestrictions();
+                    
+                    // Debug: Log the selected project type
+                    console.log('Step 4 - Selected Project Type:', selectedProjectType);
+                    
+                    // Show restriction message if user selected Children's Book or Product Packaging
+                    // Only create message if it doesn't already exist
+                    if (!document.getElementById('restrictionMessage')) {
+                        if (selectedProjectType === 'book') {
+                            console.log('Creating Children\'s Book message');
+                            // Show restriction message for Children's Book
+                            let restrictionMessage = document.createElement('div');
+                            restrictionMessage.id = 'restrictionMessage';
+                            restrictionMessage.style.cssText = 'background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: center; font-weight: 500;';
+                            restrictionMessage.innerHTML = 'Based on your vision, we\'ve chosen the Severina style for its soft watercolor feel.';
+                            
+                            // Insert the message at the bottom of step 4, before the navigation buttons
+                            const stepNavigation = document.querySelector('#step4 .step-navigation');
+                            if (stepNavigation) {
+                                stepNavigation.parentNode.insertBefore(restrictionMessage, stepNavigation);
+                            }
+                        } else if (selectedProjectType === 'packaging') {
+                            console.log('Creating Product Packaging message');
+                            // Show restriction message for Product Packaging
+                            let restrictionMessage = document.createElement('div');
+                            restrictionMessage.id = 'restrictionMessage';
+                            restrictionMessage.style.cssText = 'background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: center; font-weight: 500;';
+                            restrictionMessage.innerHTML = 'Based on your vision, we\'ve chosen the August Macke style for its pastel pop of colors and illustrative feel.';
+                            
+                            // Insert the message at the bottom of step 4, before the navigation buttons
+                            const stepNavigation = document.querySelector('#step4 .step-navigation');
+                            if (stepNavigation) {
+                                stepNavigation.parentNode.insertBefore(restrictionMessage, stepNavigation);
+                            }
+                        } else {
+                            console.log('No matching project type found for message creation');
+                        }
+                    } else {
+                        console.log('Restriction message already exists, not creating new one');
+                    }
+                    break;
+                    
+                case 5:
+                    // Handle conditional step 5 based on product type
+                    if (selectedProjectType === 'packaging') {
+                        // Enable packaging market textarea
+                        const packagingMarket = document.getElementById('packagingMarket');
+                        if (packagingMarket) {
+                            packagingMarket.addEventListener('input', function() {
+                                document.getElementById('step5PackagingNext').disabled = this.value.trim().length === 0;
+                            });
+                        }
+                        
+                        // Since Box is pre-selected, enable the Continue button by default
+                        document.getElementById('step5PackagingNext').disabled = false;
+                    } else if (selectedProjectType === 'book') {
+                        // Auto-fill character description for Children's Book
+                        const characterTextarea = document.getElementById('characterDescription');
+                        if (characterTextarea) {
+                            characterTextarea.value = 'Miso is a golden retriever puppy sitting with his paws in front, soft golden fur and floppy ears. He\'s got a green collar with a little silver tag and a goofy smile on his face. His head tilts slightly, making him look extra cheerful and curious.';
+                            characterDescription = characterTextarea.value;
+                            // Continue button will be enabled only after Generate Image is clicked
+                        }
+                        
+                        // Set up generate button functionality
+                        const generateBtn = document.getElementById('generateCharacterBtn');
+                        if (generateBtn && !generateBtn.hasAttribute('data-listener-added')) {
+                            generateBtn.setAttribute('data-listener-added', 'true');
+                            generateBtn.addEventListener('click', function() {
+                                generateThirdCharacter();
+                            });
+                        }
+                    } else if (selectedProjectType === 'poster') {
+                        // Enable poster purpose textarea
+                        const posterPurpose = document.getElementById('posterPurpose');
+                        if (posterPurpose) {
+                            posterPurpose.addEventListener('input', function() {
+                                document.getElementById('step5PosterNext').disabled = this.value.trim().length === 0;
+                            });
+                        }
+                    }
+                    break;
+                    
+                case 6:
+                    // Handle conditional step 6 based on product type
+                    if (selectedProjectType === 'packaging') {
+                        // Enable brand colors and logo requirements textareas
+                        const brandColors = document.getElementById('brandColors');
+                        const logoRequirements = document.getElementById('logoRequirements');
+                        if (brandColors && logoRequirements) {
+                            [brandColors, logoRequirements].forEach(textarea => {
+                                textarea.addEventListener('input', function() {
+                                    const bothFilled = brandColors.value.trim().length > 0 && logoRequirements.value.trim().length > 0;
+                                    document.getElementById('step6PackagingNext').disabled = !bothFilled;
+                                });
+                            });
+                        }
+                        
+                        // Enable Generate Image button for packaging description
+                        const packagingDescription = document.getElementById('packagingDescription');
+                        if (packagingDescription) {
+                            // Since the textarea is prefilled, enable the Generate Image button immediately
+                            document.getElementById('generatePackagingBtn').disabled = false;
+                        }
+                    } else if (selectedProjectType === 'book') {
+                        // Auto-fill visual prompt for Children's Book
+                        const visualPrompt = document.getElementById('visualPrompt');
+                        if (visualPrompt) {
+                            visualPrompt.value = 'Leo is excitedly flying a red kite while Amaya sits nearby on a picnic blanket, calm and absorbed in her activity. Their puppy Miso watches happily, full of playful energy. The scene is set in a bright garden with wildflowers and a white picket fence, creating a cheerful and peaceful backdrop.';
+                        }
+                        
+                        // Generate button starts enabled
+                        const generateBtn = document.getElementById('generateVisualBtn');
+                        if (generateBtn) {
+                            generateBtn.disabled = false; // Enable the button so user can click it
+                        }
+                        
+                        // Set up generate button functionality
+                        if (generateBtn && !generateBtn.hasAttribute('data-listener-added')) {
+                            generateBtn.setAttribute('data-listener-added', 'true');
+                            generateBtn.addEventListener('click', function() {
+                                generateSecondVisual();
+                            });
+                        }
+                        
+                        // Populate the character and style images
+                        populateCharacterImages();
+                        populateStyleImage();
+                    } else if (selectedProjectType === 'packaging') {
+                        // Auto-fill visual prompt for Product Packaging
+                        const visualPrompt = document.getElementById('visualPrompt');
+                        if (visualPrompt) {
+                            visualPrompt.value = 'I\'m designing the packaging for a beauty cream with fig and rose under my brand DearBloom, crafted for skincare lovers who value natural and gentle ingredients. The goal is to keep a neutral palette with soft, graceful pops of color—elegant, calming, and inviting without being too bold.';
+                        }
+                        
+                        // Enable generate button
+                        const generateBtn = document.getElementById('generateVisualBtn');
+                        if (generateBtn) {
+                            generateBtn.disabled = false;
+                        }
+                        
+                        // Set up generate button functionality
+                        if (generateBtn && !generateBtn.hasAttribute('data-listener-added')) {
+                            generateBtn.setAttribute('data-listener-added', 'true');
+                            generateBtn.addEventListener('click', function() {
+                                generateSecondVisual();
+                            });
+                        }
+                        
+                        // Populate the character and style images
+                        populateCharacterImages();
+                        populateStyleImage();
+                    } else if (selectedProjectType === 'poster') {
+                        // Enable key elements and text content textareas
+                        const keyElements = document.getElementById('keyElements');
+                        const textContent = document.getElementById('textContent');
+                        if (keyElements && textContent) {
+                            [keyElements, textContent].forEach(textarea => {
+                                textarea.addEventListener('input', function() {
+                                    const bothFilled = keyElements.value.trim().length > 0 && textContent.value.trim().length > 0;
+                                    document.getElementById('step6PosterNext').disabled = !bothFilled;
+                                });
+                            });
+                        }
+                    }
+                    break;
+                    
+                case 7:
+                    // Handle conditional step 7 based on product type
+                    if (selectedProjectType === 'packaging') {
+                        // Enable visual prompt textarea (optional)
+                        const visualPrompt = document.getElementById('productVisualPrompt');
+                        if (visualPrompt) {
+                            visualPrompt.addEventListener('input', function() {
+                                // Visual prompt is optional, so continue button stays enabled
+                            });
+                        }
+                        
+                        // Since the textarea is prefilled, enable the Generate button immediately
+                        document.getElementById('generateProductVisualBtn').disabled = false;
+                        
+                        // Populate the design elements and style images
+                        populateProductDesignElements();
+                        populateProductStyleImage();
+                    } else if (selectedProjectType === 'book') {
+                        // Auto-fill story prompt for Children's Book (Cover Photo is selected by default)
+                        const storyPrompt = document.getElementById('storyPrompt');
+                        if (storyPrompt) {
+                            storyPrompt.value = 'Add the title "The Lost Kite" onto the cover. Make sure it sits nicely with the illustration, with fonts and colors that look clear and easy to read.';
+                        }
+                        
+                        // Set up generate button functionality
+                        const generateBtn = document.getElementById('generateStoryBtn');
+                        if (generateBtn && !generateBtn.hasAttribute('data-listener-added')) {
+                            generateBtn.setAttribute('data-listener-added', 'true');
+                            generateBtn.addEventListener('click', function() {
+                                generateStory();
+                            });
+                        }
+                    } else if (selectedProjectType === 'poster') {
+                        // Enable poster quantity textarea
+                        const posterQuantity = document.getElementById('posterQuantity');
+                        if (posterQuantity) {
+                            posterQuantity.addEventListener('input', function() {
+                                document.getElementById('step7PosterNext').disabled = this.value.trim().length === 0;
+                            });
+                        }
+                    }
+                    break;
+                    
+                case 8:
+                    if (selectedProjectType === 'packaging') {
+                        // Initialize step8_packaging with default prompt and first image selected
+                        const packagePrompt = document.getElementById('packagePrompt');
+                        if (packagePrompt) {
+                            packagePrompt.value = 'Place the text "DearBloom" with "Fig + Rose" below it, and "Hydrating + Restorative Botanical Cream" as supporting text. Arrange and style these elements with suitable fonts, sizes, colors, and positioning so they feel balanced and harmonious with the background design.';
+                        }
+                        
+                        // Set up the first image as selected by default
+                        const firstImage = document.querySelector('#step8-packaging .story-image:first-child');
+                        const secondImage = document.querySelector('#step8-packaging .story-image:last-child');
+                        if (firstImage && secondImage) {
+                            firstImage.classList.add('selected');
+                            secondImage.classList.remove('selected');
+                        }
+                        
+                        // Preview starts empty - will be populated when Generate is clicked
+                        const container = document.getElementById('packageDesignContainer');
+                        if (container) {
+                            container.innerHTML = '';
+                        }
+                    } else {
+                        updateReviewSummary();
+                    }
+                    break;
+            }
+        }
+
+        function updateReviewSummary() {
+            // Map option types to display names
+            const projectTypeNames = {
+                'packaging': 'Product Packaging',
+                'book': 'Children\'s Book',
+                'poster': 'Posters'
+            };
+            
+            const styleNames = {
+                'retro': 'Retro',
+                'bold': 'Bold',
+                'abstract': 'Abstract',
+                'folk': 'Fun',
+                'fun': 'Fun',
+                'gouache': 'Gouache',
+                'pop': 'Pop',
+                'vintage': 'Vintage',
+                'august-macke': 'August Macke',
+                'mary-walcott': 'Mary Walcott',
+                'nicolas-kristian': 'Nicolas Kristian',
+                'severina': 'Severina'
+            };
+            
+            document.getElementById('summaryType').textContent = projectTypeNames[selectedProjectType] || '-';
+            document.getElementById('summaryStyle').textContent = styleNames[selectedStyle] || '-';
+            document.getElementById('summaryDescription').textContent = projectDescription || '-';
+            
+            // Add product-specific summary
+            const productSpecificSummary = document.getElementById('productSpecificSummary');
+            if (selectedProjectType === 'packaging') {
+                const packagingMarket = document.getElementById('packagingMarket')?.value || '';
+                productSpecificSummary.innerHTML = `
+                    <h4>Package Details</h4>
+                    <p>Target Market: ${packagingMarket || '-'}</p>
+                `;
+            } else if (selectedProjectType === 'book') {
+                const characterDesc = document.getElementById('characterDescription')?.value || '';
+                productSpecificSummary.innerHTML = `
+                    <h4>Character Details</h4>
+                    <p>Character Description: ${characterDesc || '-'}</p>
+                `;
+            } else if (selectedProjectType === 'poster') {
+                const posterPurpose = document.getElementById('posterPurpose')?.value || '';
+                productSpecificSummary.innerHTML = `
+                    <h4>Poster Details</h4>
+                    <p>Purpose: ${posterPurpose || '-'}</p>
+                `;
+            }
+        }
+
+        function generateOption(option) {
+            // Handle different generation options
+            console.log(`Generating ${option} for project:`, {
+                type: selectedProjectType,
+                style: selectedStyle,
+                description: projectDescription
+            });
+            
+            // You can add specific logic here for each generation option
+            switch (option) {
+                case 'concepts':
+                    alert('🎨 Generating design concepts based on your preferences...');
+                    break;
+                case 'mockups':
+                    alert('📱 Creating mockups for your project...');
+                    break;
+                case 'variations':
+                    alert('🔄 Generating style variations...');
+                    break;
+            }
+        }
+
+        function finishDemo() {
+            // Final action when demo is completed
+            console.log('Demo completed with selections:', {
+                type: selectedProjectType,
+                style: selectedStyle,
+                description: projectDescription
+            });
+            
+            // Move to first page and refresh
+            currentDemoStep = 1;
+            
+            // Hide all steps
+            document.querySelectorAll('.demo-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            // Show first step
+            const firstStep = document.getElementById('step1');
+            if (firstStep) {
+                firstStep.classList.add('active');
+            }
+            
+            // Reset progress bar
+            updateProgressBar();
+            document.getElementById('currentStep').textContent = currentDemoStep;
+            
+            // Reset all form inputs and selections
+            resetDemoState();
+            
+            // Refresh the page after a short delay
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+
+        // Conditional Step Functions
+        
+        // Package Type Selection
+        function selectPackageType(packageType, element) {
+            // Remove selection from all package options
+            document.querySelectorAll('.package-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            element.classList.add('selected');
+            
+            // Enable continue button
+            document.getElementById('step5PackagingNext').disabled = false;
+        }
+
+        // Poster Size Selection
+        function selectPosterSize(size, element) {
+            // Remove selection from all size options
+            document.querySelectorAll('.size-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            element.classList.add('selected');
+            
+            // Enable continue button
+            document.getElementById('step5PosterNext').disabled = false;
+        }
+
+        // Book Size Selection
+        function selectBookSize(size, element) {
+            // Remove selection from all book size options
+            document.querySelectorAll('.book-size-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            element.classList.add('selected');
+            
+            // Enable continue button
+            document.getElementById('step7BookNext').disabled = false;
+        }
+
+        // Printing Method Selection
+        function selectPrintingMethod(method, element) {
+            // Remove selection from all printing options
+            document.querySelectorAll('.printing-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            element.classList.add('selected');
+            
+            // Enable continue button
+            document.getElementById('step7PackagingNext').disabled = false;
+        }
+
+        // Print Quality Selection
+        function selectPrintQuality(quality, element) {
+            // Remove selection from all quality options
+            document.querySelectorAll('.quality-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            element.classList.add('selected');
+            
+            // Enable continue button
+            document.getElementById('step7PosterNext').disabled = false;
+        }
+
+        // Character Creation Functions
+        function triggerCharacterImageUpload() {
+            document.getElementById('characterImageUpload').click();
+        }
+
+        function handleCharacterImageUpload(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                characterReferenceImage = file;
+                // Enable generate button when reference image is uploaded
+                document.getElementById('generateCharacterBtn').disabled = false;
+                
+                // Show success message
+                alert('Reference image uploaded successfully! You can now generate character images.');
+            }
+        }
+
+        // Tips Modal Functions
+        function openTipsModal() {
+            const modal = document.getElementById('tipsModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeTipsModal() {
+            const modal = document.getElementById('tipsModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Story Book Visual Functions
+        function populateCharacterImages() {
+            // Populate character images from step 5
+            const charImage1 = document.getElementById('charImage1');
+            const charImage2 = document.getElementById('charImage2');
+            const charImage3 = document.getElementById('charImage3');
+            
+            if (charImage1 && charImage2 && charImage3) {
+                // Get the images from step 5 carousel
+                const step5Image1 = document.querySelector('#placeholder1 img');
+                const step5Image2 = document.querySelector('#placeholder2 img');
+                const step5Image3 = document.querySelector('#placeholder3 img');
+                
+                if (step5Image1 && step5Image1.src) {
+                    charImage1.innerHTML = `<img src="${step5Image1.src}" alt="Character 1">`;
+                }
+                
+                if (step5Image2 && step5Image2.src) {
+                    charImage2.innerHTML = `<img src="${step5Image2.src}" alt="Character 2">`;
+                }
+                
+                if (step5Image3 && step5Image3.src) {
+                    charImage3.innerHTML = `<img src="${step5Image3.src}" alt="Character 3">`;
+                }
+            }
+        }
+
+        function populateStyleImage() {
+            // Populate the style image from step 3
+            const styleImageContainer = document.getElementById('styleImage');
+            
+            console.log('populateStyleImage called');
+            console.log('selectedStyleImage:', selectedStyleImage);
+            console.log('styleImageContainer:', styleImageContainer);
+            
+            if (styleImageContainer && selectedStyleImage) {
+                styleImageContainer.innerHTML = `<img src="${selectedStyleImage}" alt="Selected Style">`;
+                console.log('Style image populated successfully');
+            } else {
+                console.log('Could not populate style image - missing container or image source');
+            }
+        }
+
+        function updateGenerateButton() {
+            const visualPrompt = document.getElementById('visualPrompt')?.value || '';
+            
+            const generateBtn = document.getElementById('generateVisualBtn');
+            if (generateBtn) {
+                generateBtn.disabled = visualPrompt.trim().length === 0;
+            }
+        }
+
+        // Story Generation Functions (for step7-book)
+        let selectedStoryImage = null;
+
+        function selectStoryImage(imageNumber, element) {
+            console.log('selectStoryImage called with:', imageNumber, element);
+            
+            // Remove selection from all story images
+            document.querySelectorAll('.story-image').forEach(img => {
+                img.classList.remove('selected-story-image');
+            });
+            
+            // Add selection to clicked image
+            element.classList.add('selected-story-image');
+            
+            // Update prompt based on selected image
+            const storyPrompt = document.getElementById('storyPrompt');
+            if (imageNumber === 1) {
+                storyPrompt.value = 'Add the title "The Lost Kite" onto the cover. Make sure it sits nicely with the illustration, with fonts and colors that look clear and easy to read.';
+                console.log('Updated prompt for Image 1 (Cover)');
+            } else if (imageNumber === 2) {
+                storyPrompt.value = 'Leo held his kite up high,\nA red tail dancing in the sky!\nAmaya smiled, "Snacks packed to share!"\nWhite Miso wagged without a care.\n\nAdd this text on a new page to the left of the image. The text should be centered.';
+                console.log('Updated prompt for Image 2 (Story)');
+            }
+            
+            console.log('Prompt value after update:', storyPrompt.value);
+        }
+
+        function generateStory() {
+            const storyPrompt = document.getElementById('storyPrompt').value;
+            
+            if (!storyPrompt.trim()) {
+                alert('Please enter a story prompt first.');
+                return;
+            }
+            
+            // Get the generate button and show processing state
+            const generateBtn = document.getElementById('generateStoryBtn');
+            if (generateBtn) {
+                generateBtn.disabled = true;
+                generateBtn.textContent = 'Processing...';
+                generateBtn.style.opacity = '0.6';
+                generateBtn.style.cursor = 'not-allowed';
+            }
+            
+            // Get the currently selected image to determine what to show
+            const selectedImage = document.querySelector('#step7-book .story-image.selected-story-image');
+            let imageToShow, imageAlt;
+            
+            console.log('Selected image:', selectedImage);
+            if (selectedImage) {
+                console.log('Selected image src:', selectedImage.querySelector('img').src);
+            }
+            
+            if (selectedImage && selectedImage.querySelector('img').src.includes('CoverPhoto.png')) {
+                // Image 1 selected - show Coverphoto_with_text.jpeg
+                imageToShow = 'images/Demo/Storybook/Storybook_Visuals/Coverphoto_with_text.jpeg';
+                imageAlt = 'Cover Photo with Text';
+                console.log('Image 1 selected, will show:', imageToShow);
+            } else if (selectedImage && selectedImage.querySelector('img').src.includes('Scene1 (1).jpeg')) {
+                // Image 2 selected - show Page2_withtext.jpg
+                imageToShow = 'images/Demo/Storybook/Storybook_Visuals/Page2_withtext.jpg';
+                imageAlt = 'Page 2 with Text';
+                console.log('Image 2 selected, will show:', imageToShow);
+            } else if (selectedImage && selectedImage.querySelector('img').src.includes('Scene1')) {
+                // Alternative detection for Image 2 - show Page2_withtext.jpg
+                imageToShow = 'images/Demo/Storybook/Storybook_Visuals/Page2_withtext.jpg';
+                imageAlt = 'Page 2 with Text';
+                console.log('Image 2 selected (alternative detection), will show:', imageToShow);
+            } else {
+                // Default fallback
+                imageToShow = 'images/Demo/Storybook/Storybook_Visuals/Coverphoto_with_text.jpeg';
+                imageAlt = 'Cover Photo with Text';
+                console.log('No specific image selected, using default:', imageToShow);
+            }
+            
+            console.log('Final imageToShow:', imageToShow);
+            
+            // Simulate processing time (2 seconds) before updating preview
+            setTimeout(() => {
+                // Check if this specific image is already in the preview
+                const preview = document.getElementById('storyPreview');
+                const existingImage = preview.querySelector(`img[src="${imageToShow}"]`);
+                
+                if (existingImage) {
+                    console.log('This image already generated, not adding duplicate');
+                    // Reset button state
+                    if (generateBtn) {
+                        generateBtn.textContent = 'Generate';
+                        generateBtn.disabled = false;
+                        generateBtn.style.opacity = '1';
+                        generateBtn.style.cursor = 'pointer';
+                    }
+                    return;
+                }
+                
+                // Check if there's already an image in the preview
+                const existingImages = preview.querySelectorAll('img');
+                
+                if (existingImages.length === 0) {
+                    // First image - create new preview
+                    preview.innerHTML = `
+                        <div class="preview-placeholder">
+                            <img src="${imageToShow}" alt="${imageAlt}" style="max-width: 100%; max-height: 600px; width: auto; height: auto; border-radius: 8px; object-fit: contain; border: 2px solid #e0e0e0;">
+                        </div>
+                    `;
+                } else {
+                    // Second image - add side by side with existing image
+                    preview.innerHTML = `
+                        <div style="display: flex; gap: 2rem; justify-content: center; align-items: flex-start;">
+                            <div class="preview-placeholder">
+                                ${existingImages[0].outerHTML}
+                            </div>
+                            <div class="preview-placeholder">
+                                <img src="${imageToShow}" alt="${imageAlt}" style="max-width: 100%; max-height: 600px; width: auto; height: auto; border-radius: 8px; object-fit: contain; border: 2px solid #e0e0e0;">
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Check if both images are now generated
+                const coverPhotoExists = preview.querySelector('img[src*="Coverphoto_with_text.jpeg"]');
+                const page2Exists = preview.querySelector('img[src*="Page2_withtext.jpg"]');
+                const totalImages = preview.querySelectorAll('img').length;
+                
+                console.log('Checking for both images:');
+                console.log('Cover photo exists:', !!coverPhotoExists);
+                console.log('Page 2 exists:', !!page2Exists);
+                console.log('Total images in preview:', totalImages);
+                
+                if ((coverPhotoExists && page2Exists) || totalImages >= 2) {
+                    // Both images generated - disable generate button permanently
+                    if (generateBtn) {
+                        generateBtn.textContent = 'All Images Generated';
+                        generateBtn.disabled = true;
+                        generateBtn.style.opacity = '0.6';
+                        generateBtn.style.cursor = 'not-allowed';
+                    }
+                    console.log('Both images generated, generate button disabled');
+                } else {
+                    // Reset button for next generation
+                    if (generateBtn) {
+                        generateBtn.textContent = 'Generate';
+                        generateBtn.disabled = false;
+                        generateBtn.style.opacity = '1';
+                        generateBtn.style.cursor = 'pointer';
+                    }
+                    console.log('One image generated, button ready for next image');
+                }
+                
+                // Enable the Continue button after story generation
+                document.getElementById('step7BookNext').disabled = false;
+                
+                // Show success message
+                console.log('Story generated successfully for image:', imageToShow);
+            }, 2000); // 2 second processing time
+        }
+
+        // Preview Navigation Function
+        function navigatePreview(direction) {
+            const slides = document.querySelectorAll('.preview-slide');
+            const indicators = document.querySelectorAll('.indicator');
+            const activeSlide = document.querySelector('.preview-slide.active');
+            const activeIndicator = document.querySelector('.indicator.active');
+            
+            if (!activeSlide) return;
+            
+            let currentIndex = parseInt(activeSlide.dataset.slide);
+            let newIndex = currentIndex + direction;
+            
+            // Handle wrap-around
+            if (newIndex < 0) newIndex = slides.length - 1;
+            if (newIndex >= slides.length) newIndex = 0;
+            
+            // Update active slide
+            activeSlide.classList.remove('active');
+            slides[newIndex].classList.add('active');
+            
+            // Update active indicator
+            activeIndicator.classList.remove('active');
+            indicators[newIndex].classList.add('active');
+        }
+
+        // Package Preview Navigation Function
+        function navigatePackagePreview(direction) {
+            const slides = document.querySelectorAll('.preview-slide');
+            const indicators = document.querySelectorAll('.indicator');
+            const activeSlide = document.querySelector('.preview-slide.active');
+            const activeIndicator = document.querySelector('.indicator.active');
+            
+            if (!activeSlide) return;
+            
+            let currentIndex = parseInt(activeSlide.dataset.slide);
+            let newIndex = currentIndex + direction;
+            
+            // Handle wrap-around
+            if (newIndex < 0) newIndex = slides.length - 1;
+            if (newIndex >= slides.length) newIndex = 0;
+            
+            // Update active slide
+            activeSlide.classList.remove('active');
+            slides[newIndex].classList.add('active');
+            
+            // Update active indicator
+            activeIndicator.classList.remove('active');
+            indicators[newIndex].classList.add('active');
+        }
+
+        // Package Generation Functions (for step8-packaging)
+        let selectedPackageImage = null;
+
+        function generatePackage() {
+            // Get the generate button and show processing state
+            const generateBtn = document.getElementById('generatePackageBtn');
+            generateBtn.textContent = 'Processing...';
+            generateBtn.disabled = true;
+            
+            // Get the currently selected image
+            const selectedImage = document.querySelector('#step8-packaging .story-image.selected');
+            if (!selectedImage) {
+                console.error('No image selected');
+                return;
+            }
+            
+            // Determine which image was selected and what to show
+            let imageToShow, imageAlt;
+            if (selectedImage.querySelector('img').src.includes('FigRose.jpg')) {
+                // Image 1 selected - show HeroFace.jpg
+                imageToShow = 'images/Demo/Product Package/HeroFace.jpg';
+                imageAlt = 'Hero Face Package Preview';
+            } else if (selectedImage.querySelector('img').src.includes('Sideface_onlydesign.jpg')) {
+                // Image 2 selected - show SIdeFace.jpg
+                imageToShow = 'images/Demo/Product Package/SIdeFace.jpg';
+                imageAlt = 'Side Face Package Preview';
+            } else {
+                console.error('Unknown image selected');
+                return;
+            }
+            
+            // Simulate processing time (2 seconds)
+            setTimeout(() => {
+                const container = document.getElementById('packageDesignContainer');
+                
+                // Check if this specific image is already in the preview
+                const existingImage = container.querySelector(`img[src="${imageToShow}"]`);
+                if (existingImage) {
+                    console.log('This image already generated, not adding duplicate');
+                    // Don't disable the button - user can still generate the other image
+                    generateBtn.textContent = 'Generate';
+                    generateBtn.disabled = false;
+                    return;
+                }
+                
+                // Create new image placeholder
+                const imagePlaceholder = document.createElement('div');
+                imagePlaceholder.className = 'carousel-placeholder';
+                imagePlaceholder.id = `packageDesign${Date.now()}`; // Unique ID
+                
+                // Create and show the image
+                const image = document.createElement('img');
+                image.src = imageToShow;
+                image.alt = imageAlt;
+                
+                // Add the image to the placeholder
+                imagePlaceholder.appendChild(image);
+                
+                // Add the placeholder to the container
+                container.appendChild(imagePlaceholder);
+                
+                // Check if both images are now generated
+                const heroFaceExists = container.querySelector('img[src*="HeroFace.jpg"]');
+                const sideFaceExists = container.querySelector('img[src*="SIdeFace.jpg"]');
+                
+                if (heroFaceExists && sideFaceExists) {
+                    // Both images generated - disable generate button permanently
+                    generateBtn.textContent = 'All Images Generated';
+                    generateBtn.disabled = true;
+                    console.log('Both images generated, generate button disabled');
+                } else {
+                    // Reset button for next generation - user can still generate the other image
+                    generateBtn.textContent = 'Generate';
+                    generateBtn.disabled = false;
+                    console.log('One image generated, button ready for next image');
+                }
+                
+                // Enable the Continue button after package generation
+                document.getElementById('step8PackagingNext').disabled = false;
+                
+                // Show success message
+                console.log('Package generated successfully');
+            }, 2000); // 2 second processing time
+        }
+
+        function selectPackageImage(imageNumber, element) {
+            // Remove selection from all package images
+            document.querySelectorAll('.story-image').forEach(img => {
+                img.classList.remove('selected');
+            });
+            
+            // Add selection to clicked image
+            element.classList.add('selected');
+            
+            // Store selected image
+            selectedPackageImage = imageNumber;
+            
+            // Update the preview to show the corresponding preview image based on thumbnail selection
+            const container = document.getElementById('packageDesignContainer');
+            let previewImageSrc, previewImageAlt;
+            
+            // Map thumbnail images to preview images
+            if (element.querySelector('img').src.includes('FigRose.jpg')) {
+                // If FigRose.jpg thumbnail is selected, show HeroFace.jpg in preview
+                previewImageSrc = 'images/Demo/Product Package/HeroFace.jpg';
+                previewImageAlt = 'Hero Face Package Preview';
+            } else if (element.querySelector('img').src.includes('Sideface_onlydesign.jpg')) {
+                // If Sideface_onlydesign.jpg thumbnail is selected, show SIdeFace.jpg in preview
+                previewImageSrc = 'images/Demo/Product Package/SIdeFace.jpg';
+                previewImageAlt = 'Side Face Package Preview';
+            } else {
+                // Fallback to the selected thumbnail image
+                previewImageSrc = element.querySelector('img').src;
+                previewImageAlt = element.querySelector('img').alt;
+            }
+            
+            // Update the prompt text based on selected image
+            const packagePromptTextarea = document.getElementById('packagePrompt');
+            if (imageNumber === 1) {
+                // First image selected - DearBloom text
+                packagePromptTextarea.value = 'Place the text "DearBloom" with "Fig + Rose" below it, and "Hydrating + Restorative Botanical Cream" as supporting text. Arrange and style these elements with suitable fonts, sizes, colors, and positioning so they feel balanced and harmonious with the background design.';
+            } else if (imageNumber === 2) {
+                // Second image selected - Key Ingredients text
+                packagePromptTextarea.value = 'Overlay the heading "Key Ingredients" in elegant handwritten script font, placed near the top center. Below it, add a clean, modern serif font list: "Fig Extract — Deep hydration, Rose Water — Calms and balances, Vitamin E — Skin barrier support, Squalane — Lightweight nourishment." Center-align the text block in the open space of the image. Ensure good contrast so the text is clear, with the heading larger and more decorative than the ingredient list.';
+            }
+            
+            // Don't show preview until Generate is clicked
+            // Preview will be populated by the generatePackage function
+            
+            console.log('Selected package image:', imageNumber);
+        }
+
+        // Packaging Tips Modal Functions
+        function openPackagingTipsModal() {
+            const modal = document.getElementById('packagingTipsModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closePackagingTipsModal() {
+            const modal = document.getElementById('packagingTipsModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Packaging Image Upload Functions
+        function triggerPackagingImageUpload() {
+            document.getElementById('packagingImageUpload').click();
+        }
+
+        function handlePackagingImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Enable the generate button when an image is uploaded
+                    document.getElementById('generatePackagingBtn').disabled = false;
+                    console.log('Packaging reference image uploaded:', file.name);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Product Design Visual Functions
+        function populateProductDesignElements() {
+            // Populate design elements from step 6
+            const element1 = document.getElementById('productElement1');
+            const element2 = document.getElementById('productElement2');
+            const element3 = document.getElementById('productElement3');
+            const element4 = document.getElementById('productElement4');
+            
+            if (element1 && element2 && element3 && element4) {
+                // Get the images from step 6 carousel
+                const step6Image1 = document.querySelector('#packagingPlaceholder1 img');
+                const step6Image2 = document.querySelector('#packagingPlaceholder2 img');
+                const step6Image3 = document.querySelector('#packagingPlaceholder3 img');
+                const step6Image4 = document.querySelector('#packagingPlaceholder4 img');
+                
+                if (step6Image1 && step6Image1.src) {
+                    element1.innerHTML = `<img src="${step6Image1.src}" alt="Design Element 1">`;
+                }
+                
+                if (step6Image2 && step6Image2.src) {
+                    element2.innerHTML = `<img src="${step6Image2.src}" alt="Design Element 2">`;
+                }
+                
+                if (step6Image3 && step6Image3.src) {
+                    element3.innerHTML = `<img src="${step6Image3.src}" alt="Design Element 3">`;
+                }
+                
+                if (step6Image4 && step6Image4.src) {
+                    element4.innerHTML = `<img src="${step6Image4.src}" alt="Design Element 4">`;
+                }
+            }
+        }
+
+        function populateProductStyleImage() {
+            // Populate the style image from step 3
+            const styleImageContainer = document.getElementById('productStyleImage');
+            
+            if (styleImageContainer && selectedStyleImage) {
+                styleImageContainer.innerHTML = `<img src="${selectedStyleImage}" alt="Selected Style">`;
+                console.log('Product style image populated successfully');
+            } else {
+                // Fallback to default style if none selected
+                styleImageContainer.innerHTML = `<img src="images/Demo/Styles/Bold.jpg" alt="Default Style">`;
+                console.log('Using default style image');
+            }
+        }
+
+
+
+
+
+        // Design My Book Function
+        function designMyBook() {
+            // Show processing state
+            const designBtn = document.querySelector('.design-book-btn');
+            const originalText = designBtn.textContent;
+            designBtn.textContent = 'Processing...';
+            designBtn.disabled = true;
+            
+            // Simulate processing time (4 seconds)
+            setTimeout(() => {
+                // Change button text to "Designed"
+                designBtn.textContent = 'Designed';
+                designBtn.disabled = true;
+                
+                // Enable the Continue button after design is complete
+                const continueBtn = document.getElementById('step8BookNext');
+                if (continueBtn) {
+                    continueBtn.disabled = false;
+                    console.log('Continue button enabled after design completion');
+                }
+                
+                // Wait a moment, then automatically move to next step
+                setTimeout(() => {
+                    // Move to step9-book
+                    currentDemoStep = 9;
+                    
+                    // Hide current step (step8-book)
+                    const currentStep8Element = document.getElementById(`step8-${selectedProjectType}`);
+                    if (currentStep8Element) {
+                        currentStep8Element.classList.remove('active');
+                    }
+                    
+                    // Show step9-book
+                    const step9Element = document.getElementById(`step9-${selectedProjectType}`);
+                    if (step9Element) {
+                        step9Element.classList.add('active');
+                    }
+                    
+                    // Update progress bar
+                    updateProgressBar();
+                    
+                    console.log('Automatically moved to step9-book');
+                }, 1000); // Wait 1 second after showing "Designed" before auto-advancing
+                
+                console.log('Design my book completed, showing "Designed"');
+            }, 4000); // 4 second processing time
+        }
+
+        // Design My Package Function
+        function designMyPackage() {
+            // Show processing state
+            const designBtn = document.getElementById('designPackageBtn');
+            const originalText = designBtn.textContent;
+            
+            console.log('Button clicked, changing to Processing...');
+            designBtn.textContent = 'Processing...';
+            designBtn.disabled = true;
+            
+            // Simulate processing time (4 seconds) then automatically proceed
+            setTimeout(() => {
+                console.log('Processing complete, moving to next step...');
+                
+                // Enable the Continue button only after processing is complete
+                document.getElementById('step9PackagingNext').disabled = false;
+                
+                // Move to step10-packaging
+                currentDemoStep = 10;
+                
+                // Hide current step (step9-packaging)
+                const currentStep9Element = document.getElementById('step9-packaging');
+                if (currentStep9Element) {
+                    currentStep9Element.classList.remove('active');
+                }
+                
+                // Show step10-packaging
+                const step10Element = document.getElementById('step10-packaging');
+                if (step10Element) {
+                    step10Element.classList.add('active');
+                }
+                
+                // Update progress bar and step numbers
+                updateProgressBar();
+                document.getElementById('currentStep').textContent = currentDemoStep;
+                
+                console.log('Moved to step10-packaging');
+            }, 4000); // 4 second processing time
+        }
+
+        // Generate Third Character Function
+        function generateThirdCharacter() {
+            const generateBtn = document.getElementById('generateCharacterBtn');
+            const originalText = generateBtn.textContent;
+            
+            // Show processing state
+            generateBtn.textContent = 'Processing...';
+            generateBtn.disabled = true;
+            
+            // Simulate processing time (2 seconds)
+            setTimeout(() => {
+                // Show the third character image (Miso)
+                const thirdPlaceholder = document.getElementById('placeholder3');
+                if (thirdPlaceholder) {
+                    // Remove placeholder content
+                    const placeholderContent = thirdPlaceholder.querySelector('.placeholder-content');
+                    if (placeholderContent) {
+                        placeholderContent.style.display = 'none';
+                    }
+                    
+                    // Create and show the Miso image
+                    const misoImage = document.createElement('img');
+                    misoImage.src = 'images/Demo/Storybook/Characters/Miso.jpeg';
+                    misoImage.alt = 'Miso - Golden Retriever Puppy';
+                    misoImage.style.cssText = 'width: 100%; height: 100%; object-fit: cover; border-radius: 8px;';
+                    
+                    // Add the image to the image container within the third placeholder
+                    const imageContainer = thirdPlaceholder.querySelector('.image-container');
+                    if (imageContainer) {
+                        imageContainer.appendChild(misoImage);
+                    }
+                    
+                    // Show Miso's name
+                    const misoName = document.getElementById('misoName');
+                    if (misoName) {
+                        misoName.style.display = 'block';
+                    }
+                }
+                
+                // Keep button disabled permanently after generation
+                generateBtn.textContent = 'Generated';
+                generateBtn.disabled = true;
+                
+                // Enable the Continue button after image generation
+                document.getElementById('step5BookNext').disabled = false;
+                
+                console.log('Third character (Miso) generated successfully');
+            }, 2000); // 2 second processing time
+        }
+
+        // Generate Second Visual Function
+        function generateSecondVisual() {
+            const generateBtn = document.getElementById('generateVisualBtn');
+            
+            // Show processing state and disable immediately
+            generateBtn.textContent = 'Processing...';
+            generateBtn.disabled = true;
+            generateBtn.removeAttribute('onclick'); // Remove any onclick handlers
+            
+            // Simulate processing time (2 seconds)
+            setTimeout(() => {
+                // Show the second visual image
+                const secondVisual = document.getElementById('visual2');
+                if (secondVisual) {
+                    secondVisual.style.display = 'block';
+                }
+                
+                // Keep button disabled permanently after generation
+                generateBtn.textContent = 'Generated';
+                generateBtn.disabled = true;
+                
+                // Enable the Continue button after image generation
+                document.getElementById('step6BookNext').disabled = false;
+                
+                console.log('Second visual generated successfully');
+            }, 2000); // 2 second processing time
+        }
+
+        // Mockup Action Functions
+        function downloadMockup() {
+            alert('Mockup download started! This would typically generate and download your book design.');
+            console.log('Downloading mockup...');
+        }
+
+        function shareMockup() {
+            alert('Sharing your book design! This would typically open sharing options.');
+            console.log('Sharing mockup...');
+        }
+
+        // Generate Packaging Image Function
+        function generatePackagingImage() {
+            const generateBtn = document.getElementById('generatePackagingBtn');
+            const originalText = generateBtn.textContent;
+            
+            // Show processing state and disable immediately
+            generateBtn.textContent = 'Processing...';
+            generateBtn.disabled = true;
+            
+            // Simulate processing time (2 seconds)
+            setTimeout(() => {
+                // Populate the Hero Image slot
+                const heroImagePlaceholder = document.getElementById('packagingPlaceholder4');
+                if (heroImagePlaceholder) {
+                    // Remove placeholder content
+                    const placeholderContent = heroImagePlaceholder.querySelector('.placeholder-content');
+                    if (placeholderContent) {
+                        placeholderContent.style.display = 'none';
+                    }
+                    
+                    // Create and show the hero image
+                    const heroImage = document.createElement('img');
+                    heroImage.src = 'images/Demo/Product Package/FigRose.jpg';
+                    heroImage.alt = 'Generated Hero Image';
+                    heroImage.style.cssText = 'width: 100%; height: 100%; object-fit: cover; border-radius: 8px;';
+                    
+                    // Add the image to the placeholder
+                    heroImagePlaceholder.appendChild(heroImage);
+                    
+                    // Show the Hero Image label
+                    const heroImageLabel = document.getElementById('heroImageLabel');
+                    if (heroImageLabel) {
+                        heroImageLabel.style.display = 'block';
+                    }
+                }
+                
+                // Keep button disabled permanently after generation
+                generateBtn.textContent = 'Generated';
+                generateBtn.disabled = true;
+                
+                // Enable the Continue button after image generation
+                document.getElementById('step6PackagingNext').disabled = false;
+                
+                console.log('Packaging image generated successfully');
+            }, 2000); // 2 second processing time
+        }
+
+        // Generate Product Visual Function
+        function generateProductVisual() {
+            const generateBtn = document.getElementById('generateProductVisualBtn');
+            
+            // Disable the generate button immediately
+            generateBtn.textContent = 'Processing...';
+            generateBtn.disabled = true;
+            
+            // Simulate processing time (2 seconds)
+            setTimeout(() => {
+                // Create the second image placeholder
+                const container = document.getElementById('packageVisualsContainer');
+                
+                // Create the second visual placeholder
+                const secondVisualPlaceholder = document.createElement('div');
+                secondVisualPlaceholder.className = 'carousel-placeholder';
+                secondVisualPlaceholder.id = 'productVisual2';
+                
+                // Create and show the second visual image
+                const secondVisualImage = document.createElement('img');
+                secondVisualImage.src = 'images/Demo/Product Package/Sideface_onlydesign.jpg';
+                secondVisualImage.alt = 'Generated Design Visual';
+                secondVisualImage.style.cssText = 'width: 100%; height: 100%; object-fit: cover; border-radius: 8px;';
+                
+                // Add the image to the placeholder
+                secondVisualPlaceholder.appendChild(secondVisualImage);
+                
+                // Add the second placeholder to the container
+                container.appendChild(secondVisualPlaceholder);
+                
+                // Keep button disabled permanently after generation
+                generateBtn.textContent = 'Generated';
+                generateBtn.disabled = true;
+                
+                // Enable the Continue button after image generation
+                document.getElementById('step7PackagingNext').disabled = false;
+                
+                console.log('Product visual generated successfully');
+            }, 2000); // 2 second processing time
+        }
+
+        // Package Mockup Action Functions
+        function downloadPackage() {
+            alert('Package mockup download started! This would typically generate and download your package design.');
+            console.log('Downloading package mockup...');
+        }
+
+        function sharePackage() {
+            alert('Sharing your package design! This would typically open sharing options.');
+            console.log('Sharing package mockup...');
+        }
+
+        function talkToExperts() {
+            alert('Connecting you with our design experts! This would typically open a chat or consultation booking.');
+            console.log('Talk to experts requested...');
+        }
+
+        function selectMockupAction(action, buttonElement) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.mockup-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab FIRST
+            buttonElement.classList.add('active');
+            
+            // Small delay to show the selection state before popup
+            setTimeout(() => {
+                // Handle the specific action AFTER selection
+                switch(action) {
+                    case 'download':
+                        downloadPackage();
+                        break;
+                    case 'share':
+                        sharePackage();
+                        break;
+                    case 'experts':
+                        talkToExperts();
+                        break;
+                }
+            }, 150); // 150ms delay to show selection state
+        }
+
+        // Reset Demo State Function
+        function resetDemoState() {
+            // Reset all form inputs
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                textarea.value = '';
+            });
+
+            // Reset all select elements
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => {
+                select.selectedIndex = 0;
+            });
+
+            // Reset all button states
+            const buttons = document.querySelectorAll('button[id$="Next"]');
+            buttons.forEach(button => {
+                button.disabled = true;
+            });
+
+            // Reset all selections
+            document.querySelectorAll('.selected, .selected-story-image, .selected-package-image').forEach(element => {
+                element.classList.remove('selected', 'selected-story-image', 'selected-package-image');
+            });
+
+            // Reset all generated content
+            document.querySelectorAll('.carousel-placeholder img').forEach(img => {
+                if (img.src.includes('generated') || img.src.includes('uploaded')) {
+                    img.remove();
+                }
+            });
+
+            // Reset all placeholder content
+            document.querySelectorAll('.placeholder-content').forEach(placeholder => {
+                placeholder.style.display = 'flex';
+            });
+
+            // Reset global variables
+            selectedProjectType = null;
+            selectedStyle = null;
+            projectDescription = '';
+            selectedPackageImage = null;
+        }
+
+        // Initialize demo when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial progress
+            updateProgressBar();
+            
+            // Initialize step 1
+            handleStepLogic();
+        });
+    </script>
+</body>
+</html>

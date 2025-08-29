@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuseAI Demo - Try Our AI Art Generation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/demo_old.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=REPLACE_WITH_YOUR_GA4_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'REPLACE_WITH_YOUR_GA4_ID');
+        
+        // Custom event tracking
+        function trackButtonClick(buttonName) {
+            gtag('event', 'button_click', {
+                'button_name': buttonName,
+                'page_location': window.location.href
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">MuseAI</a>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html#value-prop" class="nav-link" onclick="closeMobileMenu()">Why MuseAI</a></li>
+                    <li><a href="index.html#use-cases" class="nav-link" onclick="closeMobileMenu()">Use Cases</a></li>
+                    <li><a href="merchandise.html" class="nav-link" onclick="closeMobileMenu()">Shop</a></li>
+                    <li><a href="demo_old.html" class="nav-link active" onclick="closeMobileMenu()">Demo</a></li>
+                </ul>
+                <div class="nav-cta">
+                    <button class="btn btn-primary" onclick="window.open('https://tally.so/r/n9g6JG', '_blank'); trackButtonClick('nav_join_waitlist'); closeMobileMenu();">Join Waitlist</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+
+    <!-- Step 1: Brand Setup & Style Selection -->
+    <section class="demo-step active" id="step1">
+        <div class="container">
+            <!-- Progress Bar - Moved inside demo step -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill1"></div>
+                </div>
+            </div>
+            
+            <div class="software-container">
+                <div class="software-content">
+                    <div class="brand-setup-container">
+                <!-- Top Section: Brand Details -->
+                <div class="brand-section">
+                    <div class="brand-inputs-row">
+                        <div class="brand-question-group">
+                            <h3>Tell me more about your project</h3>
+                            <textarea id="projectInfo" rows="6" placeholder="Describe your project, what you are trying to achieve, any requirements, your audience..." required></textarea>
+                        </div>
+                        
+                        <div class="brand-question-group">
+                            <h3>Reference Images</h3>
+                            <div class="reference-images-upload">
+                                <div class="upload-zone" id="referenceUploadZone" onclick="document.getElementById('referenceUpload').click()">
+                                    <input type="file" id="referenceUpload" accept="image/*" multiple style="display: none;" onchange="handleReferenceUpload(this.files)">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/>
+                                    </svg>
+                                    <p>Upload Reference Images</p>
+                                    <span class="upload-hint">PNG, JPG up to 5MB each</span>
+                                </div>
+                                <div class="reference-preview" id="referencePreview" style="display: none;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="brand-question-group">
+                            <h3>Logo upload (Optional)</h3>
+                            <div class="logo-upload">
+                                <div class="upload-zone" id="logoUploadZone" onclick="document.getElementById('logoUpload').click()">
+                                    <input type="file" id="logoUpload" accept="image/*" style="display: none;" onchange="handleLogoUpload(this.files)">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/>
+                                    </svg>
+                                    <p>Upload Logo</p>
+                                    <span class="upload-hint">PNG, JPG up to 5MB</span>
+                                </div>
+                                <div class="logo-preview" id="logoPreview" style="display: none;">
+                                    <img id="logoPreviewImg" alt="Logo preview">
+                                    <button class="remove-logo" onclick="removeLogo()">×</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Section: Two Columns -->
+                <div class="selection-section">
+                    <!-- Left Column: Design Model -->
+                    <div class="design-model-column">
+                        <h3>Design Model</h3>
+                        
+                        <!-- Navigation Buttons - Moved to top -->
+                        <div class="design-nav-buttons">
+                            <button class="nav-btn active" onclick="showSection('stylesSection')">Styles</button>
+                            <button class="nav-btn" onclick="showSection('artistsSection')">Artists</button>
+                            <button class="nav-btn" onclick="showSection('customSection')">Create Your Own</button>
+                        </div>
+                        
+                        <div class="design-options">
+                            <!-- Styles Section -->
+                            <div class="option-section" id="stylesSection">
+                                <div class="style-grid">
+                                    <div class="style-block" onclick="selectStyle('retro')">
+                                        <img src="images/Demo/Styles/Retro.jpg" alt="Retro Style" onerror="this.src='images/Demo/Styles/retro.jpg'">
+                                        <span>Retro</span>
+                                    </div>
+                                    <div class="style-block" onclick="selectStyle('bold')">
+                                        <img src="images/Demo/Styles/Bold.jpg" alt="Bold Style" onerror="this.src='images/Demo/Styles/bold.jpg'">
+                                        <span>Bold</span>
+                                    </div>
+                                    <div class="style-block" onclick="selectStyle('abstract')">
+                                        <img src="images/Demo/Styles/Abstract.jpg" alt="Abstract Style" onerror="this.src='images/Demo/Styles/abstract.jpg'">
+                                        <span>Abstract</span>
+                                    </div>
+                                    <div class="style-block" onclick="selectStyle('folk')">
+                                        <img src="images/Demo/Styles/Folk.jpg" alt="Folk Style" onerror="this.src='images/Demo/Styles/folk.jpg'">
+                                        <span>Folk</span>
+                                    </div>
+                                    <div class="style-block" onclick="selectStyle('fun')">
+                                        <img src="images/Demo/Styles/Fun.jpg" alt="Fun Style" onerror="this.src='images/Demo/Styles/fun.jpg'">
+                                        <span>Fun</span>
+                                    </div>
+                                    <div class="style-block" onclick="selectStyle('gouache')">
+                                        <img src="images/Demo/Styles/Gouache.jpg" alt="Gouache Style" onerror="this.src='images/Demo/Styles/gouache.jpg'">
+                                        <span>Gouache</span>
+                                    </div>
+                                    <div class="style-block" onclick="selectStyle('pop')">
+                                        <img src="images/Demo/Styles/pop.jpg" alt="Pop Style" onerror="this.src='images/Demo/Styles/pop.jpg'">
+                                        <span>Pop</span>
+                                    </div>
+                                    <div class="style-block" onclick="selectStyle('vintage')">
+                                        <img src="images/Demo/Styles/Vintage.jpg" alt="Vintage Style" onerror="this.src='images/Demo/Styles/vintage.jpg'">
+                                        <span>Vintage</span>
+                                    </div>
+                                    <div class="style-block" onclick="selectStyle('handpainted')">
+                                        <img src="images/Demo/Styles/Handpainted.jpg" alt="Handpainted Style" onerror="this.src='images/Demo/Styles/handpainted.jpg'">
+                                        <span>Handpainted</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Artists Section -->
+                            <div class="option-section" id="artistsSection" style="display: none;">
+                                <div class="artist-grid">
+                                    <div class="artist-block" onclick="selectArtist('august-macke')">
+                                        <img src="images/Demo/Artists/August Macke.jpg" alt="August Macke">
+                                        <span>August Macke</span>
+                                    </div>
+                                    <div class="artist-block" onclick="selectArtist('mary-walcott')">
+                                        <img src="images/Demo/Artists/Mary Walcott.jpg" alt="Mary Walcott">
+                                        <span>Mary Walcott</span>
+                                    </div>
+                                    <div class="artist-block" onclick="selectArtist('nicolas-kristian')">
+                                        <img src="images/Demo/Artists/Nicolas Kristian.jpg" alt="Nicolas Kristian">
+                                        <span>Nicolas Kristian</span>
+                                    </div>
+                                    <div class="artist-block" onclick="selectArtist('severina')">
+                                        <img src="images/Demo/Styles/Severina.jpg" alt="Severina">
+                                        <span>Severina</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Create Your Own Section -->
+                            <div class="option-section" id="customSection" style="display: none;">
+                                <div class="custom-upload">
+                                    <div class="upload-zone-large" id="customUploadZone">
+                                        <input type="file" id="customUpload" multiple accept="image/*" style="display: none;">
+                                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/>
+                                        </svg>
+                                        <p>Upload 10 images to create your custom style</p>
+                                        <span class="upload-hint">PNG, JPG up to 5MB each</span>
+                                    </div>
+                                    <div class="custom-preview" id="customPreview"></div>
+                                    <button class="btn btn-primary" id="readyToDesignBtn" onclick="readyToDesign()" style="display: none;">Ready to Design My Model</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                                            <!-- Right Column: What do you want to make? -->
+                        <div class="product-column">
+                            <h3>What do you want to make?</h3>
+                            
+                            <!-- Dynamic Content Area -->
+                            <div class="product-content-area">
+                                <!-- Main Category Grid -->
+                                <div id="mainCategoryView" class="main-category-grid">
+                                    <!-- Books Block -->
+                                    <div class="main-category-block" onclick="toggleCategory('books')">
+                                        <img src="images/Demo/Kind of Product/Book.jpg" alt="Books">
+                                        <span>Books</span>
+                                    </div>
+                                    
+                                    <!-- Product Packaging Block -->
+                                    <div class="main-category-block" onclick="toggleCategory('packaging')">
+                                        <img src="images/Demo/Kind of Product/Product package.jpg" alt="Product Packaging">
+                                        <span>Packaging</span>
+                                    </div>
+                                    
+                                    <!-- Character Design Block -->
+                                    <div class="main-category-block" onclick="toggleCategory('characters')">
+                                        <img src="images/Demo/Kind of Product/Characters.jpg" alt="Character Design">
+                                        <span>Character</span>
+                                    </div>
+                                    
+                                    <!-- Brand Assets Block -->
+                                    <div class="main-category-block" onclick="toggleCategory('brandAssets')">
+                                        <img src="images/Demo/Kind of Product/Brandassets.jpg" alt="Brand Assets">
+                                        <span>Asset</span>
+                                    </div>
+                                    
+                                    <!-- Posters Block -->
+                                    <div class="main-category-block" onclick="toggleCategory('posters')">
+                                        <img src="images/Demo/Kind of Product/Poster.jpg" alt="Posters">
+                                        <span>Posters</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Books Sub-options View -->
+                                <div id="booksView" class="sub-options-view" style="display: none;">
+                                    <div class="books-content">
+                                        <div class="sub-options-grid">
+                                            <div class="sub-option" onclick="selectProduct('childrenBooks')">
+                                                <img src="images/Demo/Kind of Product/Book/StoryBookChildren.jpg" alt="Children's Books">
+                                                <span>Children's Books</span>
+                                            </div>
+                                            <div class="sub-option" onclick="selectProduct('notebook')">
+                                                <img src="images/Demo/Kind of Product/Book/Notebook.jpg" alt="Notebook">
+                                                <span>Notebook</span>
+                                            </div>
+                                        </div>
+                                        <div class="back-button-container">
+                                            <button class="btn btn-secondary back-btn" onclick="backToMainCategories()">← Back</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Product Packaging Sub-options View -->
+                                <div id="packagingView" class="sub-options-view" style="display: none;">
+                                    <div class="packaging-content">
+                                        <div class="sub-options-grid">
+                                            <div class="sub-option" onclick="selectProduct('can')">
+                                                <img src="images/Demo/Kind of Product/Product Packaging/CanMockup.jpg" alt="Can">
+                                                <span>Can</span>
+                                            </div>
+                                            <div class="sub-option" onclick="selectProduct('squareBox')">
+                                                <img src="images/Demo/Kind of Product/Product Packaging/BoxMockup.jpg" alt="Square Box">
+                                                <span>Square Box</span>
+                                            </div>
+                                            <div class="sub-option" onclick="selectProduct('rectangularBox')">
+                                                <img src="images/Demo/Kind of Product/Product Packaging/RectangularBox.jpg" alt="Rectangular Box">
+                                                <span>Rectangular Box</span>
+                                            </div>
+                                            <div class="sub-option" onclick="selectProduct('tubeBox')">
+                                                <img src="images/Demo/Kind of Product/Product Packaging/TubeBox.jpg" alt="Tube Box">
+                                                <span>Tube Box</span>
+                                            </div>
+                                        </div>
+                                        <div class="back-button-container">
+                                            <button class="btn btn-secondary back-btn" onclick="backToMainCategories()">← Back</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step Navigation for Step 1 -->
+            <div class="step-actions">
+                <button class="btn btn-primary" onclick="nextStep(2)" id="step1NextBtn" disabled>Next</button>
+                <p class="step-hint" id="step1Hint">Please fill in project details and select a style and product to continue</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step 2: Image Generation -->
+    <section class="demo-step" id="step2">
+        <div class="container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill2"></div>
+                </div>
+            </div>
+            
+            <div class="software-container">
+                <div class="software-content">
+                    <div class="image-generation-container">
+                        <!-- Section 1: Prompt Input -->
+                        <div class="prompt-section">
+                            <h3>Describe What You Need</h3>
+                            <div class="prompt-input-container">
+                                <textarea id="promptInput" placeholder="Type a description of the elements you want to see in your design. Be specific about style, mood, or details. You can also add a reference image for inspiration." rows="4"></textarea>
+                                <div class="generation-controls">
+                                    <div class="control-group">
+                                        <label>Design Model:</label>
+                                        <div id="selectedModelDisplay" class="model-display">
+                                            <div class="model-item">
+                                                <img id="modelStyleImage" src="" alt="Style" class="model-thumbnail" onerror="this.style.display='none'">
+                                                <span id="modelStyle">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label>Product:</label>
+                                        <div id="selectedProductDisplay" class="model-display">
+                                            <div class="model-item">
+                                                <img id="modelProductImage" src="" alt="Product" class="model-thumbnail" onerror="this.style.display='none'">
+                                                <span id="modelProduct">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label>Aspect Ratio:</label>
+                                        <select id="aspectRatio">
+                                            <option value="1:1">Square (1:1)</option>
+                                            <option value="4:3">Landscape (4:3)</option>
+                                            <option value="3:4">Portrait (3:4)</option>
+                                            <option value="16:9">Widescreen (16:9)</option>
+                                        </select>
+                                    </div>
+                                    <div class="control-group">
+                                        <label>Reference Image:</label>
+                                        <button class="btn btn-outline" onclick="addReferenceImage()">Add Reference</button>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="generateImages()" id="generateBtn">
+                                        <span class="btn-text">Generate Images</span>
+                                        <span class="spinner" style="display: none;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Generated Images Display -->
+                        <div class="generated-images-section">
+                            <h3>Explore Your Options</h3>
+                            <div class="generated-images-container" id="generatedImagesContainer">
+                                <div class="placeholder-message">
+                                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
+                                    </svg>
+                                    <p>Your generated images will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Selected Images Bucket -->
+                        <div class="selected-images-section">
+                            <h3>Your Design Elements</h3>
+                            <div class="selected-images-container" id="selectedImagesContainer">
+                                <div class="placeholder-message">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/>
+                                    </svg>
+                                    <p>Selected images will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-actions">
+                        <button class="btn btn-secondary" onclick="prevStep(1)">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep(3)">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step 3: Book Design (only for books) -->
+    <section class="demo-step" id="step3">
+        <div class="container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill3"></div>
+                </div>
+            </div>
+            
+                                <!-- Section 1: Number of Pages -->
+                    <div class="page-selection-section">
+                        <h3>Number of pages in your book</h3>
+                        <select id="numberOfPages" onchange="updateBookPages()">
+                            <option value="3">3</option>
+                            <option value="4" selected>4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </div>
+            
+            <!-- Section 2: Page Block Containers -->
+            <div class="page-blocks-container">
+                <button class="page-nav-arrow left" id="leftArrow" onclick="scrollPages('left')" disabled>‹</button>
+                <div class="page-blocks-wrapper">
+                    <div class="page-blocks-scroll" id="pageBlocksScroll">
+                        <!-- Page blocks will be dynamically generated here -->
+                    </div>
+                </div>
+                <button class="page-nav-arrow right" id="rightArrow" onclick="scrollPages('right')">›</button>
+            </div>
+            
+            <!-- Design My Book Button -->
+            <div class="design-book-section">
+                <button class="btn btn-primary" onclick="designMyBook()">
+                    <span class="btn-text">Design My Book</span>
+                </button>
+            </div>
+            
+            <!-- Book Preview Section -->
+            <div class="book-preview-section" id="bookPreviewSection" style="display: none;">
+                <h3>Book Preview</h3>
+                <div class="preview-container">
+                    <button class="preview-arrow left" onclick="scrollPreview('left')" id="previewLeftArrow">‹</button>
+                    <div class="preview-image-wrapper">
+                        <img id="previewImage" src="" alt="Book Preview" class="preview-image">
+                        <div id="previewLabel" class="preview-label"></div>
+                    </div>
+                    <button class="preview-arrow right" onclick="scrollPreview('right')" id="previewRightArrow">›</button>
+                </div>
+            </div>
+            
+            <!-- Download Section -->
+            <div class="download-section" id="downloadSection" style="display: none;">
+                <div class="download-controls">
+                    <select id="downloadType" class="download-dropdown">
+                        <option value="high-res-print">Illustrations (High Res Print)</option>
+                        <option value="low-res-web">Illustrations (Low Res Web)</option>
+                        <option value="proof-pdf">Proof (PDFs)</option>
+                        <option value="print-ready-pdf">Print Ready Files (High Res PDF)</option>
+                        <option value="all-files">All Files (ZIP)</option>
+                    </select>
+                    <button class="btn btn-primary download-btn" onclick="downloadBook()">
+                        <span class="btn-text">Download</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="step-actions">
+                <button class="btn btn-secondary" onclick="prevStep(2)">Back</button>
+                <button class="btn btn-primary" onclick="finishDemo()">Finish Demo</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">MuseAI</a>
+                    <p class="footer-tagline">Your on-demand AI design team.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/museaidesign/?hl=en" target="_blank" class="social-link" aria-label="Follow us on Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C14.717 2 15.056 2.01 16.122 2.06C17.187 2.11 17.912 2.277 18.55 2.525C19.21 2.779 19.766 3.123 20.322 3.678C20.8305 4.1779 21.224 4.78259 21.475 5.45C21.722 6.087 21.89 6.813 21.94 7.878C21.987 8.944 22 9.283 22 12C22 14.717 21.99 15.056 21.94 16.122C21.89 17.187 21.722 17.912 21.475 18.55C21.2247 19.2178 20.8311 19.8226 20.322 20.322C19.822 20.8303 19.2173 21.2238 18.55 21.475C17.913 21.722 17.187 21.89 16.122 21.94C15.056 21.987 14.717 22 12 22C9.283 22 8.944 21.99 7.878 21.94C6.813 21.89 6.088 21.722 5.45 21.475C4.78233 21.2245 4.17753 20.8309 3.678 20.322C3.16941 19.8222 2.77593 19.2175 2.525 18.55C2.277 17.913 2.11 17.187 2.06 16.122C2.013 15.056 2 14.717 2 12C2 9.283 2.01 8.944 2.06 7.878C2.11 6.812 2.277 6.088 2.525 5.45C2.77524 4.78218 3.1688 4.17732 3.678 3.678C4.17767 3.16923 4.78243 2.77573 5.45 2.525C6.088 2.277 6.812 2.11 7.878 2.06C8.944 2.013 9.283 2 12 2ZM12 7C10.6739 7 9.40215 7.52678 8.46447 8.46447C7.52678 9.40215 7 10.6739 7 12C7 13.3261 7.52678 14.5979 8.46447 15.5355C9.40215 16.4732 10.6739 17 12 17C13.3261 17 14.5979 16.4732 15.5355 15.5355C16.4732 14.5979 17 13.3261 17 12C17 10.6739 16.4732 9.40215 15.5355 8.46447C14.5979 7.52678 13.3261 7 12 7ZM18.5 6.75C18.5 6.41848 18.3683 6.10054 18.1339 5.86612C17.8995 5.6317 17.5815 5.5 17.25 5.5C16.9185 5.5 16.6005 5.6317 16.3661 5.86612C16.1317 6.10054 16 6.41848 16 6.75C16 7.08152 16.1317 7.39946 16.3661 7.63388C16.6005 7.8683 16.9185 8 17.25 8C17.5815 8 17.8995 7.8683 18.1339 7.63388C18.3683 7.39946 18.5 7.08152 18.5 6.75ZM12 9C12.7956 9 13.5587 9.31607 14.1213 9.87868C14.6839 10.4413 15 11.2044 15 12C15 12.7956 14.6839 13.5587 14.1213 14.1213C13.5587 14.6839 12.7956 15 12 15C11.2044 15 10.4413 14.6839 9.87868 14.1213C9.31607 13.5587 9 12.7956 9 12C9 11.2044 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2044 9 12 9Z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="index.html#value-prop">Features</a></li>
+                        <li><a href="index.html#how-it-works">How It Works</a></li>
+                        <li><a href="index.html#showcase">Showcase</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="mailto:museaidesign@gmail.com">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MuseAI. All rights reserved.</p>
+                <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.5rem;">Demo version. Full features available on waitlist.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/demo_old.js"></script>
+    
+    <script>
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            nav.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            nav.classList.remove('active');
+            toggle.classList.remove('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            if (!nav.contains(e.target) && !toggle.contains(e.target) && nav.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+    </script>
+</body>
+</html>
